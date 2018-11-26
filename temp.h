@@ -2,12 +2,22 @@
 #define TEMP_H
 #define idlen 64//接收标识符的有效长度
 #define tab_size 512//符号表最大长度
-
+#define const_int 0
+#define const_char 1
+#define var_int 2
+#define var_char 3
+#define int_array 4
+#define char_array 5
+#define return_int_func 6
+#define return_char_func 7
+#define void_func 8
+#define int_para 9
+#define char_para 10
 extern enum sym symbol;
 //符号表结构体
 struct ttab {
 	char ident[idlen];
-	int type;//数据类型const int:0, const char:1, var int:2, var char:3, int_array:4, char_array:5, return_int_func:6,
+	int type;//数据类型const_int:0, const_char:1, var_int:2, var_char:3, int_array:4, char_array:5, return_int_func:6,
 			 //return_char_func:7, void_func:8, int_para:9, char_para:10;p.s. 9&10看作函数内定义的变量
 	int value;//值或者长度
 	int addr;//ident的首地址或者相对偏移地址

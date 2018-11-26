@@ -34,6 +34,7 @@ void entertab(char *ident, int type, int value, int addr, int lev) {
 	else if (type == 4 || type == 5)	tab[curloc].size = value * sizeof(int);
 	tab[curloc].addr = addr;
 	tab[curloc].lev = lev;
+	curloc++;//当前位置+1
 }
 /*
 	查找符号表

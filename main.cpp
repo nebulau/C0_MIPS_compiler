@@ -261,9 +261,10 @@ int getsym() {
 	return 0;
 }
 /*
-	处理常量说明
+	处理常量说明，filedflag为作用域
 */
 void overallconst(int SYM, int fieldflag) {
+	int sym_tp;//缓存±号
 	getsym();
 	while (symbol != SEMISY) {
 		if (symbol == IDSY) {
@@ -271,19 +272,27 @@ void overallconst(int SYM, int fieldflag) {
 			if (symbol == ASSIGNSY) {
 				getsym();
 				if (symbol == INTVALUE) {
+					entertab(token, const_int, num, addr, fieldflag);//const_int登录符号表
+					addr += 4;
 					getsym();
 					if (symbol == COMMASY) { getsym(); }
 					else if (symbol != SEMISY) { skip(); errormsg(10); getsym(); return; }
 				}
 				else if (symbol == CHARVALUE) {
+					entertab(token, const_char, token[0], addr, fieldflag);//const_char登录符号表
+					addr += 4;
 					getsym();
 					if (symbol == COMMASY) { getsym(); }
 					else if (symbol != SEMISY) { skip(); errormsg(10); getsym(); return; }
 				}
 				//处理有符号整数
 				else if (symbol == PLUSSY || symbol == MINUSSY) {
+					sym_tp = symbol;//缓存±号
 					getsym();
 					if (symbol == INTVALUE) {
+						if (sym_tp == MINUSSY) num = -num;
+						entertab(token, const_int, num, addr, fieldflag);//有±号整数登录符号表
+						addr += 4;
 						getsym();
 						if (symbol == COMMASY) { getsym(); }
 						else if (symbol != SEMISY) { skip(); errormsg(10); getsym(); return; }
@@ -304,26 +313,35 @@ void constHandler(int fieldflag) {
 		getsym();
 		if (symbol == INTSY || symbol == CHARSY)
 			overallconst(symbol, fieldflag);
-		else { skip(); errormsg(6); getsym(); return; }
+		else { skip(); errormsg(6); getsym(); }
 	}
 }
 /*
 	处理变量说明
 	接收;或者a, b, c ;
 */
-void overallvar(int fieldflag) {
+void overallvar(int SYM, int fieldflag) {
+	char token_tp[idlen] = {'\0'};//缓存ident
+	int num_tp;//缓存数组长度
 	while (symbol != SEMISY) {
 		if (symbol == IDSY) {
+			strcpy(token_tp, token);
 			getsym();
-			if (symbol == LBRASY) {
+			if (symbol == LBRASY) {//接收数组
 				getsym();
 				if (symbol == INTVALUE) {
+					num_tp = num;
 					getsym();
-					if (symbol == RBRASY) { getsym(); }
+					if (symbol == RBRASY) {
+						entertab(token_tp, (SYM == INTSY) ? int_array : char_array, num, addr, fieldflag);
+						addr += tab[curloc - 1].size;
+						getsym(); 
+					}
 					else { skip(); errormsg(14); getsym(); return; }
 				}
 				else { skip(); errormsg(13); getsym(); return; }
 			}
+			entertab(token_tp, (SYM == INTSY) ? var_int : var_char, NULL, addr, fieldflag);
 			if (symbol == COMMASY) { getsym(); }
 			else if (symbol != SEMISY) { skip(); errormsg(10); getsym(); return; }
 		}
@@ -665,6 +683,7 @@ void callfuncHandler() {
 	接收到int 标识符(或者 char 标识符(开始调用
 */
 void refuncHandler() {
+	int sym_tp;//缓存变量是int还是char
 	paramHandler();
 	if (symbol == LBRACE) {
 		getsym();
@@ -673,12 +692,14 @@ void refuncHandler() {
 			处理函数内变量声明
 		*/
 		while (symbol == INTSY || symbol == CHARSY) {
+			sym_tp = symbol;
 			getsym();
-			if (symbol == IDSY) {
+			if (symbol == IDSY) {//TODO 如果第一个var是数组怎么办，要处理所有进入overallvar的地方
+				entertab(token, (sym_tp==INTSY)?)
 				getsym();
-				if (symbol == COMMASY) { getsym(); overallvar(1); }
+				if (symbol == COMMASY) { getsym(); overallvar(sym_tp, 1); }
 				else if (symbol == SEMISY) {
-					overallvar(1);
+					overallvar(sym_tp, 1);
 				}
 				else { skip(); errormsg(16); getsym(); continue; }
 			}
