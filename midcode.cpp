@@ -1,13 +1,15 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <string.h>
-#include "temp.h"
-
+#include "compiler.h"
+using namespace std;
+ofstream tabmsg;
 void entertab(char *ident, int type, int value, int addr, int lev) {
 	if (curloc > tab_size) {
 		errormsg(20); exit(1);
 	}
-	//strcpy(tab[curloc].ident, ident);
+	//strcpy_s(tab[curloc].ident, ident);
 	int i;
 	/*
 		在全局查找新登录符号表项是否和全局常量，全局变量或者全局函数重名
@@ -27,7 +29,7 @@ void entertab(char *ident, int type, int value, int addr, int lev) {
 		}
 	}
 	//没有出现同名，登录符号表
-	strcpy(tab[curloc].ident, ident);
+	strcpy_s(tab[curloc].ident, ident);
 	tab[curloc].type = type;
 	tab[curloc].value = value;
 	if ((type >= 0 && type <= 3) || (type >= 9 && type <= 10))	tab[curloc].size = sizeof(int);
@@ -39,6 +41,22 @@ void entertab(char *ident, int type, int value, int addr, int lev) {
 /*
 	查找符号表
 */
-int search(char* ident, int filed) {
-
+int searchtab(char* ident, int filed) {
+	return 0;
+}
+void printtab() {
+	int i;
+	tabmsg.open("tabmsg.txt");
+	string type[15];
+	type[0] = "const_int";	type[1] = "const_char";	type[2] = "var_int";
+	type[3] = "var_char";	type[4] = "int_array";	type[5] = "char_array";
+	type[6] = "return_int_func";	type[7] = "return_char_func";
+	type[8] = "void_func";	type[9] = "int_para";	type[10] = "char_para";
+	for (i = 0; i < curloc; i++) {
+		tabmsg << tab[i].ident << ' ' << type[tab[i].type] << ' '
+			<< tab[i].value << ' ' << tab[i].size << ' '
+			<< tab[i].lev << '\n';
+	}
+	tabmsg.close();
+	system("pause");
 }

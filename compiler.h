@@ -1,5 +1,5 @@
-#ifndef TEMP_H
-#define TEMP_H
+#ifndef COMPILER_H
+#define COMPILER_H
 #define idlen 64//接收标识符的有效长度
 #define tab_size 512//符号表最大长度
 #define const_int 0
@@ -13,6 +13,47 @@
 #define void_func 8
 #define int_para 9
 #define char_para 10
+enum sym {
+	NOTSY,      //0  not symbol      
+	CONSTSY,    //1  const     
+	INTSY,      //2  int    
+	CHARSY,     //3  char 
+	VOIDSY,     //4  void 
+	MAINSY,     //5  main 
+	IFSY,       //6  if 
+	WHILESY,    //7  while 
+	SWITCHSY,   //8  switch
+	CASESY,     //9  case 
+	DEFAULTSY,  //10  default 
+	SCANFSY,    //11  scanf 
+	PRINTFSY,   //12  printf 
+	RETURNSY,   //13 return 
+	IDSY,       //14  标识符 
+	UNDERLINESY,//15  _
+	PLUSSY,     //16  + 
+	MINUSSY,    //17  - 
+	STARSY,     //18  * 
+	DIVISY,     //19  /
+	LESSSY,     //20  <
+	UNMORESY,   //21  <=
+	MORESY,     //22  >
+	UNLESSSY,   //23 >=
+	UNEQUSY,    //24  !=
+	EQUSY,      //25  ==
+	ASSIGNSY,   //26  =
+	LPARSY,     //27  (
+	RPARSY,     //28  )
+	LBRASY,     //29  [  
+	RBRASY,     //30  ]
+	COMMASY,    //31  ,
+	SEMISY,     //32  分号  
+	INTVALUE,   //33  int值
+	CHARVALUE,  //34  char值
+	STRINGVALUE,//35  string值
+	LBRACE,     //36  {  
+	RBRACE,     //37  }  
+	COLONSY     //38  冒号
+};
 extern enum sym symbol;
 //符号表结构体
 struct ttab {
@@ -66,7 +107,7 @@ void errormsg(int n);
 int getsym();
 void overallconst(int SYM, int fieldflag);
 void constHandler(int fieldflag);
-void overallvar(int fieldflag);
+void overallvar(int SYM, int fieldflag);
 void paramHandler();
 void termHandler();
 void factorHandler();
@@ -86,6 +127,7 @@ void refuncHandler();
 void unfuncHandler();
 void program();
 void entertab(char *ident, int type, int value, int addr, int lev);
-int search(char* ident, int filed);
+int searchtab(char* ident, int filed);
+void printtab();
 #endif // TEMP_H
 

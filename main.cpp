@@ -3,54 +3,14 @@
 #include <string>
 #include <stdio.h>
 #include <string.h>
-#include "temp.h"
+#include "compiler.h"
 using namespace std;
 //C:\workspace\vsapp\Project2\Project2\test.txt
 ifstream file;
 ofstream output;
 string errmsg[50];
 //定义全局变量
-enum sym {
-	NOTSY,      //0  not symbol      
-	CONSTSY,    //1  const     
-	INTSY,      //2  int    
-	CHARSY,     //3  char 
-	VOIDSY,     //4  void 
-	MAINSY,     //5  main 
-	IFSY,       //6  if 
-	WHILESY,    //7  while 
-	SWITCHSY,   //8  switch
-	CASESY,     //9  case 
-	DEFAULTSY,  //10  default 
-	SCANFSY,    //11  scanf 
-	PRINTFSY,   //12  printf 
-	RETURNSY,   //13 return 
-	IDSY,       //14  标识符 
-	UNDERLINESY,//15  _
-	PLUSSY,     //16  + 
-	MINUSSY,    //17  - 
-	STARSY,     //18  * 
-	DIVISY,     //19  /
-	LESSSY,     //20  <
-	UNMORESY,   //21  <=
-	MORESY,     //22  >
-	UNLESSSY,   //23 >=
-	UNEQUSY,    //24  !=
-	EQUSY,      //25  ==
-	ASSIGNSY,   //26  =
-	LPARSY,     //27  (
-	RPARSY,     //28  )
-	LBRASY,     //29  [  
-	RBRASY,     //30  ]
-	COMMASY,    //31  ,
-	SEMISY,     //32  分号  
-	INTVALUE,   //33  int值
-	CHARVALUE,  //34  char值
-	STRINGVALUE,//35  string值
-	LBRACE,     //36  {  
-	RBRACE,     //37  }  
-	COLONSY     //38  冒号
-}symbol;
+enum sym symbol;//每一次调用getsym初始化为NOTSY
 char chr;
 char token[idlen];//存储每一个获取的symbol，在每一次getsym初始化
 int num = 0;//the value of int
@@ -140,7 +100,7 @@ void skip() {
 	nextch();
 }
 void catToken() {	
-	if(strlen(token)<=idlen)	token[strlen(token)] = chr;	
+	if(strlen(token)<idlen)	token[strlen(token)] = chr;	
 }
 enum sym reserver() {//查找保留字，返回保留字类别码，未查找到返回0
 	if (strcmp(token, "const") == 0)   return CONSTSY;
@@ -176,7 +136,7 @@ void setup() {
 	errmsg[14] = "missing ].";                                errmsg[15] = "missing (.";
 	errmsg[16] = "unknown mistake.";						  errmsg[17] = "missing ).";
 	errmsg[18] = "illegal expressions.";					  errmsg[19] = "missing ;.";
-	errmsg[20] = "ttab is full, exit(1).";
+	errmsg[20] = "ttab is full, exit(1).";					  errmsg[21] = "len of defined array is 0.";
 }
 void errormsg(int n) {
 	output << "error line:" << lc << ", " << errmsg[n] << '\n';
@@ -257,6 +217,11 @@ int getsym() {
 		else { symbol = STRINGVALUE; nextch(); }
 	}
 	else if (chr == ':') { symbol = COLONSY; catToken(); nextch(); }
+	else if (chr == '!') {
+		nextch();
+		if (chr == '=') { symbol = UNEQUSY; nextch(); }
+		else { skip(); symbol = NOTSY; errormsg(16); return 2; }
+	}
 	else { skip(); symbol = NOTSY; errormsg(5); return 3; }//不符合文法的词开头
 	return 0;
 }
@@ -264,22 +229,24 @@ int getsym() {
 	处理常量说明，filedflag为作用域
 */
 void overallconst(int SYM, int fieldflag) {
+	char token_tp[idlen] = { '\0' };//缓存ident
 	int sym_tp;//缓存±号
 	getsym();
 	while (symbol != SEMISY) {
 		if (symbol == IDSY) {
+			strcpy_s(token_tp, token);
 			getsym();
 			if (symbol == ASSIGNSY) {
 				getsym();
 				if (symbol == INTVALUE) {
-					entertab(token, const_int, num, addr, fieldflag);//const_int登录符号表
+					entertab(token_tp, const_int, num, addr, fieldflag);//const_int登录符号表
 					addr += 4;
 					getsym();
 					if (symbol == COMMASY) { getsym(); }
 					else if (symbol != SEMISY) { skip(); errormsg(10); getsym(); return; }
 				}
 				else if (symbol == CHARVALUE) {
-					entertab(token, const_char, token[0], addr, fieldflag);//const_char登录符号表
+					entertab(token_tp, const_char, token[0], addr, fieldflag);//const_char登录符号表
 					addr += 4;
 					getsym();
 					if (symbol == COMMASY) { getsym(); }
@@ -291,7 +258,7 @@ void overallconst(int SYM, int fieldflag) {
 					getsym();
 					if (symbol == INTVALUE) {
 						if (sym_tp == MINUSSY) num = -num;
-						entertab(token, const_int, num, addr, fieldflag);//有±号整数登录符号表
+						entertab(token_tp, const_int, num, addr, fieldflag);//有±号整数登录符号表
 						addr += 4;
 						getsym();
 						if (symbol == COMMASY) { getsym(); }
@@ -325,11 +292,12 @@ void overallvar(int SYM, int fieldflag) {
 	int num_tp;//缓存数组长度
 	while (symbol != SEMISY) {
 		if (symbol == IDSY) {
-			strcpy(token_tp, token);
+			strcpy_s(token_tp, token);
 			getsym();
 			if (symbol == LBRASY) {//接收数组
 				getsym();
 				if (symbol == INTVALUE) {
+					if(num == 0) { skip(); errormsg(21); getsym(); return; }
 					num_tp = num;
 					getsym();
 					if (symbol == RBRASY) {
@@ -341,7 +309,11 @@ void overallvar(int SYM, int fieldflag) {
 				}
 				else { skip(); errormsg(13); getsym(); return; }
 			}
-			entertab(token_tp, (SYM == INTSY) ? var_int : var_char, NULL, addr, fieldflag);
+			//不是数组，登录ident到符号表
+			else {
+				entertab(token_tp, (SYM == INTSY) ? var_int : var_char, NULL, addr, fieldflag);
+				addr += sizeof(int);
+			}
 			if (symbol == COMMASY) { getsym(); }
 			else if (symbol != SEMISY) { skip(); errormsg(10); getsym(); return; }
 		}
@@ -359,6 +331,7 @@ void paramHandler() {
 		if (symbol == INTSY) {
 			getsym();
 			if (symbol == IDSY) {
+				entertab(token, int_para, NULL, addr, 1);
 				getsym();
 				if (symbol == COMMASY) { getsym(); }
 				else if (symbol != RPARSY) { skip(); errormsg(6); getsym(); return; }
@@ -368,6 +341,7 @@ void paramHandler() {
 		else if (symbol == CHARSY) {
 			getsym();
 			if (symbol == IDSY) {
+				entertab(token, char_para, NULL, addr, 1);
 				getsym();
 				if (symbol == COMMASY) { getsym(); }
 				else if (symbol != RPARSY) { skip(); errormsg(6); getsym(); return; }
@@ -680,10 +654,12 @@ void callfuncHandler() {
 }
 /*
 	处理有返回值函数定义
-	接收到int 标识符(或者 char 标识符(开始调用
+	接收到int 标识符(或者 char 标识符(开始调用，此时symbol=LPARSY
 */
 void refuncHandler() {
+	char token_tp[idlen] = { '\0' };//缓存token
 	int sym_tp;//缓存变量是int还是char
+	int num_tp;//缓存intvalue
 	paramHandler();
 	if (symbol == LBRACE) {
 		getsym();
@@ -695,8 +671,29 @@ void refuncHandler() {
 			sym_tp = symbol;
 			getsym();
 			if (symbol == IDSY) {//TODO 如果第一个var是数组怎么办，要处理所有进入overallvar的地方
-				entertab(token, (sym_tp==INTSY)?)
+				strcpy_s(token_tp, token);
 				getsym();
+				//判断是不是数组
+				if (symbol == LBRASY) {
+					getsym();
+					if (symbol == INTVALUE) {
+						if (num == 0) { skip(); errormsg(21); getsym(); return; }
+						num_tp = num;
+						getsym();
+						if (symbol == RBRASY) {
+							entertab(token_tp, (sym_tp == INTSY) ? int_array : char_array, num_tp, addr, 1);
+							addr += tab[curloc - 1].size;
+							getsym();
+						}
+						else { skip(); errormsg(14); getsym(); return; }
+					}
+					else { skip(); errormsg(13); getsym(); return; }
+				}
+				else {
+					entertab(token_tp, (sym_tp == INTSY) ? var_int : var_char, NULL, addr, 1);
+					addr += 4;
+				}
+				//
 				if (symbol == COMMASY) { getsym(); overallvar(sym_tp, 1); }
 				else if (symbol == SEMISY) {
 					overallvar(sym_tp, 1);
@@ -720,6 +717,9 @@ void refuncHandler() {
 */
 void unfuncHandler() {}
 void program() {
+	char token_tp[idlen] = { '\0' };//缓存token
+	int sym_tp;//缓存变量是int还是char
+	int num_tp;//缓存intvalue
 	/*
 		处理全局常量说明部分
 	*/
@@ -732,13 +732,35 @@ void program() {
 	while (true)
 	{
 		if (symbol == INTSY || symbol == CHARSY) {
+			sym_tp = symbol;
 			getsym();
 			if (symbol == IDSY) {
+				strcpy_s(token_tp, token);
 				getsym();
 				if (symbol == LPARSY)	break;
-				else if (symbol == COMMASY) { getsym(); overallvar(0); }
+				//判断数组
+				if (symbol == LBRASY) {
+					getsym();
+					if (symbol == INTVALUE) {
+						if (num == 0) { skip(); errormsg(21); getsym(); continue; }
+						num_tp = num;
+						getsym();
+						if (symbol == RBRASY) {
+							entertab(token_tp, (sym_tp == INTSY) ? int_array : char_array, num_tp, addr, 0);
+							addr += tab[curloc - 1].size;
+							getsym();
+						}
+						else { skip(); errormsg(14); getsym(); return; }
+					}
+					else { skip(); errormsg(13); getsym(); continue; }
+				}
+				else {
+					entertab(token_tp, (sym_tp == INTSY) ? var_int : var_char, NULL, addr, 0);
+					addr += 4;
+				}
+				if (symbol == COMMASY) { getsym(); overallvar(sym_tp, 0); }
 				else if (symbol == SEMISY) {
-					overallvar(0);
+					overallvar(sym_tp, 0);
 				}
 				else { skip(); errormsg(16); getsym(); continue; }
 			}
@@ -749,9 +771,12 @@ void program() {
 	/*
 		遇到有返回值函数定义
 		接收到标识符(调用refuncHandler
-		如果标识符之后不是括号则跳读一句处理
+		如果接收到void进入无返回值函数处理部分或者是主函数部分
 	*/
 	if (symbol == LPARSY) {
+		entertab(token_tp,
+			(sym_tp == INTSY) ? return_int_func : return_char_func,
+			NULL, addr, 0);
 		refuncHandler();
 	}
 	else if (symbol != VOIDSY) { skip(); errormsg(16); getsym(); }
@@ -759,10 +784,15 @@ void program() {
 	while (true)
 	{
 		if (symbol == INTSY || symbol == CHARSY) {
+			sym_tp = symbol;
 			getsym();
 			if (symbol == IDSY) {
+				strcpy_s(token_tp, token);
 				getsym();
 				if (symbol == LPARSY) {
+					entertab(token_tp,
+						(sym_tp == INTSY) ? return_int_func : return_char_func,
+						NULL, addr, 0);
 					refuncHandler();
 				}
 				else { skip(); errormsg(16); getsym(); continue; }
@@ -773,6 +803,7 @@ void program() {
 			getsym();
 			if (symbol == MAINSY)	break;//处理到了主函数部分跳出循环
 			if (symbol == IDSY) {
+				entertab(token, void_func, NULL, addr, 0);
 				getsym();
 				if (symbol == LPARSY) {
 					refuncHandler();
@@ -784,6 +815,7 @@ void program() {
 		else { skip(); errormsg(16); getsym(); continue; }
 	}
 	output << "Line: " << lc << ", This is a mainfunc statement!" << '\n';
+	entertab(token, void_func, NULL, addr, 0);
 	getsym();
 	if (symbol == LPARSY) { getsym(); }
 	else { skip(); errormsg(15); getsym(); }
@@ -798,12 +830,35 @@ void program() {
 			处理主函数内变量声明
 		*/
 		while (symbol == INTSY || symbol == CHARSY) {
+			sym_tp = symbol;
 			getsym();
 			if (symbol == IDSY) {
+				strcpy_s(token_tp, token);
 				getsym();
-				if (symbol == COMMASY) { getsym(); overallvar(1); }
+				//判断是不是数组
+				if (symbol == LBRASY) {
+					getsym();
+					if (symbol == INTVALUE) {
+						if (num == 0) { skip(); errormsg(21); getsym(); continue; }
+						num_tp = num;
+						getsym();
+						if (symbol == RBRASY) {
+							entertab(token_tp, (sym_tp == INTSY) ? int_array : char_array, num_tp, addr, 1);
+							addr += tab[curloc - 1].size;
+							getsym();
+						}
+						else { skip(); errormsg(14); getsym(); continue; }
+					}
+					else { skip(); errormsg(13); getsym(); continue; }
+				}
+				else {
+					entertab(token_tp, (sym_tp == INTSY) ? var_int : var_char, NULL, addr, 1);
+					addr += 4;
+				}
+				//
+				if (symbol == COMMASY) { getsym(); overallvar(sym_tp, 1); }
 				else if (symbol == SEMISY) {
-					overallvar(1);
+					overallvar(sym_tp, 1);
 				}
 				else { skip(); errormsg(16); getsym(); continue; }
 			}
@@ -823,12 +878,10 @@ void program() {
 }
 int main()
 {
-	//file = fopen("C:\\workspace\\work2\\test.txt", "r");
-	//if(file == NULL)   {cout<<"No such file!";return -1;}//file does not exist
 	char path[100];
 	cout << "Input file path within 100 characters.(e.g. C:\\User\\Doc\\test.txt)\nOutput file in output.txt" << endl;
 	cin.getline(path, 100);
-	file.open(path);
+	file.open("test1.txt");
 	output.open("output.txt");
 	if (!file) { cout << "No such file!"; return -1; }//file does not exist
 	setup();
@@ -841,6 +894,7 @@ int main()
 	*/
 	getsym();
 	program();
+	printtab();
 	file.close();
 	output.close();
 	//fclose(file);

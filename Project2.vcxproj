@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="compiler.h" />
     <ClInclude Include="temp.h" />
   </ItemGroup>
   <ItemGroup>
