@@ -137,6 +137,7 @@ void setup() {
 	errmsg[16] = "unknown mistake.";						  errmsg[17] = "missing ).";
 	errmsg[18] = "illegal expressions.";					  errmsg[19] = "missing ;.";
 	errmsg[20] = "ttab is full, exit(1).";					  errmsg[21] = "len of defined array is 0.";
+	errmsg[22] = "the same ident registered to ttab.";		  errmsg[23] = "";
 }
 void errormsg(int n) {
 	output << "error line:" << lc << ", " << errmsg[n] << '\n';
@@ -881,7 +882,7 @@ int main()
 	char path[100];
 	cout << "Input file path within 100 characters.(e.g. C:\\User\\Doc\\test.txt)\nOutput file in output.txt" << endl;
 	cin.getline(path, 100);
-	file.open("test1.txt");
+	file.open(path);
 	output.open("output.txt");
 	if (!file) { cout << "No such file!"; return -1; }//file does not exist
 	setup();

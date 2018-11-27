@@ -1,7 +1,10 @@
 #ifndef COMPILER_H
 #define COMPILER_H
-#define idlen 64//接收标识符的有效长度
-#define tab_size 512//符号表最大长度
+
+#define idlen 128//接收标识符的有效长度
+#define tab_size 1024//符号表最大长度
+#define midcode_size 4096//中间代码最大长度
+//登陆的符号表的项的类型
 #define const_int 0
 #define const_char 1
 #define var_int 2
@@ -13,6 +16,31 @@
 #define void_func 8
 #define int_para 9
 #define char_para 10
+//中间代码的类型
+#define CONST_INT 0
+#define CONST_CHAR 1
+#define VAR_INT 2
+#define VAR_CHAR 3
+#define ADDOP 4
+#define SUBOP 5
+#define MULOP 6
+#define DIVOP 7
+#define INT_FUNC 8
+#define CHAR_FUNC 9
+#define VOID_FUNC 10
+#define CALL 11
+#define PUSH 12
+#define FUNCRET 13
+#define VARASSIGN 14
+#define ARRASSIGN 15
+#define ARRACCESS 16
+#define MOREOP 17
+#define UNMOREOP 18
+#define LESSOP 19
+#define UNLESSOP 20
+#define EQUOP 21
+#define UNEQUOP 22
+
 enum sym {
 	NOTSY,      //0  not symbol      
 	CONSTSY,    //1  const     
@@ -55,7 +83,7 @@ enum sym {
 	COLONSY     //38  冒号
 };
 extern enum sym symbol;
-//符号表结构体
+//符号表结构体和相关变量
 struct ttab {
 	char ident[idlen];
 	int type;//数据类型const_int:0, const_char:1, var_int:2, var_char:3, int_array:4, char_array:5, return_int_func:6,
@@ -76,6 +104,17 @@ extern int addr;
 extern int lev;
 extern struct ttab tab[tab_size];
 extern int curloc;//存储当前在符号表的位置
+//中间代码结构体和相关变量
+struct mmid {
+	int type;
+	char argu1[idlen];
+	char argu2[idlen];
+	char result[idlen];
+	int value;//用于存常量的值或者数组的长度，其他默认为0
+};
+extern mmid midcode[midcode_size];
+extern int midcodec;//中间代码计数
+extern int id_name_num;//用于给变量临时起名
 //声明一些判断空格换行和既定终结符的函数
 int isSpace();
 int isNewline();
@@ -129,5 +168,6 @@ void program();
 void entertab(char *ident, int type, int value, int addr, int lev);
 int searchtab(char* ident, int filed);
 void printtab();
+char* id_name_gen();
 #endif // TEMP_H
 
