@@ -21,26 +21,45 @@
 #define CONST_CHAR 1
 #define VAR_INT 2
 #define VAR_CHAR 3
-#define ADDOP 4
-#define SUBOP 5
-#define MULOP 6
-#define DIVOP 7
-#define INT_FUNC 8
-#define CHAR_FUNC 9
-#define VOID_FUNC 10
-#define CALL 11
-#define PUSH 12
-#define FUNCRET 13
-#define VARASSIGN 14
-#define ARRASSIGN 15
-#define ARRACCESS 16
-#define MOREOP 17
-#define UNMOREOP 18
-#define LESSOP 19
-#define UNLESSOP 20
-#define EQUOP 21
-#define UNEQUOP 22
+#define INT_ARR 4
+#define CHAR_ARR 5
 
+#define ADDOP 6
+#define SUBOP 7
+#define MULOP 8
+#define DIVOP 9
+
+#define INT_FUNC 10
+#define CHAR_FUNC 11
+#define VOID_FUNC 12
+#define PARA_INT 13
+#define PARA_CHAR 14
+#define CALL 15
+#define PUSH 16
+#define FUNCRET 17
+
+#define VARASSIGN 18
+#define ARRASSIGN 19
+#define ARRACCESS 20
+
+#define LESSOP 21
+#define UNMOREOP 22
+#define MOREOP 23
+#define UNLESSOP 24
+#define UNEQUOP 25
+#define EQUOP 26
+
+#define SETLABEL 27
+#define GOTO 28
+#define BNZ 29
+#define BZ 30
+extern char chr;
+extern char token[idlen];//存储每一个获取的symbol，在每一次getsym初始化
+extern int num;//the value of int
+extern int lc;//当前行数
+extern int funcnum;//统计函数个数
+extern int expr_is_char;//判断表达式是不是单个字符
+//枚举类型
 enum sym {
 	NOTSY,      //0  not symbol      
 	CONSTSY,    //1  const     
@@ -93,11 +112,6 @@ struct ttab {
 	int size;//占用空间大小
 	int lev;//作用域结构层次
 };
-extern char chr;
-extern char token[idlen];//存储每一个获取的symbol，在每一次getsym初始化
-extern int num;//the value of int
-extern int lc;//当前行数
-//临时存储要填符号表的全局变量
 extern int type;
 extern int value;
 extern int addr;
@@ -115,6 +129,7 @@ struct mmid {
 extern mmid midcode[midcode_size];
 extern int midcodec;//中间代码计数
 extern int id_name_num;//用于给变量临时起名
+extern int label_name_num;//用于标签起名
 //声明一些判断空格换行和既定终结符的函数
 int isSpace();
 int isNewline();
@@ -154,7 +169,7 @@ void exprHandler();
 void statementHandler();
 void ifHandler();
 void whileHandler();
-void assignHandler();
+void assignHandler(char* token);
 void overallcase();
 void swicaseHandler();
 void scanfHandler();
@@ -166,8 +181,11 @@ void refuncHandler();
 void unfuncHandler();
 void program();
 void entertab(char *ident, int type, int value, int addr, int lev);
-int searchtab(char* ident, int filed);
+int searchtab(char* ident, int funcnum);
 void printtab();
+void insert_midcode(int type, char* argu1, char* argu2, char* result, int value);
 char* id_name_gen();
+void print_midcode();
+char* label_name_gen();
 #endif // TEMP_H
 
