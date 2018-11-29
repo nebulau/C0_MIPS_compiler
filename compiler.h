@@ -185,6 +185,7 @@ void scanfHandler();
 void printfHandler();
 void returnHandler();
 void realparaHandler(int j);
+void callrefuncHandler(char* token_tp);
 void callfuncHandler(char* token_tp);
 void refuncHandler();
 void unfuncHandler();

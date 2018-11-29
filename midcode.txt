@@ -1,50 +1,181 @@
-var int a
-var int b
-var int c
-var int d
-var int e
-#0 = 1
-a = #0
-#1 = 2
-b = #1
-#2 = 3
-c = #2
-#3 = 4
-d = #3
-#4 = 0
-#5 = a
-#6 = b
-#7 = #5 * #6
-#8 = c
-#9 = #7 / #8
-#10 = #4 - #9
-#11 = d
-#12 = a
-#13 = #11 * #12
-#14 = #10 + #13
-#15 = c
-#16 = #14 - #15
-e = #16
-#17 = a
-#18 = 1
-#17 == #18
+const int tp_f = 10
+const int tp_0 = 20
+const char ch_s = 'a'
+const char ch_f = 'w'
+var int pt
+var int tp
+int array[1]
+var char op
+var char ch
+int fib()
+para_int x
+$0 = x
+$1 = 1
+$0 <= $1
 BNZ Label0
-#19 = 5
-b = #19
+$2 = x
+ret $2
 Label0:
-#20 = 7
-e = #20
-#21 = a
-#21 == 1
-BNZ Label2
-#22 = 4
-c = #22
-GOTO Label1
-Label2:
-#21 == 5
-BNZ Label3
-#23 = 3
-d = #23
-GOTO Label1
-Label3:
+$3 = x
+$4 = 1
+$3 > $4
+BNZ Label1
+$5 = x
+$6 = 1
+$7 = $5 - $6
+push $7
+call fib
+$8 = RET
+$9 = $8
+$10 = x
+$11 = 2
+$12 = $10 - $11
+push $12
+call fib
+$13 = RET
+$14 = $13
+$15 = $9 + $14
+ret $15
 Label1:
+void func()
+para_int x
+para_int y
+const int u = 24
+const char c = 'z'
+$16 = y
+$17 = x
+$16 >= $17
+BNZ Label2
+$18 = 0
+$19 = u
+$20 = 3
+$21 = $19 * $20
+$22 = $18 - $21
+$23 = c
+$24 = $22 + $23
+tp = $24
+$25 = 56
+ch = $25
+$26 = 1
+$27 = 1
+array[$26] = $27
+$28 = 1
+$29 = 0
+array[$28] = $29
+Label2:
+$30 = y
+$31 = x
+$30 < $31
+BNZ Label3
+$32 = x
+push $32
+call fib
+$33 = RET
+$34 = $33
+tp = $34
+$35 = 95
+ch = $35
+$36 = 0
+$37 = 0
+array[$36] = $37
+$38 = 1
+$39 = 1
+array[$38] = $39
+Label3:
+void main()
+var int n
+$40 = 0
+n = $40
+scanf(pt)
+scanf(pt)
+scanf(op)
+$41 = pt
+$42 = op
+$41 == $42
+BNZ Label4
+printf("pt equals to op")
+Label4:
+$43 = op
+$43 == 102
+BNZ Label6
+$44 = pt
+push $44
+call fib
+$45 = RET
+$46 = $45
+$47 = tp_f
+$48 = $46 + $47
+tp = $48
+$49 = 97
+ch = $49
+$50 = 0
+$51 = 1
+array[$50] = $51
+$52 = 1
+$53 = 1
+array[$52] = $53
+GOTO Label5
+Label6:
+$43 == 107
+BNZ Label7
+$54 = pt
+push $54
+$55 = tp_f
+push $55
+call func
+GOTO Label5
+Label7:
+$56 = 0
+tp = $56
+$57 = 97
+ch = $57
+$58 = 0
+$59 = 0
+array[$58] = $59
+$60 = 1
+$61 = 0
+array[$60] = $61
+Label5:
+Label8:
+$62 = n
+$63 = tp_f
+$62 < $63
+BNZ Label9
+printf(" fib ")
+$64 = n
+$65 = 1
+$66 = $64 + $65
+printf($66)
+printf(" ")
+$67 = n
+$68 = 1
+$69 = $67 + $68
+push $69
+call fib
+$70 = RET
+$71 = $70
+printf($71)
+$72 = n
+$73 = 3
+$74 = $72 + $73
+n = $74
+GOTO Label8
+Label9:
+printf("tp = ")
+$75 = tp
+printf($75)
+printf(" ,")
+printf("ch = ")
+$76 = ch
+printf($76)
+printf(" ")
+$77 = 5
+$78 = array[$77]
+$79 = 97
+$80 = $78 + $79
+$81 = 98
+$82 = 97
+$83 = $81 - $82
+$84 = array[$83]
+$85 = $80 + $84
+printf($85)

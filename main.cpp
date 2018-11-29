@@ -429,7 +429,8 @@ void factorHandler() {
 			if (tab[j].type != return_int_func && tab[j].type != return_char_func) {
 				skip(); errormsg(30); getsym(); return; 
 			}
-			callfuncHandler(token_tp); 
+			callrefuncHandler(token_tp); 
+			insert_midcode(VARASSIGN, midcode[midcodec - 1].result, NULL, id_name_gen(), 0);
 			return; 
 		}
 		//既不是数组也不是函数，则是普通ident继续处理
@@ -467,6 +468,7 @@ void factorHandler() {
 	表达式处理只在该出现表达式的地方调用
 */
 void exprHandler() {
+	expr_is_char = 0;
 	char term_tp[idlen];//缓存上一个term的结果名
 	int is_minus = 0;
 	int sym_tp = 0;
@@ -624,6 +626,7 @@ void whileHandler() {
 			output << "Line: " << lc << ", This is a while statement!" << '\n'; 
 			getsym(); 
 			statementHandler(); 
+			insert_midcode(GOTO, label_name1, NULL, NULL, 0);
 			insert_midcode(SETLABEL, label_name2, NULL, NULL, 0);
 		}
 		else { skip(); errormsg(17); getsym(); return; }
@@ -654,13 +657,13 @@ void assignHandler(char *token) {
 		if(j == -1) { skip(); errormsg(23); return; }//已经读到分号 去除getsym
 		if (is_array) {
 			if (tab[j].type == int_array) {
-				if(expr_is_char) { skip(); errormsg(25); getsym(); return; }
+				if(expr_is_char) { errormsg(25); }
 				else {
 					insert_midcode(ARRASSIGN, index, result, token, 0);
 				}
 			}
 			else if (tab[j].type == char_array) {
-				if (!expr_is_char) { skip(); errormsg(25); getsym(); return; }
+				if (!expr_is_char) { errormsg(25);  }
 				else {
 					insert_midcode(ARRASSIGN, index, result, token, 0);
 				}
@@ -669,14 +672,14 @@ void assignHandler(char *token) {
 		}
 		else {
 			if (tab[j].type == var_int) {
-				if (expr_is_char) { skip(); errormsg(27); getsym(); return; }
+				if (expr_is_char) {  errormsg(27);  }
 				else {
 					insert_midcode(VARASSIGN, result, NULL, token, 0);
 					//var_int = !expr_is_char
 				}
 			}
 			else if (tab[j].type == var_char) {
-				if (!expr_is_char) { skip(); errormsg(28); getsym(); return; }
+				if (!expr_is_char) { errormsg(28); }
 				else {
 					insert_midcode(VARASSIGN, result, NULL, token, 0);
 				}
@@ -700,7 +703,10 @@ void overallcase(char* op_tp, char* label_name) {
 		strcpy_s(case_label, label_name_gen());
 		getsym();
 		if (symbol == INTVALUE || symbol == CHARVALUE) {
-			insert_midcode(EQUOP, op_tp, NULL, NULL, num);
+			if(symbol == INTVALUE)
+				insert_midcode(EQUOP, op_tp, NULL, NULL, num);
+			else
+				insert_midcode(EQUOP, op_tp, NULL, NULL, token[0]);
 			insert_midcode(BNZ, case_label, NULL, NULL, 0);
 			getsym();
 			if (symbol == COLONSY) {
@@ -787,7 +793,7 @@ void scanfHandler() {
 				else if (tab[j].type == var_char)
 					insert_midcode(SCANCHAR, token_tp, NULL, NULL, 0);
 				else {
-					errormsg(32); getsym(); getsym();  continue;
+					errormsg(32);
 				}
 				getsym();
 				if (symbol == COMMASY) { getsym(); }
@@ -845,12 +851,14 @@ void returnHandler() {
 		getsym();
 		exprHandler();
 		if (symbol == RPARSY) {
+			insert_midcode(RETEXPR, NULL, NULL, midcode[midcodec - 1].result, 0);
 			output << "Line: " << lc << ", This is a return statement!" << '\n';
 			getsym();
 			return;
 		}
 		else { skip(); errormsg(17); getsym(); return; }
 	}
+	insert_midcode(RETNULL, NULL, NULL, NULL, 0);
 	if (symbol == SEMISY)	output << "Line: " << lc << ", This is a return statement!" << '\n';
 }
 /*
@@ -858,22 +866,38 @@ void returnHandler() {
 	此时symbol = (
 */
 void realparaHandler(int j) {
+	j = j + 1;
 	getsym();
 	while (symbol != RPARSY) {
 		exprHandler();
 		if (expr_is_char) {
-			if (tab[j--].type == char_para) {
+			if (tab[j++].type == char_para) {
 				insert_midcode(PUSH, midcode[midcodec - 1].result, NULL, NULL, 0);
 			}
-			else{ skip(); errormsg(33); getsym(); return; }
+			else{ errormsg(33); }
 		}
 		else {
-			if (tab[j--].type == int_para) {
+			if (tab[j++].type == int_para) {
 				insert_midcode(PUSH, midcode[midcodec - 1].result, NULL, NULL, 0);
 			}
-			else { skip(); errormsg(33); getsym(); return; }
+			else { errormsg(33); }
 		}
-		if (symbol == COMMASY) { getsym(); exprHandler(); }
+		if (symbol == COMMASY) { 
+			getsym(); 
+			exprHandler(); 
+			if (expr_is_char) {
+				if (tab[j++].type == char_para) {
+					insert_midcode(PUSH, midcode[midcodec - 1].result, NULL, NULL, 0);
+				}
+				else { errormsg(33); }
+			}
+			else {
+				if (tab[j++].type == int_para) {
+					insert_midcode(PUSH, midcode[midcodec - 1].result, NULL, NULL, 0);
+				}
+				else { errormsg(33); }
+			}
+		}
 		else if (symbol != RPARSY) { skip(); errormsg(16); getsym(); return; }
 	}
 	getsym();
@@ -882,11 +906,21 @@ void realparaHandler(int j) {
 	处理函数调用语句
 	接收到 标识符( 开始
 */
-void callfuncHandler(char* token_tp) {
+void callrefuncHandler(char* token_tp) {
 	int j;
 	j = searchtab(token_tp, funcnum);
 	if (j == -1) { skip(); errormsg(30); getsym(); return; }
 	if(!(tab[j].type>=6&&tab[j].type<=8)){ skip(); errormsg(30); getsym(); return; }
+	realparaHandler(j);
+	insert_midcode(CALL, token_tp, NULL, NULL, 0);
+	insert_midcode(FUNCRET, NULL, NULL, id_name_gen(), 0);
+
+}
+void callfuncHandler(char* token_tp) {
+	int j;
+	j = searchtab(token_tp, funcnum);
+	if (j == -1) { skip(); errormsg(30); getsym(); return; }
+	if (!(tab[j].type >= 6 && tab[j].type <= 8)) { skip(); errormsg(30); getsym(); return; }
 	realparaHandler(j);
 	insert_midcode(CALL, token_tp, NULL, NULL, 0);
 }
@@ -1011,6 +1045,7 @@ void program() {
 			else { skip(); errormsg(16); getsym(); continue; }
 		}
 		if (symbol == VOIDSY)	break;
+		if (symbol != INTSY && symbol != CHARSY && symbol != VOIDSY)	exit(3);
 	}
 	/*
 		遇到有返回值函数定义

@@ -117,21 +117,30 @@ void insert_midcode(int type, char* argu1, char* argu2, char* result, int value)
 }
 char* id_name_gen() {
 	static char id_name[idlen];
-	sprintf_s(id_name, "#%d", id_name_num++);
+	sprintf_s(id_name, "$%d", id_name_num++);
 	return id_name;
 }
 void print_midcode() {
 	MidOutput.open("midcode.txt");
 	int i;
 	string str;
+	char temp[idlen];
 	for (i = 0; i < midcodec; i++) {
 		switch (midcode[i].type) {
 			case CONST_INT: {
-
+				MidOutput << "const int ";
+				str = midcode[i].argu1;
+				MidOutput << str << " = ";
+				MidOutput << midcode[i].value << '\n';
 				break;
 			}
 			case CONST_CHAR: {
-
+				MidOutput << "const char ";
+				str = midcode[i].argu1;
+				MidOutput << str << " = ";
+				sprintf_s(temp, "%c", midcode[i].value);
+				str = temp;
+				MidOutput << '\'' << str << '\'' << '\n';
 				break;
 			}
 			case VAR_INT: {
@@ -141,15 +150,24 @@ void print_midcode() {
 				break;
 			}
 			case VAR_CHAR: {
-
+				MidOutput << "var char ";
+				str = midcode[i].argu1;
+				MidOutput << str << '\n';
+				break;
 				break;
 			}
 			case INT_ARR: {
-
+				MidOutput << "int ";
+				str = midcode[i].argu1;
+				MidOutput << str << '[';
+				MidOutput << midcode[i].value << "]\n";
 				break;
 			}
 			case CHAR_ARR: {
-
+				MidOutput << "char ";
+				str = midcode[i].argu1;
+				MidOutput << str << '[';
+				MidOutput << midcode[i].value << "]\n";
 				break;
 			}
 			case ADDOP: {
@@ -189,31 +207,53 @@ void print_midcode() {
 				break;
 			}
 			case INT_FUNC: {
-
+				MidOutput << "int ";
+				str = midcode[i].argu1;
+				MidOutput << str << '(';
+				MidOutput << ")\n";
 				break;
 			}
 			case CHAR_FUNC: {
-
+				MidOutput << "char ";
+				str = midcode[i].argu1;
+				MidOutput << str << '(';
+				MidOutput << ")\n";
 				break;
 			}
 			case VOID_FUNC: {
-
+				MidOutput << "void ";
+				str = midcode[i].argu1;
+				MidOutput << str << '(';
+				MidOutput << ")\n";
 				break;
 			}
 			case PARA_INT: {
-
+				MidOutput << "para_int ";
+				str = midcode[i].argu1;
+				MidOutput << str << '\n';
 				break;
 			}
 			case PARA_CHAR: {
-
+				MidOutput << "para_char ";
+				str = midcode[i].argu1;
+				MidOutput << str << '\n';
+				break;
+			}
+			case CALL: {
+				MidOutput << "call ";
+				str = midcode[i].argu1;
+				MidOutput << str << '\n';
 				break;
 			}
 			case PUSH: {
-
+				MidOutput << "push ";
+				str = midcode[i].argu1;
+				MidOutput << str << '\n';
 				break;
 			}
 			case FUNCRET: {
-
+				str = midcode[i].result;
+				MidOutput << str << " = RET\n";
 				break;
 			}
 			case VARASSIGN: {
@@ -231,27 +271,49 @@ void print_midcode() {
 				break;
 			}
 			case ARRASSIGN: {
-
+				str = midcode[i].result;
+				MidOutput << str << '[';
+				str = midcode[i].argu1;
+				MidOutput << str << "] = ";
+				str = midcode[i].argu2;
+				MidOutput << str << '\n';
 				break;
 			}
 			case ARRACCESS: {
-
+				str = midcode[i].result;
+				MidOutput << str << " = ";
+				str = midcode[i].argu1;
+				MidOutput << str << '[';
+				str = midcode[i].argu2;
+				MidOutput << str << "]\n";
 				break;
 			}
 			case MOREOP: {
-
+				str = midcode[i].argu1;
+				MidOutput << str << " > ";
+				str = midcode[i].argu2;
+				MidOutput << str << "\n";
 				break;
 			}
 			case UNMOREOP: {
-
+				str = midcode[i].argu1;
+				MidOutput << str << " <= ";
+				str = midcode[i].argu2;
+				MidOutput << str << "\n";
 				break;
 			}
 			case LESSOP: {
-
+				str = midcode[i].argu1;
+				MidOutput << str << " < ";
+				str = midcode[i].argu2;
+				MidOutput << str << "\n";
 				break;
 			}
 			case UNLESSOP: {
-
+				str = midcode[i].argu1;
+				MidOutput << str << " >= ";
+				str = midcode[i].argu2;
+				MidOutput << str << "\n";
 				break;
 			}
 			case EQUOP: {
@@ -268,7 +330,16 @@ void print_midcode() {
 				break;
 			}
 			case UNEQUOP: {
-
+				str = midcode[i].argu1;
+				if (strlen(midcode[i].argu2) != 0) {
+					MidOutput << str << " != ";
+					str = midcode[i].argu2;
+					MidOutput << str << '\n';
+				}
+				else {
+					MidOutput << str << " != ";
+					MidOutput << midcode[i].value << '\n';
+				}
 				break;
 			}
 			case SETLABEL: {
@@ -287,35 +358,42 @@ void print_midcode() {
 				break;
 			}
 			case BZ: {
-
+				str = midcode[i].argu1;
+				MidOutput << "BZ " << str << '\n';
 				break;
 			}
 			case SCANINT: {
-
+				str = midcode[i].argu1;
+				MidOutput << "scanf(" << str << ")\n";
 				break;
 			}
 			case SCANCHAR: {
-
+				str = midcode[i].argu1;
+				MidOutput << "scanf(" << str << ")\n";
 				break;
 			}
 			case PRINTINT: {
-
+				str = midcode[i].argu1;
+				MidOutput << "printf(" << str << ")\n";
 				break;
 			}
 			case PRINTCHAR: {
-
+				str = midcode[i].argu1;
+				MidOutput << "printf(" << str << ")\n";
 				break;
 			}
 			case PRINTSTR: {
-
+				str = midcode[i].argu1;
+				MidOutput << "printf(\"" << str << "\")\n";
 				break;
 			}
 			case RETEXPR: {
-
+				str = midcode[i].result;
+				MidOutput << "ret " << str << '\n';
 				break;
 			}
 			case RETNULL: {
-
+				MidOutput << "return null" << '\n';
 				break;
 			}
 			default: {
