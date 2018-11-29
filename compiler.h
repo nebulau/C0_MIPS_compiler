@@ -53,6 +53,15 @@
 #define GOTO 28
 #define BNZ 29
 #define BZ 30
+
+#define SCANINT 31
+#define SCANCHAR 32
+#define PRINTINT 33
+#define PRINTCHAR 34
+#define PRINTSTR 35
+
+#define RETEXPR 36
+#define RETNULL 37
 extern char chr;
 extern char token[idlen];//存储每一个获取的symbol，在每一次getsym初始化
 extern int num;//the value of int
@@ -170,13 +179,13 @@ void statementHandler();
 void ifHandler();
 void whileHandler();
 void assignHandler(char* token);
-void overallcase();
+void overallcase(char* op_tp, char* label_name);
 void swicaseHandler();
 void scanfHandler();
 void printfHandler();
 void returnHandler();
-void realparaHandler();
-void callfuncHandler();
+void realparaHandler(int j);
+void callfuncHandler(char* token_tp);
 void refuncHandler();
 void unfuncHandler();
 void program();

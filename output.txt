@@ -5,6 +5,13 @@ Line: 4, This is a assign statement!
 Line: 5, This is a assign statement!
 Line: 6, This is a assign statement!
 Line: 7, This is a assign statement!
+Line: 7, This is a if statement!
+Line: 9, This is a assign statement!
+Line: 11, This is a assign statement!
+Line: 12, This is a switch statement!
+Line: 14, This is a assign statement!
+Line: 15, This is a assign statement!
+Line: 18, This is a switch_case statement!
 
 ***************Finished***************
 

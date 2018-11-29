@@ -5,6 +5,16 @@ void main(){
  c=3;
  d=4;
  e=-a*b/c + d * a - c;
+ if(a == 1){
+  b = 5;
+ }
+ e = 7;
 
+ switch(a){
+	case +1: c = 4;
+	case 5: d=3;
+
+
+}
 
 }

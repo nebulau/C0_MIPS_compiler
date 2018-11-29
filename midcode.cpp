@@ -62,7 +62,7 @@ int searchtab(char* ident, int funcnum) {
 	int j;
 	int is_found = 0;
 	//在函数内查找变量、常量,从当前函数下一个index开始查找
-	for (j = i; !(tab[j].type >= 6 && tab[j].type <= 8); j++) {
+	for (j = i; !(tab[j].type >= 6 && tab[j].type <= 8) && j < curloc; j++) {
 		if (strcmp(ident, tab[j].ident) == 0) { is_found = 1; break; }
 	}
 	if (is_found) return j;
@@ -117,7 +117,7 @@ void insert_midcode(int type, char* argu1, char* argu2, char* result, int value)
 }
 char* id_name_gen() {
 	static char id_name[idlen];
-	sprintf_s(id_name, "@%d", id_name_num++);
+	sprintf_s(id_name, "#%d", id_name_num++);
 	return id_name;
 }
 void print_midcode() {
@@ -126,27 +126,32 @@ void print_midcode() {
 	string str;
 	for (i = 0; i < midcodec; i++) {
 		switch (midcode[i].type) {
-			//case CONST_INT: {
+			case CONST_INT: {
 
-			//}
-			//case CONST_CHAR: {
+				break;
+			}
+			case CONST_CHAR: {
 
-			//}
+				break;
+			}
 			case VAR_INT: {
 				MidOutput << "var int ";
 				str = midcode[i].argu1;
 				MidOutput << str << '\n';
 				break;
 			}
-			//case VAR_CHAR: {
+			case VAR_CHAR: {
 
-			//}
-			//case INT_ARR: {
+				break;
+			}
+			case INT_ARR: {
 
-			//}
-			//case CHAR_ARR: {
+				break;
+			}
+			case CHAR_ARR: {
 
-			//}
+				break;
+			}
 			case ADDOP: {
 				str = midcode[i].result;
 				MidOutput << str << " = ";
@@ -183,27 +188,34 @@ void print_midcode() {
 				MidOutput << str << '\n';
 				break;
 			}
-			//case INT_FUNC: {
+			case INT_FUNC: {
 
-			//}
-			//case CHAR_FUNC: {
+				break;
+			}
+			case CHAR_FUNC: {
 
-			//}
-			//case VOID_FUNC: {
+				break;
+			}
+			case VOID_FUNC: {
 
-			//}
-			//case PARA_INT: {
+				break;
+			}
+			case PARA_INT: {
 
-			//}
-			//case PARA_CHAR: {
+				break;
+			}
+			case PARA_CHAR: {
 
-			//}
-			//case PUSH: {
+				break;
+			}
+			case PUSH: {
 
-			//}
-			//case FUNCRET: {
+				break;
+			}
+			case FUNCRET: {
 
-			//}
+				break;
+			}
 			case VARASSIGN: {
 				if (strlen(midcode[i].argu1) != 0) {
 					str = midcode[i].result;
@@ -218,42 +230,94 @@ void print_midcode() {
 				}
 				break;
 			}
-			/*case ARRASSIGN: {
+			case ARRASSIGN: {
 
+				break;
 			}
 			case ARRACCESS: {
 
+				break;
 			}
 			case MOREOP: {
 
+				break;
 			}
 			case UNMOREOP: {
 
+				break;
 			}
 			case LESSOP: {
 
+				break;
 			}
 			case UNLESSOP: {
 
+				break;
 			}
 			case EQUOP: {
-
+				str = midcode[i].argu1;
+				if (strlen(midcode[i].argu2) != 0) {
+					MidOutput << str << " == ";
+					str = midcode[i].argu2;
+					MidOutput << str << '\n';
+				}
+				else {
+					MidOutput << str << " == ";
+					MidOutput << midcode[i].value << '\n';
+				}
+				break;
 			}
 			case UNEQUOP: {
 
+				break;
 			}
 			case SETLABEL: {
-
+				str = midcode[i].argu1;
+				MidOutput << str << ":\n";
+				break;
 			}
 			case GOTO: {
-
+				str = midcode[i].argu1;
+				MidOutput << "GOTO " << str << '\n';
+				break;
 			}
 			case BNZ: {
-
+				str = midcode[i].argu1;
+				MidOutput << "BNZ " << str << '\n';
+				break;
 			}
 			case BZ: {
 
-			}*/
+				break;
+			}
+			case SCANINT: {
+
+				break;
+			}
+			case SCANCHAR: {
+
+				break;
+			}
+			case PRINTINT: {
+
+				break;
+			}
+			case PRINTCHAR: {
+
+				break;
+			}
+			case PRINTSTR: {
+
+				break;
+			}
+			case RETEXPR: {
+
+				break;
+			}
+			case RETNULL: {
+
+				break;
+			}
 			default: {
 
 			}
