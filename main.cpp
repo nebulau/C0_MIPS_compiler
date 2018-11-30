@@ -205,8 +205,8 @@ int getsym() {
 	}
 	else if (chr == '\'') {
 		nextch();
-		if (isLetter() | isDigit() | (chr == '_') | (chr == '+')
-			| (chr == '-') | (chr == '*') | (chr == '/')) {
+		if (isLetter() || isDigit() || (chr == '_') || (chr == '+')
+			|| (chr == '-') || (chr == '*') || (chr == '/')) {
 			catToken(); nextch();
 		}
 		else { skip(); symbol = NOTSY; errormsg(1); return 1; }
@@ -394,11 +394,11 @@ void factorHandler() {
 	int sym_tp;//缓存当前标识符类别码
 	int j;//返回数组或者函数在tab表的index
 	if (symbol == INTVALUE) {
-		insert_midcode(VARASSIGN, NULL, NULL, id_name_gen(), num);
+		insert_midcode(VARASSIGN, numtostr(num), NULL, id_name_gen(), 0);
 		getsym();
 	}
-	else if (symbol == CHARVALUE) {
-		insert_midcode(VARASSIGN, NULL, NULL, id_name_gen(), token[0]);//以int值存char，tothink
+	else if (symbol == CHARVALUE ) {
+		insert_midcode(VARASSIGN, numtostr(token[0]), NULL, id_name_gen(), 0);//以int值存char，tothink
 		getsym();
 		expr_is_char = 1;
 	}
@@ -456,7 +456,7 @@ void factorHandler() {
 		getsym();
 		if (symbol == INTVALUE) {
 			if (sym_tp == MINUSSY)	num = -num;
-			insert_midcode(VARASSIGN, NULL, NULL, id_name_gen(), num);
+			insert_midcode(VARASSIGN, numtostr(num), NULL, id_name_gen(), 0);
 			getsym();
 		}
 		else { skip(); errormsg(16); getsym(); return; }
@@ -476,10 +476,11 @@ void exprHandler() {
 		sym_tp = symbol;
 		expr_is_char = 0;
 		getsym();
+		//如果遇到-，看作0 - 
 		if (sym_tp == MINUSSY) {
 			strcpy_s(term_tp, id_name_gen());
 			is_minus = 1;
-			insert_midcode(VARASSIGN, NULL, NULL, term_tp, 0);
+			insert_midcode(VARASSIGN, numtostr(0), NULL, term_tp, 0);
 		}
 	}
 	termHandler();
@@ -704,9 +705,9 @@ void overallcase(char* op_tp, char* label_name) {
 		getsym();
 		if (symbol == INTVALUE || symbol == CHARVALUE) {
 			if(symbol == INTVALUE)
-				insert_midcode(EQUOP, op_tp, NULL, NULL, num);
+				insert_midcode(EQUOP, op_tp, numtostr(num), NULL, 0);
 			else
-				insert_midcode(EQUOP, op_tp, NULL, NULL, token[0]);
+				insert_midcode(EQUOP, op_tp, numtostr(token[0]), NULL, 0);
 			insert_midcode(BNZ, case_label, NULL, NULL, 0);
 			getsym();
 			if (symbol == COLONSY) {
@@ -851,7 +852,7 @@ void returnHandler() {
 		getsym();
 		exprHandler();
 		if (symbol == RPARSY) {
-			insert_midcode(RETEXPR, NULL, NULL, midcode[midcodec - 1].result, 0);
+			insert_midcode(RETEXPR, midcode[midcodec - 1].result, NULL, NULL, 0);
 			output << "Line: " << lc << ", This is a return statement!" << '\n';
 			getsym();
 			return;
@@ -868,7 +869,7 @@ void returnHandler() {
 void realparaHandler(int j) {
 	j = j + 1;
 	getsym();
-	while (symbol != RPARSY) {
+	if (symbol != RPARSY) {
 		exprHandler();
 		if (expr_is_char) {
 			if (tab[j++].type == char_para) {
@@ -882,7 +883,7 @@ void realparaHandler(int j) {
 			}
 			else { errormsg(33); }
 		}
-		if (symbol == COMMASY) { 
+		while (symbol == COMMASY) { 
 			getsym(); 
 			exprHandler(); 
 			if (expr_is_char) {
@@ -898,7 +899,7 @@ void realparaHandler(int j) {
 				else { errormsg(33); }
 			}
 		}
-		else if (symbol != RPARSY) { skip(); errormsg(16); getsym(); return; }
+		if (symbol != RPARSY) { skip(); errormsg(16); getsym(); return; }
 	}
 	getsym();
 }
@@ -967,7 +968,7 @@ void refuncHandler() {
 				else {
 					entertab(token_tp, (sym_tp == INTSY) ? var_int : var_char, NULL, addr, 1);
 					addr += 4;
-					insert_midcode((sym_tp == INTSY) ? VAR_INT : VAR_CHAR, token_tp,NULL,NULL,0);
+					insert_midcode((sym_tp == INTSY) ? VAR_INT : VAR_CHAR, token_tp, NULL, NULL, 0);
 				}
 				//
 				if (symbol == COMMASY) { getsym(); overallvar(sym_tp, 1); }
@@ -1102,6 +1103,7 @@ void program() {
 	entertab(token, void_func, NULL, addr, 0);
 	funcnum++;
 	insert_midcode(VOID_FUNC, token, NULL, NULL, 0);
+	
 	getsym();
 	if (symbol == LPARSY) { getsym(); }
 	else { skip(); errormsg(15); getsym(); }
@@ -1187,6 +1189,7 @@ int main()
 	getsym();
 	program();
 	printtab();
+	generate1();
 	print_midcode();
 	file.close();
 	output.close();

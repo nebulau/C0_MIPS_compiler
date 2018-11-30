@@ -62,6 +62,8 @@
 
 #define RETEXPR 36
 #define RETNULL 37
+
+#define DEL 38
 extern char chr;
 extern char token[idlen];//存储每一个获取的symbol，在每一次getsym初始化
 extern int num;//the value of int
@@ -197,5 +199,7 @@ void insert_midcode(int type, char* argu1, char* argu2, char* result, int value)
 char* id_name_gen();
 void print_midcode();
 char* label_name_gen();
+char* numtostr(int num);
+void generate1();
 #endif // TEMP_H
 

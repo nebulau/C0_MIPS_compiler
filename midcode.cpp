@@ -257,17 +257,10 @@ void print_midcode() {
 				break;
 			}
 			case VARASSIGN: {
-				if (strlen(midcode[i].argu1) != 0) {
-					str = midcode[i].result;
-					MidOutput << str << " = ";
-					str = midcode[i].argu1;
-					MidOutput << str << '\n';
-				}
-				else {
-					str = midcode[i].result;
-					MidOutput << str << " = ";
-					MidOutput << midcode[i].value << '\n';
-				}
+				str = midcode[i].result;
+				MidOutput << str << " = ";
+				str = midcode[i].argu1;
+				MidOutput << str << '\n';				
 				break;
 			}
 			case ARRASSIGN: {
@@ -318,28 +311,16 @@ void print_midcode() {
 			}
 			case EQUOP: {
 				str = midcode[i].argu1;
-				if (strlen(midcode[i].argu2) != 0) {
-					MidOutput << str << " == ";
-					str = midcode[i].argu2;
-					MidOutput << str << '\n';
-				}
-				else {
-					MidOutput << str << " == ";
-					MidOutput << midcode[i].value << '\n';
-				}
+				MidOutput << str << " == ";
+				str = midcode[i].argu2;
+				MidOutput << str << '\n';
 				break;
 			}
 			case UNEQUOP: {
-				str = midcode[i].argu1;
-				if (strlen(midcode[i].argu2) != 0) {
-					MidOutput << str << " != ";
-					str = midcode[i].argu2;
-					MidOutput << str << '\n';
-				}
-				else {
-					MidOutput << str << " != ";
-					MidOutput << midcode[i].value << '\n';
-				}
+				str = midcode[i].argu1;	
+				MidOutput << str << " != ";
+				str = midcode[i].argu2;
+				MidOutput << str << '\n';
 				break;
 			}
 			case SETLABEL: {
@@ -388,13 +369,16 @@ void print_midcode() {
 				break;
 			}
 			case RETEXPR: {
-				str = midcode[i].result;
+				str = midcode[i].argu1;
 				MidOutput << "ret " << str << '\n';
 				break;
 			}
 			case RETNULL: {
 				MidOutput << "return null" << '\n';
 				break;
+			}
+			case DEL: {
+				MidOutput << '\n';
 			}
 			default: {
 
@@ -408,4 +392,31 @@ char* label_name_gen() {
 	static char label_name[idlen];
 	sprintf_s(label_name, "Label%d", label_name_num++);
 	return label_name;
+}
+char* numtostr(int num) {
+	static char buffer[idlen];
+	sprintf_s(buffer, "%d", num);
+	return buffer;
+
+}
+//消除相邻重复项
+void generate1() {
+	int i, j;
+	for (i = 0; i < midcodec; i++) {
+		if (midcode[i].type == VARASSIGN && strlen(midcode[i].argu1) != 0
+			&& strlen(midcode[i].argu2) == 0 && strlen(midcode[i].result) != 0) {
+			
+			j = i + 1;
+				if (strcmp(midcode[j].argu1, midcode[i].result) == 0) {
+					midcode[i].type = DEL;
+						strcpy_s(midcode[j].argu1, midcode[i].argu1);
+				}
+				else if (strcmp(midcode[j].argu2, midcode[i].result) == 0) {
+					midcode[i].type = DEL;
+						strcpy_s(midcode[j].argu2, midcode[i].argu1);
+				}
+			
+			
+		}
+	}
 }
