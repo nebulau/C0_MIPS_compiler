@@ -1,0 +1,15 @@
+.data
+	pt:.word 0
+	tp:.word 0
+	array:.word 0:4
+	op:.word 0
+	ch:.word 0
+	$str0:.asciiz "pt equals to op"
+	$str1:.asciiz " fib "
+	$str2:.asciiz " "
+	$str3:.asciiz "tp = "
+	$str4:.asciiz " ,"
+	$str5:.asciiz "ch = "
+	$str6:.asciiz " "
+.text
+j main

@@ -11,7 +11,7 @@ int fib(int x){
   }
 }
 void func(int x, int y){
-  const int u = 24;
+  const int u = -24;
   const char c = 'z';
   if(y >= x){
     tp = - u * 3 + c;

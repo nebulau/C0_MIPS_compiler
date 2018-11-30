@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="midcode.cpp" />
+    <ClCompile Include="mipscode.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

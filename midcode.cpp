@@ -378,7 +378,8 @@ void print_midcode() {
 				break;
 			}
 			case DEL: {
-				MidOutput << '\n';
+				//MidOutput << '\n';
+				break;
 			}
 			default: {
 
@@ -399,14 +400,61 @@ char* numtostr(int num) {
 	return buffer;
 
 }
-//消除相邻重复项
+/*
+	将常量替换
+*/
+void delconst() {
+	int i = 0, j = 0, k = 0;
+	char const_tp[idlen];
+	//将函数内定义的常量在本函数内替换
+	/*for (i = 0; i < funcnum; i++) {
+		for (; j < midcodec; j++) {
+			if (midcode[j].type >= 6 && midcode[j].type <= 8) {
+				for (k = j + 1; k < midcodec; k++) {
+
+				}
+			}
+		}
+	}*/
+	//到达第一个函数在midcode的index
+	while (i < midcodec) {
+		for (; !(midcode[i].type >= 11 && midcode[i].type <= 12) && i < midcodec; i++);
+		for (j = i + 1; j < midcodec; j++) {
+			if (midcode[j].type == 0 || midcode[j].type == 1) {
+				for (k = j + 1; k < midcodec; k++) {
+					if (strcmp(midcode[k].argu1, midcode[j].argu1) == 0)
+						strcpy_s(midcode[k].argu1, numtostr(midcode[j].value));
+					else if (strcmp(midcode[k].argu2, midcode[j].argu1) == 0)
+						strcpy_s(midcode[k].argu2, numtostr(midcode[j].value));
+					else if (midcode[k].type >= 11 && midcode[k].type <= 12)	break;
+				}
+			}
+			if (midcode[j].type >= 11 && midcode[j].type <= 12)	break;
+		}
+		i++;
+	}
+	for (i = 0; i < midcodec; i++) {
+		if (midcode[i].type == 0 || midcode[i].type == 1) {
+			for (j = i + 1; j < midcodec; j++) {
+				if (strcmp(midcode[j].argu1, midcode[i].argu1) == 0)
+					strcpy_s(midcode[j].argu1, numtostr(midcode[i].value));
+				else if (strcmp(midcode[j].argu2, midcode[i].argu1) == 0)
+					strcpy_s(midcode[j].argu2, numtostr(midcode[i].value));
+			}
+		}
+	}
+}
+/*
+	如果出现了一个临时变量$的赋值，且这个临时变量没出现在result位置，则可以全部替换
+	可能替换+ - * /
+*/
 void generate1() {
-	int i, j;
+	int i, j, flag = 0;
 	for (i = 0; i < midcodec; i++) {
 		if (midcode[i].type == VARASSIGN && strlen(midcode[i].argu1) != 0
-			&& strlen(midcode[i].argu2) == 0 && strlen(midcode[i].result) != 0) {
-			
-			j = i + 1;
+			&& strlen(midcode[i].argu2) == 0 && strlen(midcode[i].result) != 0
+			&& midcode[i].result[0] == '$') {
+			/*j = i + 1;
 				if (strcmp(midcode[j].argu1, midcode[i].result) == 0) {
 					midcode[i].type = DEL;
 						strcpy_s(midcode[j].argu1, midcode[i].argu1);
@@ -414,9 +462,24 @@ void generate1() {
 				else if (strcmp(midcode[j].argu2, midcode[i].result) == 0) {
 					midcode[i].type = DEL;
 						strcpy_s(midcode[j].argu2, midcode[i].argu1);
+				}*/
+			for (j = i + 1; j < midcodec; j++) {
+				if (strcmp(midcode[j].result, midcode[i].result) == 0) {
+					flag = 1; break;
 				}
-			
-			
+			}
+			if (flag == 0) {
+				for (j = i + 1; j < midcodec; j++) {
+					if (strcmp(midcode[j].argu1, midcode[i].result) == 0) {
+						midcode[i].type = DEL;
+						strcpy_s(midcode[j].argu1, midcode[i].argu1);
+					}
+					else if (strcmp(midcode[j].argu2, midcode[i].result) == 0) {
+						midcode[i].type = DEL;
+						strcpy_s(midcode[j].argu2, midcode[i].argu1);
+					}
+				}
+			}
 		}
 	}
 }

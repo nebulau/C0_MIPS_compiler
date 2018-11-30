@@ -9,173 +9,107 @@ var char op
 var char ch
 int fib()
 para_int x
-$0 = x
-
-$0 <= 1
+x <= 1
 BNZ Label0
-
 ret x
 Label0:
-$3 = x
-
-$3 > 1
+x > 1
 BNZ Label1
-$5 = x
-
-$7 = $5 - 1
+$7 = x - 1
 push $7
 call fib
 $8 = RET
-$9 = $8
-$10 = x
-
-$12 = $10 - 2
+$12 = x - 2
 push $12
 call fib
 $13 = RET
-
-$15 = $9 + $13
+$15 = $8 + $13
 ret $15
 Label1:
 void func()
 para_int x
 para_int y
-const int u = 24
+const int u = -24
 const char c = 'z'
-$16 = y
-
-$16 >= x
+y >= x
 BNZ Label2
-$18 = 0
-$19 = u
-
-$21 = $19 * 3
-$22 = $18 - $21
-
-$24 = $22 + c
+$21 = -24 * 3
+$22 = 0 - $21
+$24 = $22 + 122
 tp = $24
-
 ch = 56
-$26 = 1
-
-array[$26] = 1
-$28 = 1
-
-array[$28] = 0
+array[1] = 1
+array[1] = 0
 Label2:
-$30 = y
-
-$30 < x
+y < x
 BNZ Label3
-
 push x
 call fib
 $33 = RET
-
 tp = $33
-
 ch = 95
-$36 = 0
-
-array[$36] = 0
-$38 = 1
-
-array[$38] = 1
+array[0] = 0
+array[1] = 1
 Label3:
 void main()
 var int n
-
 n = 0
 scanf(pt)
 scanf(pt)
 scanf(op)
-$41 = pt
-
-$41 == op
+pt == op
 BNZ Label4
 printf("pt equals to op")
 Label4:
-
 op == 102
 BNZ Label6
-
 push pt
 call fib
 $45 = RET
-$46 = $45
-
-$48 = $46 + tp_f
+$48 = $45 + 10
 tp = $48
-
 ch = 97
-$50 = 0
-
-array[$50] = 1
-$52 = 1
-
-array[$52] = 1
+array[0] = 1
+array[1] = 1
 GOTO Label5
 Label6:
-$43 == 107
+op == 107
 BNZ Label7
-
 push pt
-
-push tp_f
+push 10
 call func
 GOTO Label5
 Label7:
-
 tp = 0
-
 ch = 97
-$58 = 0
-
-array[$58] = 0
-$60 = 1
-
-array[$60] = 0
+array[0] = 0
+array[1] = 0
 Label5:
 Label8:
-$62 = n
-
-$62 < tp_f
+n < 10
 BNZ Label9
 printf(" fib ")
-$64 = n
-
-$66 = $64 + 1
+$66 = n + 1
 printf($66)
 printf(" ")
-$67 = n
-
-$69 = $67 + 1
+$69 = n + 1
 push $69
 call fib
 $70 = RET
-
 printf($70)
-$72 = n
-
-$74 = $72 + 3
+$74 = n + 3
 n = $74
 GOTO Label8
 Label9:
 printf("tp = ")
-
 printf(tp)
 printf(" ,")
 printf("ch = ")
-
 printf(ch)
 printf(" ")
-
 $78 = array[5]
-
 $80 = $78 + 97
-$81 = 98
-
-$83 = $81 - 97
+$83 = 98 - 97
 $84 = array[$83]
 $85 = $80 + $84
 printf($85)

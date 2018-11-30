@@ -17,17 +17,17 @@
 #define int_para 9
 #define char_para 10
 //中间代码的类型
-#define CONST_INT 0
-#define CONST_CHAR 1
-#define VAR_INT 2
-#define VAR_CHAR 3
-#define INT_ARR 4
-#define CHAR_ARR 5
+#define CONST_INT 0		//argu1存名字，argu2存无，result存无，value存值
+#define CONST_CHAR 1	
+#define VAR_INT 2		//argu1存名字，argu2存无，result存无，value存无
+#define VAR_CHAR 3		
+#define INT_ARR 4		//argu1存名字，argu2存无，result存无，value存长度
+#define CHAR_ARR 5		
 
-#define ADDOP 6
-#define SUBOP 7
-#define MULOP 8
-#define DIVOP 9
+#define ADDOP 6			//argu1存变量1，argu2变量2，result存结果，value存无
+#define SUBOP 7			
+#define MULOP 8			
+#define DIVOP 9			
 
 #define INT_FUNC 10
 #define CHAR_FUNC 11
@@ -42,14 +42,14 @@
 #define ARRASSIGN 19
 #define ARRACCESS 20
 
-#define LESSOP 21
+#define LESSOP 21		//argu1存变量1，argu2变量2，result存无，value存无
 #define UNMOREOP 22
 #define MOREOP 23
 #define UNLESSOP 24
 #define UNEQUOP 25
 #define EQUOP 26
 
-#define SETLABEL 27
+#define SETLABEL 27		//argu1存label，argu2存无，result存无，value存无
 #define GOTO 28
 #define BNZ 29
 #define BZ 30
@@ -128,7 +128,7 @@ extern int value;
 extern int addr;
 extern int lev;
 extern struct ttab tab[tab_size];
-extern int curloc;//存储当前在符号表的位置
+extern int curloc;//符号表长度
 //中间代码结构体和相关变量
 struct mmid {
 	int type;
@@ -138,7 +138,7 @@ struct mmid {
 	int value;//用于存常量的值或者数组的长度，其他默认为0
 };
 extern mmid midcode[midcode_size];
-extern int midcodec;//中间代码计数
+extern int midcodec;//中间代码长度
 extern int id_name_num;//用于给变量临时起名
 extern int label_name_num;//用于标签起名
 //声明一些判断空格换行和既定终结符的函数
@@ -192,6 +192,7 @@ void callfuncHandler(char* token_tp);
 void refuncHandler();
 void unfuncHandler();
 void program();
+
 void entertab(char *ident, int type, int value, int addr, int lev);
 int searchtab(char* ident, int funcnum);
 void printtab();
@@ -200,6 +201,9 @@ char* id_name_gen();
 void print_midcode();
 char* label_name_gen();
 char* numtostr(int num);
+void delconst();
 void generate1();
+char* str_name_gen();
+void mips();
 #endif // TEMP_H
 

@@ -29,5 +29,8 @@
     <ClCompile Include="midcode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="mipscode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

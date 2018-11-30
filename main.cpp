@@ -1190,7 +1190,9 @@ int main()
 	program();
 	printtab();
 	generate1();
+	delconst();
 	print_midcode();
+	mips();
 	file.close();
 	output.close();
 	//system("pause");

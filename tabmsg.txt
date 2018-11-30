@@ -12,7 +12,7 @@ x int_para 0 4 1
 func void_func 0 0 0
 x int_para 0 4 1
 y int_para 0 4 1
-u const_int 24 4 1
+u const_int -24 4 1
 c const_char 122 4 1
 main void_func 0 0 0
 n var_int 0 4 1
