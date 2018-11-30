@@ -72,6 +72,18 @@ char testPrint(){
     return ('a');
 }
 
+int pow(int a, int b){
+    int c;
+    if(b < 0) return (-1);
+    if(a == 0) return (0);
+    if(b == 0) return (1);
+    c = a + 0;
+    while(b > 1){
+        c = c * a;
+        b = b - 1;
+    }
+    return (c);
+}
 void testExpressions(){
     const int const_int1 = -1;
     const int const_int4 = 4;
@@ -132,18 +144,7 @@ void testSwitch(int a, int b){
     printf("------------------------------");
 }
 
-int pow(int a, int b){
-    int c;
-    if(b < 0) return (-1);
-    if(a == 0) return (0);
-    if(b == 0) return (1);
-    c = a + 0;
-    while(b > 1){
-        c = c * a;
-        b = b - 1;
-    }
-    return (c);
-}
+
 
 int Fibonacci(int n){
     if(n <= 0) return (0);

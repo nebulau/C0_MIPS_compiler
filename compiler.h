@@ -4,6 +4,7 @@
 #define idlen 128//接收标识符的有效长度
 #define tab_size 1024//符号表最大长度
 #define midcode_size 4096//中间代码最大长度
+#define info_size 512//函数信息表长度，函数变量表长度
 //登陆的符号表的项的类型
 #define const_int 0
 #define const_char 1

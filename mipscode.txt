@@ -1,15 +1,61 @@
 .data
-	pt:.word 0
-	tp:.word 0
-	array:.word 0:4
-	op:.word 0
-	ch:.word 0
-	$str0:.asciiz "pt equals to op"
-	$str1:.asciiz " fib "
-	$str2:.asciiz " "
-	$str3:.asciiz "tp = "
-	$str4:.asciiz " ,"
-	$str5:.asciiz "ch = "
-	$str6:.asciiz " "
+	var_int1:.word 0
+	var_int2:.word 0
+	var_int_array:.word 0:40
+	var_char1:.word 0
+	var_char2:.word 0
+	var_char_array:.word 0:40
+	$str0:.asciiz "----------printGlobalConsts----------"
+	$str1:.asciiz "const_int1:"
+	$str2:.asciiz "const_int2:"
+	$str3:.asciiz "const_int3:"
+	$str4:.asciiz "const_int0:"
+	$str5:.asciiz "const_char1:"
+	$str6:.asciiz "const_char2:"
+	$str7:.asciiz "const_char3:"
+	$str8:.asciiz "------------------------------"
+	$str9:.asciiz "----------printGlobalVariables----------"
+	$str10:.asciiz "var_int1:"
+	$str11:.asciiz "var_int2:"
+	$str12:.asciiz "var_char1:"
+	$str13:.asciiz "var_char2:"
+	$str14:.asciiz "------------------------------"
+	$str15:.asciiz "var_int_array["
+	$str16:.asciiz "]:"
+	$str17:.asciiz "var_char_array["
+	$str18:.asciiz "]:"
+	$str19:.asciiz "------------------------------"
+	$str20:.asciiz "----------testOperators----------"
+	$str21:.asciiz "a+b:"
+	$str22:.asciiz "a-b:"
+	$str23:.asciiz "a*b:"
+	$str24:.asciiz "a/2:"
+	$str25:.asciiz "------------------------------"
+	$str26:.asciiz "----------testPrint----------"
+	$str27:.asciiz "!#$%&'()*+,-./0123456789:;<=>?@AZ[\]^_`az{|}~"
+	$str28:.asciiz "------------------------------"
+	$str29:.asciiz "----------testExpressions----------"
+	$str30:.asciiz "total:"
+	$str31:.asciiz "------------------------------"
+	$str32:.asciiz "j is smaller than i, j is:"
+	$str33:.asciiz "i is smaller than j, i is:"
+	$str34:.asciiz "------------------------------"
+	$str35:.asciiz "----------testSwitch----------"
+	$str36:.asciiz "a isn't bigger than b"
+	$str37:.asciiz "a is bigger than b"
+	$str38:.asciiz "lucky, a is 'a'"
+	$str39:.asciiz "lucky, a is 'b'"
+	$str40:.asciiz "I can't see."
+	$str41:.asciiz "------------------------------"
+	$str42:.asciiz "--------------tesRrecursion----------------"
+	$str43:.asciiz "n = "
+	$str44:.asciiz "Fibonacci(n) = "
+	$str45:.asciiz "n = "
+	$str46:.asciiz "Fibonacci(n) = "
+	$str47:.asciiz "n = "
+	$str48:.asciiz "Fibonacci(n) = "
+	$str49:.asciiz "n = "
+	$str50:.asciiz "Fibonacci(n) = "
+	$str51:.asciiz "------------------------------"
 .text
 j main

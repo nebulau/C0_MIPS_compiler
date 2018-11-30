@@ -401,7 +401,7 @@ char* numtostr(int num) {
 
 }
 /*
-	将常量替换
+	将所有常量替换
 */
 void delconst() {
 	int i = 0, j = 0, k = 0;
@@ -418,7 +418,7 @@ void delconst() {
 	}*/
 	//到达第一个函数在midcode的index
 	while (i < midcodec) {
-		for (; !(midcode[i].type >= 11 && midcode[i].type <= 12) && i < midcodec; i++);
+		for (; !(midcode[i].type >= 10 && midcode[i].type <= 12) && i < midcodec; i++);
 		for (j = i + 1; j < midcodec; j++) {
 			if (midcode[j].type == 0 || midcode[j].type == 1) {
 				for (k = j + 1; k < midcodec; k++) {
@@ -426,10 +426,10 @@ void delconst() {
 						strcpy_s(midcode[k].argu1, numtostr(midcode[j].value));
 					else if (strcmp(midcode[k].argu2, midcode[j].argu1) == 0)
 						strcpy_s(midcode[k].argu2, numtostr(midcode[j].value));
-					else if (midcode[k].type >= 11 && midcode[k].type <= 12)	break;
+					else if (midcode[k].type >= 10 && midcode[k].type <= 12)	break;
 				}
 			}
-			if (midcode[j].type >= 11 && midcode[j].type <= 12)	break;
+			if (midcode[j].type >= 10 && midcode[j].type <= 12)	break;
 		}
 		i++;
 	}

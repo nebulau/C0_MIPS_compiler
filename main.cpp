@@ -672,20 +672,20 @@ void assignHandler(char *token) {
 			else{ skip(); errormsg(26); getsym(); return; }
 		}
 		else {
-			if (tab[j].type == var_int) {
+			if (tab[j].type == var_int || tab[j].type == int_para) {
 				if (expr_is_char) {  errormsg(27);  }
 				else {
 					insert_midcode(VARASSIGN, result, NULL, token, 0);
 					//var_int = !expr_is_char
 				}
 			}
-			else if (tab[j].type == var_char) {
+			else if (tab[j].type == var_char || tab[j].type == char_para) {
 				if (!expr_is_char) { errormsg(28); }
 				else {
 					insert_midcode(VARASSIGN, result, NULL, token, 0);
 				}
 			}
-			else { skip(); errormsg(29); getsym(); return; }
+			else { errormsg(29); }
 		}
 		output << "Line: " << lc << ", This is a assign statement!" << '\n';
 	}
@@ -789,9 +789,9 @@ void scanfHandler() {
 				strcpy_s(token_tp, token);
 				j = searchtab(token, funcnum);
 				if (j == -1) { errormsg(16); getsym(); getsym();  continue; }
-				if (tab[j].type == var_int)
+				if (tab[j].type == var_int || tab[j].type == int_para)
 					insert_midcode(SCANINT, token_tp, NULL, NULL, 0);
-				else if (tab[j].type == var_char)
+				else if (tab[j].type == var_char || tab[j].type == char_para)
 					insert_midcode(SCANCHAR, token_tp, NULL, NULL, 0);
 				else {
 					errormsg(32);

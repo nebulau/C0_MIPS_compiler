@@ -6,6 +6,19 @@
 using namespace std;
 ofstream MipsOutput;
 int strnum = 0;//计数字符串
+struct VariInfo{
+	char VariName[idlen];
+	int addr;//相对于函数基地址的偏移
+	int type;//int or char
+};
+struct FuncInfo {
+	struct VariInfo VariTab[info_size];
+	int retvalue;
+	int retaddr;
+	int last_fp;
+	int vari_num;
+};
+struct FuncInfo FuncTab[info_size];
 char* str_name_gen() {
 	static char str_name[idlen];
 	sprintf_s(str_name, "$str%d", strnum++);
@@ -16,6 +29,7 @@ char* str_name_gen() {
 
 void mips() {
 	int i = 0;
+	int j = 0;
 	string str;
 	char str_name[idlen];
 	MipsOutput.open("mipscode.txt");
@@ -37,7 +51,7 @@ void mips() {
 		if (tab[i].type >= 6 && tab[i].type <= 8)	break;
 	}
 	/*
-		将字符串写进data段
+		将字符串写进data段，并把PRINTSTR的argu1改名
 	*/
 	for (i = 0; i < midcodec; i++) {
 		if (midcode[i].type == PRINTSTR) {
@@ -48,6 +62,16 @@ void mips() {
 			str = midcode[i].argu1;
 			MipsOutput << str << "\"\n";
 			strcpy_s(midcode[i].argu1, str_name);
+		}
+	}
+	/*
+		将函数信息表、变量表初始化
+	*/
+	for (i = 0; i < midcodec; i++) {
+		if (midcode[i].type >= 10 && midcode[i].type <= 12) {
+			for (j = i + 1; j < midcodec; j++) {
+
+			}
 		}
 	}
 	MipsOutput << ".text\n";
