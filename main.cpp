@@ -669,7 +669,7 @@ void assignHandler(char *token) {
 					insert_midcode(ARRASSIGN, index, result, token, 0);
 				}
 			}
-			else{ skip(); errormsg(26); getsym(); return; }
+			else{ errormsg(26); }
 		}
 		else {
 			if (tab[j].type == var_int || tab[j].type == int_para) {
@@ -910,7 +910,7 @@ void realparaHandler(int j) {
 void callrefuncHandler(char* token_tp) {
 	int j;
 	j = searchtab(token_tp, funcnum);
-	if (j == -1) { skip(); errormsg(30); getsym(); return; }
+	if (j == -1) {  errormsg(30);  }
 	if(!(tab[j].type>=6&&tab[j].type<=8)){ skip(); errormsg(30); getsym(); return; }
 	realparaHandler(j);
 	insert_midcode(CALL, token_tp, NULL, NULL, 0);
@@ -920,7 +920,7 @@ void callrefuncHandler(char* token_tp) {
 void callfuncHandler(char* token_tp) {
 	int j;
 	j = searchtab(token_tp, funcnum);
-	if (j == -1) { skip(); errormsg(30); getsym(); return; }
+	if (j == -1) { errormsg(30); }
 	if (!(tab[j].type >= 6 && tab[j].type <= 8)) { skip(); errormsg(30); getsym(); return; }
 	realparaHandler(j);
 	insert_midcode(CALL, token_tp, NULL, NULL, 0);

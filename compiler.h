@@ -40,8 +40,8 @@
 #define FUNCRET 17
 
 #define VARASSIGN 18
-#define ARRASSIGN 19
-#define ARRACCESS 20
+#define ARRASSIGN 19	//argu1存下标，argu2存右式，result存数组名字
+#define ARRACCESS 20	//argu1存数组名字，argu2存下标，result存左式
 
 #define LESSOP 21		//argu1存变量1，argu2变量2，result存无，value存无
 #define UNMOREOP 22

@@ -63,7 +63,7 @@ int searchtab(char* ident, int funcnum) {
 	int is_found = 0;
 	//在函数内查找变量、常量,从当前函数下一个index开始查找
 	for (j = i; !(tab[j].type >= 6 && tab[j].type <= 8) && j < curloc; j++) {
-		if (strcmp(ident, tab[j].ident) == 0) { is_found = 1; break; }
+		if (strcmp(ident, tab[j].ident) == 0) { is_found = 1; break; }               
 	}
 	if (is_found) return j;
 	//回溯查找函数，从当前函数的index往回查找
@@ -117,7 +117,7 @@ void insert_midcode(int type, char* argu1, char* argu2, char* result, int value)
 }
 char* id_name_gen() {
 	static char id_name[idlen];
-	sprintf_s(id_name, "$%d", id_name_num++);
+	sprintf_s(id_name, "$$%d", id_name_num++);
 	return id_name;
 }
 void print_midcode() {
@@ -378,7 +378,7 @@ void print_midcode() {
 				break;
 			}
 			case DEL: {
-				//MidOutput << '\n';
+				MidOutput << '\n';
 				break;
 			}
 			default: {
@@ -403,7 +403,7 @@ char* numtostr(int num) {
 /*
 	将所有常量替换
 */
-void delconst() {
+void delconst()                                                                                                                                                                                                                       {
 	int i = 0, j = 0, k = 0;
 	char const_tp[idlen];
 	//将函数内定义的常量在本函数内替换
@@ -449,6 +449,7 @@ void delconst() {
 	可能替换+ - * /
 */
 void generate1() {
+	//中间代码不会result位置有临时变量名的重复
 	int i, j, flag = 0;
 	for (i = 0; i < midcodec; i++) {
 		if (midcode[i].type == VARASSIGN && strlen(midcode[i].argu1) != 0

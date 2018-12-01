@@ -1,310 +1,181 @@
-const int const_int1 = 1
-const int const_int2 = 2
-const int const_int3 = 3
-const int const_int0 = 0
-const char const_char1 = 'a'
-const char const_char2 = 'b'
-const char const_char3 = 'c'
-var int var_int1
-var int var_int2
-int var_int_array[10]
-var char var_char1
-var char var_char2
-char var_char_array[10]
-void printGlobalConsts()
-printf("----------printGlobalConsts----------")
-printf("const_int1:")
-printf(1)
-printf("const_int2:")
-printf(2)
-printf("const_int3:")
-printf(3)
-printf("const_int0:")
-printf(0)
-printf("const_char1:")
-printf(97)
-printf("const_char2:")
-printf(98)
-printf("const_char3:")
-printf(99)
-printf("------------------------------")
-return null
-void printGlobalVariables()
-printf("----------printGlobalVariables----------")
-printf("var_int1:")
-printf(var_int1)
-printf("var_int2:")
-printf(var_int2)
-printf("var_char1:")
-printf(var_char1)
-printf("var_char2:")
-printf(var_char2)
-printf("------------------------------")
-return null
-void printfGlobalArrays()
-const int length = 10
-var int i
-i = 0
+const int tp_f = 10
+const int tp_0 = 20
+const char ch_s = 'a'
+const char ch_f = 'w'
+var int pt
+var int tp
+int array[1]
+var char op
+var char ch
+int fib()
+para_int x
+
+
+x <= 1
+BNZ Label0
+
+ret x
 Label0:
-i < 10
+
+
+x > 1
 BNZ Label1
-printf("var_int_array[")
-printf(i)
-printf("]:")
-$16 = var_int_array[i]
-printf($16)
-GOTO Label0
+
+
+$$7 = x - 1
+push $$7
+call fib
+$$8 = RET
+
+
+
+$$12 = x - 2
+push $$12
+call fib
+$$13 = RET
+
+$$15 = $$8 + $$13
+ret $$15
 Label1:
-i = 0
+void func()
+para_int x
+para_int y
+const int u = -24
+const char c = 'z'
+
+
+y >= x
+BNZ Label2
+
+
+
+$$21 = -24 * 3
+$$22 = 0 - $$21
+
+$$24 = $$22 + 122
+tp = $$24
+
+ch = 56
+
+
+array[1] = 1
+
+
+array[1] = 0
 Label2:
-i < 10
+
+
+y < x
 BNZ Label3
-printf("var_char_array[")
-printf(i)
-printf("]:")
-$22 = var_char_array[i]
-printf($22)
-GOTO Label2
+
+push x
+call fib
+$$33 = RET
+
+tp = $$33
+
+ch = 95
+
+
+array[0] = 0
+
+
+array[1] = 1
 Label3:
-printf("------------------------------")
-return null
-int testOperators()
-para_char a
-para_int b
-printf("----------testOperators----------")
-printf("a+b:")
-$25 = a + b
-printf($25)
-printf("a-b:")
-$28 = a - b
-printf($28)
-printf("a*b:")
-$31 = a * b
-printf($31)
-printf("a/2:")
-$34 = a / 2
-printf($34)
-printf("------------------------------")
-ret 0
-char testPrint()
-var char _character
-_character = 97
-printf("----------testPrint----------")
-printf("!#$%&'()*+,-./0123456789:;<=>?@AZ[\]^_`az{|}~")
-printf(43)
-printf(_character)
-$41 = _character + 1
-printf($41)
-printf(1230)
-printf("------------------------------")
-ret 97
-int pow()
-para_int a
-para_int b
-var int c
-b < 0
-BNZ Label4
-$48 = 0 - 1
-ret $48
-Label4:
-a == 0
-BNZ Label5
-ret 0
-Label5:
-b == 0
-BNZ Label6
-ret 1
-Label6:
-$57 = a + 0
-c = $57
-Label7:
-b > 1
-BNZ Label8
-$62 = c * a
-c = $62
-$65 = b - 1
-printf("----------testExpressions----------")
-printf(97)
-printf(97)
-$70 = 0 - 98
-printf($70)
-$73 = 0 + 1
-$74 = var_int_array[$73]
-$76 = $74 + 68
-printf($76)
-$79 = var_char_array[0]
-$81 = $79 + 98
-$83 = 97 * $81
-printf($83)
-$86 = 0 - 1
-$89 = 98 - 97
-push 3
-push 2
-call pow
-$93 = RET
-$96 = $93 * $93
-$98 = $89 * $96
-$99 = $86 - $98
-printf($99)
-printf("total:")
-printf(a)
-GOTO Label7
-Label8:
-printf("------------------------------")
-void testWhile()
-var int i
-var int j
-i = 0
-j = 2
-Label9:
-j < i
-BNZ Label10
-printf("j is smaller than i, j is:")
-printf(j)
-$108 = j + 1
-j = $108
-GOTO Label9
-Label10:
-Label11:
-i < j
-BNZ Label12
-printf("i is smaller than j, i is:")
-printf(i)
-$114 = i + 1
-i = $114
-GOTO Label11
-Label12:
-printf("------------------------------")
-void testSwitch()
-para_int a
-para_int b
-var int c
-printf("----------testSwitch----------")
-$117 = a - b
-c = $117
-c == 0
-BNZ Label14
-printf("a isn't bigger than b")
-GOTO Label13
-Label14:
-c == 1
-BNZ Label15
-printf("a is bigger than b")
-GOTO Label13
-Label15:
-Label13:
-a == 97
-BNZ Label17
-printf("lucky, a is 'a'")
-GOTO Label16
-Label17:
-a == 98
-BNZ Label18
-printf("lucky, a is 'b'")
-GOTO Label16
-Label18:
-printf("I can't see.")
-Label16:
-printf("------------------------------")
-int Fibonacci()
-para_int n
-n <= 0
-BNZ Label19
-ret 0
-Label19:
-n == 1
-BNZ Label20
-ret 1
-Label20:
-n == 2
-BNZ Label21
-ret 1
-Label21:
-$131 = n - 1
-push $131
-call Fibonacci
-$132 = RET
-$136 = n - 2
-push $136
-call Fibonacci
-$137 = RET
-$139 = $132 + $137
-ret $139
 void main()
-var int int1
-var int int2
-var char char1
-var char char2
-var int i
 var int n
-$142 = int1 + 10
-n = $142
-scanf(int1)
-scanf(int2)
-scanf(char1)
-scanf(char2)
-call printGlobalConsts
-$146 = 0 - -3
-$148 = int1 * $146
-var_int1 = $148
-$151 = int2 / 2
-var_int2 = $151
-$154 = char1 + 2
-$157 = char2 - 1
-call printGlobalVariables
-i = 0
-Label22:
-i < 10
-BNZ Label23
-var_int_array[i] = i
-$163 = i
-$166 = 97 + i
-$169 = i + 1
-i = $169
-GOTO Label22
-Label23:
-call printfGlobalArrays
-$170 = int1
-push int2
-call testOperators
-call testPrint
-call testWhile
-push char1
-push char2
-call testSwitch
-$176 = char2 + 1
-push $176
-push char1
-call testSwitch
-printf("--------------tesRrecursion----------------")
-printf("n = ")
-$180 = n - n
-printf($180)
-printf("Fibonacci(n) = ")
-push 0
-call Fibonacci
-$182 = RET
-printf($182)
-printf("n = ")
-printf(1)
-printf("Fibonacci(n) = ")
-push 1
-call Fibonacci
-$186 = RET
-printf($186)
-printf("n = ")
-printf(2)
-printf("Fibonacci(n) = ")
-push 2
-call Fibonacci
-$190 = RET
-printf($190)
-printf("n = ")
-printf(n)
-printf("Fibonacci(n) = ")
-push n
-call Fibonacci
-$194 = RET
-printf($194)
-printf("------------------------------")
-ret 0
+
+n = 0
+scanf(pt)
+scanf(pt)
+scanf(op)
+
+
+pt == op
+BNZ Label4
+printf("pt equals to op")
+Label4:
+
+op == 102
+BNZ Label6
+
+push pt
+call fib
+$$45 = RET
+
+
+$$48 = $$45 + 10
+tp = $$48
+
+ch = 97
+
+
+array[0] = 1
+
+
+array[1] = 1
+GOTO Label5
+Label6:
+op == 107
+BNZ Label7
+
+push pt
+
+push 10
+call func
+GOTO Label5
+Label7:
+
+tp = 0
+
+ch = 97
+
+
+array[0] = 0
+
+
+array[1] = 0
+Label5:
+Label8:
+
+
+n < 10
+BNZ Label9
+printf(" fib ")
+
+
+$$66 = n + 1
+printf($$66)
+printf(" ")
+
+
+$$69 = n + 1
+push $$69
+call fib
+$$70 = RET
+
+printf($$70)
+
+
+$$74 = n + 3
+n = $$74
+GOTO Label8
+Label9:
+printf("tp = ")
+
+printf(tp)
+printf(" ,")
+printf("ch = ")
+
+printf(ch)
+printf(" ")
+
+$$78 = array[5]
+
+$$80 = $$78 + 97
+
+
+$$83 = 98 - 97
+$$84 = array[$$83]
+$$85 = $$80 + $$84
+printf($$85)
