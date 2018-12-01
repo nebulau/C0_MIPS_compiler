@@ -42,13 +42,15 @@ int get_index(char* ident, int funcnum, int* addr) {//查找是不是在函数信息表里，
 	return -1;
 }
 int get_funcloc(char* func_name) {
-	int i;
+	int i, flag = 0;
 	//funcnum为compiler.h定义的全局函数个数
 	for (i = 0; i < funcnum; i++) {
 		if (strcmp(FuncTab[i].func_name, func_name) == 0) {
-			return i;
+			flag = 1; break;
 		}
 	}
+	if (flag == 1) return i;
+	return 0;
 }
 int str_is_num(char* str) {
 	if (str[0] == '+' || str[0] == '-' || (str[0] >= '0'&&str[0] <= '9'))
@@ -337,22 +339,75 @@ void DivHandler(int i) {
 }
 //todo
 void FuncHandler(int i) {
+	int addr_tp = 0;
+	//int index_tp;
 	string str_tp;
-	int FuncLoc, del_para_$_size;
-	FuncLoc = get_funcloc(midcode[i].argu1);
-	str_tp = midcode[i].argu1;
-	MipsOutput << "\t" << str_tp << ":\n";
-	del_para_$_size = FuncTab[FuncLoc].InfoSize - 40 - 4 * FuncTab[FuncLoc].ParaNum;
+	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
+	//main函数特殊处理
+	if (strcmp(midcode[i].argu1, "main") == 0) {
+		MipsOutput << "main:\n";
+		MipsOutput << "\tmove $fp, $sp\n#保存帧指针\n";
+		MipsOutput << "\tsub $sp, $sp, " << FuncTab[FuncLoc].InfoSize << "\n退栈空间\n";
+	}
+	else {
+		str_tp = midcode[i].argu1;
+		MipsOutput << str_tp << ":\n";
+		//MipsOutput << "\tadd $fp, $sp, " << FuncTab[FuncLoc].ParaNum * 4 << "\n#置$fp为被调用者基地址\n";
+		MipsOutput << "\tsub $sp, $sp, " << (FuncTab[FuncLoc].VariNum - FuncTab[FuncLoc].ParaNum) * 4;
+		MipsOutput << "\n#退栈空间，接着保存s系寄存器和$ra,$fp\n";
+		MipsOutput << "\tsw $s0, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s1, 0($sp)\n\tsub $sp, $sp, 4\n";
+		MipsOutput << "\tsw $s2, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s3, 0($sp)\n\tsub $sp, $sp, 4\n";
+		MipsOutput << "\tsw $s4, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s5, 0($sp)\n\tsub $sp, $sp, 4\n";
+		MipsOutput << "\tsw $s6, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s7, 0($sp)\n\tsub $sp, $sp, 4\n";
+		MipsOutput << "\tsw $ra, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $fp, 0($sp)\n\tsub $sp, $sp, 4\n";
+		MipsOutput << "\tadd $fp, $sp, " << FuncTab[FuncLoc].VariNum * 4 + 40<< "\n#置$fp为被调用者基地址\n";
+	}
 
 }
 //todo
+void CallHandler(int i) {
+	string str_tp;
+	str_tp = midcode[i].argu1;
+	MipsOutput << "\tjal " << str_tp << '\n';
+}
+void PushHandler(int i) {
+	int addr_tp = 0;
+	int index_tp;
+	string str_tp;
+	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
+	//如果argu1是数字
+	if (str_is_num(midcode[i].argu1)) {
+		str_tp = midcode[i].argu1;
+		MipsOutput << "\tli $t0, " << str_tp << '\n';
+		//MipsOutput << "\tsw $t0, 0($sp)\n\tsub $sp, $sp, 4\n";
+	}
+	else {
+		index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
+		if (index_tp == -1) {
+			str_tp = midcode[i].argu1;
+			MipsOutput << "\tlw $t0, " << str_tp << '\n';
+		}
+		else if (index_tp < ParaNum) {//参数从栈加载出来
+			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+		}
+		else if (index_tp >= ParaNum && index_tp <= ParaNum + 7) {
+			MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+		}
+		else {//是未分配到s系寄存器的变量
+			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			//TOTHINK!!!
+		}
+	}
+	MipsOutput << "\tsw $t0, 0($sp)\n\tsub $sp, $sp, 4\n";
+}
 void FuncRetHandler(int i) {
 	int addr_tp = 0;
 	int index_tp;
 	string str_tp;
+	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
 	//即result = $v0,临时起名的。一定在函数变量表
 	index_tp = get_index(midcode[i].result, FuncLoc, &addr_tp);
-	if (index_tp >= 0 && index_tp <= 7) {
+	if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
 		MipsOutput << "\tmove $s" << index_tp << ", $v0";
 	}
 	else {
@@ -931,7 +986,28 @@ void RetExprHandler(int i) {
 			MipsOutput << "\tlw $v0, " << -addr_tp << "($fp)\n";
 		}
 	}
+	//return之前恢复栈指针到调用者的位置
+	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $fp, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $ra, 0($sp)\n";
+	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s7, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s6, 0($sp)\n";
+	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
+	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
+	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
+	MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4;
 	MipsOutput << "\tjr $ra\n";
+}
+void RetNullHandler(int i) {
+	if (FuncLoc == funcnum - 1)
+		//main函数返回
+		MipsOutput << "\tli $v0, 10\nsyscall\n";
+	else {
+		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $fp, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $ra, 0($sp)\n";
+		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s7, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s6, 0($sp)\n";
+		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
+		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
+		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
+		MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4;
+		MipsOutput << "\tjr $ra\n";
+	}
 }
 void mips() {
 	int i = 0;
@@ -1035,15 +1111,15 @@ void mips() {
 			break;
 		case INT_FUNC:
 			FuncLoc++;
-
+			FuncHandler(i);
 			break;
 		case CHAR_FUNC:
 			FuncLoc++;
-
+			FuncHandler(i);
 			break;
 		case VOID_FUNC:
 			FuncLoc++;
-
+			FuncHandler(i);
 			break;
 		/*case PARA_INT:
 
@@ -1052,10 +1128,10 @@ void mips() {
 
 			break;*/
 		case CALL:
-
+			CallHandler(i);
 			break;
 		case PUSH:
-
+			PushHandler(i);
 			break;
 		case FUNCRET:
 			FuncRetHandler(i);
@@ -1118,11 +1194,7 @@ void mips() {
 			RetExprHandler(i);
 			break;
 		case RETNULL:
-			if (FuncLoc == funcnum - 1) 
-				//main函数返回
-				MipsOutput << "\tli $v0, 10\nsyscall\n";
-			else
-				MipsOutput << "\tjr $ra\n";			
+			RetNullHandler(i);
 			break;
 		default:
 			break;

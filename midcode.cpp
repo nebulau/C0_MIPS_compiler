@@ -405,7 +405,7 @@ char* numtostr(int num) {
 */
 void delconst()                                                                                                                                                                                                                       {
 	int i = 0, j = 0, k = 0;
-	char const_tp[idlen];
+	//char const_tp[idlen];
 	//将函数内定义的常量在本函数内替换
 	/*for (i = 0; i < funcnum; i++) {
 		for (; j < midcodec; j++) {
