@@ -510,6 +510,11 @@ void statementHandler() {
 	char token_tp[idlen];
 	if (symbol == LBRACE) {
 		getsym();
+		//接收语句{}
+		if (symbol == RBRACE) {
+			getsym();
+			return;
+		}
 		do {
 			statementHandler();
 		} while (symbol != RBRACE);
@@ -540,7 +545,7 @@ void statementHandler() {
 		else { skip(); errormsg(19); getsym(); return; }
 	}
 	else if (symbol == SEMISY){
-		getsym();//接收<空>;
+		getsym();//接收语句 <空>;
 	}
 	else if (symbol == IDSY) {
 		strcpy_s(token_tp, token);

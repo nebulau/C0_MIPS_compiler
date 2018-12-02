@@ -1,27 +1,34 @@
-var int a
+const int tp_f = -10
+const char ch_s = 'a'
+const char ch_f = 'w'
+var int pt
+var int tp
+int array[1]
+var char op
+var char ch
 int fib()
-para_int i
+para_int x
 
 
-i <= 1
+x <= 2
 BNZ Label0
 
-ret 1
+ret x
 Label0:
 
 
-i > 1
+x > 1
 BNZ Label1
 
 
-$$7 = i - 1
+$$7 = x - 1
 push $$7
 call fib
 $$8 = RET
 
 
 
-$$12 = i - 2
+$$12 = x - 2
 push $$12
 call fib
 $$13 = RET
@@ -29,32 +36,141 @@ $$13 = RET
 $$15 = $$8 + $$13
 ret $$15
 Label1:
+void func()
+para_int x
+para_int y
+const int u = 24
+const char c = 'z'
+
+
+y >= x
+BNZ Label2
+printf("para1 >= para2")
+
+
+
+$$21 = 24 * 3
+$$22 = 0 - $$21
+
+$$24 = $$22 + 122
+tp = $$24
+
+ch = 56
+
+
+array[1] = 1
+
+
+array[1] = 0
+Label2:
+
+
+y < x
+BNZ Label3
+printf("para1 < para2")
+
+ch = 95
+
+
+array[0] = 0
+
+
+array[1] = 1
+Label3:
 void main()
-var int i
-scanf(i)
+var int n
 
-printf(i)
+n = 0
+scanf(pt)
+scanf(pt)
+scanf(op)
 
-push 1
+
+pt == op
+BNZ Label4
+printf("pt equals to op")
+Label4:
+
+op == 102
+BNZ Label6
+
+push pt
 call fib
-$$18 = RET
+$$42 = RET
 
-printf($$18)
 
-push 2
+$$45 = $$42 + -10
+tp = $$45
+
+ch = 97
+
+
+array[0] = 1
+
+
+array[1] = 1
+GOTO Label5
+Label6:
+op == 107
+BNZ Label7
+
+push pt
+
+push -10
+call func
+GOTO Label5
+Label7:
+
+tp = 0
+
+ch = 97
+
+
+array[0] = 0
+
+
+array[1] = 0
+Label5:
+Label8:
+
+
+n < -10
+BNZ Label9
+printf(" fib ")
+
+
+$$63 = n + 1
+printf($$63)
+printf(" ")
+
+
+$$66 = n + 1
+push $$66
 call fib
-$$21 = RET
+$$67 = RET
 
-printf($$21)
+printf($$67)
 
-push 3
-call fib
-$$24 = RET
 
-printf($$24)
+$$71 = n + 3
+n = $$71
+GOTO Label8
+Label9:
+printf("tp = ")
 
-push 6
-call fib
-$$27 = RET
+printf(tp)
+printf(" ,")
+printf("ch = ")
 
-printf($$27)
+printf(ch)
+printf(" ")
+
+$$75 = array[5]
+
+$$77 = $$75 + 97
+
+
+$$80 = 98 - 97
+$$81 = array[$$80]
+$$82 = $$77 + $$81
+printf($$82)

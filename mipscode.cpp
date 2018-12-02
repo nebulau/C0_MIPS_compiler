@@ -449,16 +449,18 @@ void VarAssignHandler(int i) {
 		MipsOutput << "\tsw $t0, " << -addr_tp << "($fp)\n";
 	}
 	else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-		MipsOutput << "\tmove $s" << index_tp - ParaNum << ", $t0";
+		MipsOutput << "\tmove $s" << index_tp - ParaNum << ", $t0" << '\n';
 	}
 	else {//需要写进函数运行栈
 		MipsOutput << "\tsw $t0, " << -addr_tp << "($fp)\n";
 	}
 }
 void ArrAssignHandler(int i) {
+	//!!!如果是全局数组就是正偏移，局部数组在栈里是负偏移
 	int addr_tp = 0;
 	int index_tp;
 	string str_tp;
+	int isGlobalArr = 0;
 	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
 	index_tp = get_index(midcode[i].result, FuncLoc, &addr_tp);
 	//$t0存数组地址
@@ -466,6 +468,7 @@ void ArrAssignHandler(int i) {
 		//全局数组
 		str_tp = midcode[i].result;
 		MipsOutput << "\tla $t0, " << str_tp << '\n';
+		isGlobalArr = 1;
 	}
 	else {
 		MipsOutput << "\tla $t0, " << -addr_tp << "($fp)\n";
@@ -515,19 +518,24 @@ void ArrAssignHandler(int i) {
 			MipsOutput << "\tlw $t2, " << -addr_tp << "($fp)\n";
 		}
 	}
-	MipsOutput << "\tadd $t0, $t0, $t1\n";
-	MipsOutput << "\tsw $t2, 0($t1)\n";
+	if(isGlobalArr)
+		MipsOutput << "\tadd $t0, $t0, $t1\n";
+	else
+		MipsOutput << "\tsub $t0, $t0, $t1\n";
+	MipsOutput << "\tsw $t2, 0($t0)\n";
 }
 void ArrAccessHandler(int i) {
 	int addr_tp = 0;
 	int index_tp;
 	string str_tp;
+	int isGlobalArr = 0;
 	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
 	index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
 	//$t0数组名， $t1下标， $t2左式
 	if(index_tp == -1){//是全局数组
 		str_tp = midcode[i].argu1;
 		MipsOutput << "\tla $t0, " << str_tp << '\n';
+		isGlobalArr = 1;
 	}
 	else {
 		MipsOutput << "\tla $t0, " << -addr_tp << "($fp)\n";
@@ -556,8 +564,11 @@ void ArrAccessHandler(int i) {
 	MipsOutput << "\tli $t2, 4\n";
 	MipsOutput << "\tmul $t1, $t1, $t2\n";
 	//$t2 = array[$t1]
-	MipsOutput << "\tadd $t0, $t0, $t1\n";
-	MipsOutput << "\tlw $t2, 0($t1)\n";
+	if(isGlobalArr)
+		MipsOutput << "\tadd $t0, $t0, $t1\n";
+	else
+		MipsOutput << "\tsub $t0, $t0, $t1\n";
+	MipsOutput << "\tlw $t2, 0($t0)\n";
 	index_tp = get_index(midcode[i].result, FuncLoc, &addr_tp);
 	if (index_tp == -1) {
 		str_tp = midcode[i].result;
@@ -1212,7 +1223,7 @@ void mips() {
 			PrintCharHandler(i);
 			break;
 		case PRINTSTR:
-			PrintIntHandler(i);
+			PrintStrHandler(i);
 			break;
 		case RETEXPR:
 			//return 表达式
