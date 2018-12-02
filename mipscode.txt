@@ -1,57 +1,151 @@
 .data
-	pt:.word 0
-	tp:.word 0
-	array:.word 0:4
-	op:.word 0
-	ch:.word 0
-	$str0:.asciiz "pt equals to op"
-	$str1:.asciiz " fib "
-	$str2:.asciiz " "
-	$str3:.asciiz "tp = "
-	$str4:.asciiz " ,"
-	$str5:.asciiz "ch = "
-	$str6:.asciiz " "
+	a:.word 0
 .text
 	j main
-	move $t0, $s0
+fib:
+	sub $sp, $sp, 20
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#置$fp为被调用者基地址
+	add $fp, $sp, 64
+	lw $t0, 0($fp)
 	li $t1, 1
-	sub $s1, $t0, $t1
+	bgt $t0, $t1, Label0
+	li $v0, 1
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 24
+	jr $ra
+Label0:
+	lw $t0, 0($fp)
+	li $t1, 1
+	ble $t0, $t1, Label1
+	lw $t0, 0($fp)
+	li $t1, 1
+	sub $s0, $t0, $t1
 	move $t0, $s0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fib
+	move $s1, $v0
+	lw $t0, 0($fp)
 	li $t1, 2
-	sub $s3, $t0, $t1
+	sub $s2, $t0, $t1
 	move $t0, $s2
-	move $t1, $s4
-	add $s5, $t0, $t1
-	li $t0, -24
-	li $t1, 3
-	mul $s2, $t0, $t1
-	li $t0, 0
-	move $t1, $s2
-	sub $s3, $t0, $t1
-	move $t0, $s3
-	li $t1, 122
-	add $s4, $t0, $t1
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fib
+	move $s3, $v0
 	move $t0, $s1
-	li $t1, 10
-	add $s2, $t0, $t1
-	move $t0, $s0
-	li $t1, 1
-	add $s3, $t0, $t1
-	move $t0, $s0
-	li $t1, 1
+	move $t1, $s3
 	add $s4, $t0, $t1
-	move $t0, $s0
-	li $t1, 3
-	add $s6, $t0, $t1
-	move $t0, $s7
-	li $t1, 97
-	add $t0, $t0, $t1
-	sw $t0, -40($fp)
-	li $t0, 98
-	li $t1, 97
-	sub $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -40($fp)
-	lw $t1, -48($fp)
-	add $t0, $t0, $t1
-	sw $t0, -52($fp)
+	move $v0, $s4
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 24
+	jr $ra
+Label1:
+main:
+#保存帧指针
+	move $fp, $sp
+#退栈空间
+	sub $sp, $sp, 20
+#读取int
+	li $v0, 5
+	syscall 
+	move $s0, $v0
+#打印int
+	move $a0, $s0
+	li $v0, 1
+	syscall
+	li $t0, 1
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fib
+	move $s1, $v0
+#打印int
+	move $a0, $s1
+	li $v0, 1
+	syscall
+	li $t0, 2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fib
+	move $s2, $v0
+#打印int
+	move $a0, $s2
+	li $v0, 1
+	syscall
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fib
+	move $s3, $v0
+#打印int
+	move $a0, $s3
+	li $v0, 1
+	syscall
+	li $t0, 6
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fib
+	move $s4, $v0
+#打印int
+	move $a0, $s4
+	li $v0, 1
+	syscall

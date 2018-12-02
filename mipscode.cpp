@@ -95,16 +95,16 @@ void AddHandler(int i) {
 		index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
 		if (index_tp == -1) {//是全局变量
 			str_tp = midcode[i].argu2;
-			MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			MipsOutput << "\tlw $t1, " << str_tp << '\n';
 		}
 		else if (index_tp < ParaNum) {//参数从栈加载出来
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
 		}
 		else {//是未分配到s系寄存器的变量
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 			//TOTHINK!!!
 		}
 	}
@@ -165,16 +165,16 @@ void SubHandler(int i) {
 		index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
 		if (index_tp == -1) {//是全局变量
 			str_tp = midcode[i].argu2;
-			MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			MipsOutput << "\tlw $t1, " << str_tp << '\n';
 		}
 		else if (index_tp < ParaNum) {//参数从栈加载出来
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
 		}
 		else {//是未分配到s系寄存器的变量
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 			//TOTHINK!!!
 		}
 	}
@@ -235,16 +235,16 @@ void MulHandler(int i) {
 		index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
 		if (index_tp == -1) {//是全局变量
 			str_tp = midcode[i].argu2;
-			MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			MipsOutput << "\tlw $t1, " << str_tp << '\n';
 		}
 		else if (index_tp < ParaNum) {//参数从栈加载出来
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
 		}
 		else {//是未分配到s系寄存器的变量
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 			//TOTHINK!!!
 		}
 	}
@@ -305,16 +305,16 @@ void DivHandler(int i) {
 		index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
 		if (index_tp == -1) {//是全局变量
 			str_tp = midcode[i].argu2;
-			MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			MipsOutput << "\tlw $t1, " << str_tp << '\n';
 		}
 		else if (index_tp < ParaNum) {//参数从栈加载出来
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
 		}
 		else {//是未分配到s系寄存器的变量
-			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 			//TOTHINK!!!
 		}
 	}
@@ -346,8 +346,8 @@ void FuncHandler(int i) {
 	//main函数特殊处理
 	if (strcmp(midcode[i].argu1, "main") == 0) {
 		MipsOutput << "main:\n";
-		MipsOutput << "\tmove $fp, $sp\n#保存帧指针\n";
-		MipsOutput << "\tsub $sp, $sp, " << FuncTab[FuncLoc].InfoSize << "\n退栈空间\n";
+		MipsOutput << "#保存帧指针\n\tmove $fp, $sp\n";
+		MipsOutput << "#退栈空间\n\tsub $sp, $sp, " << FuncTab[FuncLoc].InfoSize << '\n';
 	}
 	else {
 		str_tp = midcode[i].argu1;
@@ -360,7 +360,7 @@ void FuncHandler(int i) {
 		MipsOutput << "\tsw $s4, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s5, 0($sp)\n\tsub $sp, $sp, 4\n";
 		MipsOutput << "\tsw $s6, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s7, 0($sp)\n\tsub $sp, $sp, 4\n";
 		MipsOutput << "\tsw $ra, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $fp, 0($sp)\n\tsub $sp, $sp, 4\n";
-		MipsOutput << "\tadd $fp, $sp, " << FuncTab[FuncLoc].VariNum * 4 + 40<< "\n#置$fp为被调用者基地址\n";
+		MipsOutput << "#置$fp为被调用者基地址\n\tadd $fp, $sp, " << FuncTab[FuncLoc].VariNum * 4 + 40<< "\n";
 	}
 
 }
@@ -408,7 +408,8 @@ void FuncRetHandler(int i) {
 	//即result = $v0,临时起名的。一定在函数变量表
 	index_tp = get_index(midcode[i].result, FuncLoc, &addr_tp);
 	if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-		MipsOutput << "\tmove $s" << index_tp << ", $v0";
+		MipsOutput << "\tmove $s" << index_tp - ParaNum << ", $v0\n";
+		//MipsOutput << "\tmove $v0, $s" << index_tp << "\n";
 	}
 	else {
 		MipsOutput << "\tsw $v0, " << -addr_tp << "($fp)\n";
@@ -433,7 +434,7 @@ void VarAssignHandler(int i) {
 			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t0, $s" << index_tp << '\n';
+			MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
 		}
 		else {
 			MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
@@ -448,7 +449,7 @@ void VarAssignHandler(int i) {
 		MipsOutput << "\tsw $t0, " << -addr_tp << "($fp)\n";
 	}
 	else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-		MipsOutput << "\tmove $s" << index_tp << ", $t0";
+		MipsOutput << "\tmove $s" << index_tp - ParaNum << ", $t0";
 	}
 	else {//需要写进函数运行栈
 		MipsOutput << "\tsw $t0, " << -addr_tp << "($fp)\n";
@@ -484,7 +485,7 @@ void ArrAssignHandler(int i) {
 			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t1, $s" << index_tp << '\n';
+			MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
 		}
 		else {
 			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
@@ -492,7 +493,7 @@ void ArrAssignHandler(int i) {
 	}
 	//$t1*4
 	MipsOutput << "\tli $t2, 4\n";
-	MipsOutput << "mul $t1, $t1, $t2\n";
+	MipsOutput << "\tmul $t1, $t1, $t2\n";
 	//array[$t1] = $t2
 	if (str_is_num(midcode[i].argu2)) {
 		str_tp = midcode[i].argu2;
@@ -508,7 +509,7 @@ void ArrAssignHandler(int i) {
 			MipsOutput << "\tlw $t2, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t2, $s" << index_tp << '\n';
+			MipsOutput << "\tmove $t2, $s" << index_tp - ParaNum << '\n';
 		}
 		else {
 			MipsOutput << "\tlw $t2, " << -addr_tp << "($fp)\n";
@@ -545,7 +546,7 @@ void ArrAccessHandler(int i) {
 			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $t1, $s" << index_tp << '\n';
+			MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
 		}
 		else {
 			MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
@@ -553,7 +554,7 @@ void ArrAccessHandler(int i) {
 	}
 	//$t1*4
 	MipsOutput << "\tli $t2, 4\n";
-	MipsOutput << "mul $t1, $t1, $t2\n";
+	MipsOutput << "\tmul $t1, $t1, $t2\n";
 	//$t2 = array[$t1]
 	MipsOutput << "\tadd $t0, $t0, $t1\n";
 	MipsOutput << "\tlw $t2, 0($t1)\n";
@@ -566,7 +567,7 @@ void ArrAccessHandler(int i) {
 		MipsOutput << "\tsw $t2, " << -addr_tp << "($fp)\n";
 	}
 	else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-		MipsOutput << "\tmove $s" << index_tp << ", $t2\n";
+		MipsOutput << "\tmove $s" << index_tp - ParaNum << ", $t2\n";
 	}
 	else {
 		MipsOutput << "\tsw $t2, " << -addr_tp << "($fp)\n";
@@ -590,7 +591,7 @@ void ConditionHandler(int i) {
 	string str_tp;
 	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
 	if (midcode[i].type == LESSOP) {
-		//blt $t0, $t1, label
+		//bge $t0, $t1, label 大于等于跳转
 		if (str_is_num(midcode[i].argu1)) {
 			str_tp = midcode[i].argu1;
 			MipsOutput << "\tli $t0, " << str_tp << '\n';
@@ -605,7 +606,7 @@ void ConditionHandler(int i) {
 				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
 			}
 			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t0, $s" << index_tp << '\n';
+				MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
 			}
 			else {
 				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
@@ -626,145 +627,7 @@ void ConditionHandler(int i) {
 				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
 			}
 			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t1, $s" << index_tp << '\n';
-			}
-			else {
-				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
-			}
-		}
-		str_tp = midcode[i + 1].argu1;
-		MipsOutput << "\tblt $t0, $t1, " << str_tp << '\n';
-	}
-	else if (midcode[i].type == UNMOREOP) {
-		//ble
-		if (str_is_num(midcode[i].argu1)) {
-			str_tp = midcode[i].argu1;
-			MipsOutput << "\tli $t0, " << str_tp << '\n';
-		}
-		else {
-			index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
-			if (index_tp == -1) {
-				str_tp = midcode[i].argu1;
-				MipsOutput << "\tlw $t0, " << str_tp << '\n';
-			}
-			else if (index_tp < ParaNum) {
-				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
-			}
-			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t0, $s" << index_tp << '\n';
-			}
-			else {
-				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
-			}
-		}
-
-		if (str_is_num(midcode[i].argu2)) {
-			str_tp = midcode[i].argu2;
-			MipsOutput << "\tli $t1, " << str_tp << '\n';
-		}
-		else {
-			index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
-			if (index_tp == -1) {
-				str_tp = midcode[i].argu2;
-				MipsOutput << "\tlw $t1, " << str_tp << '\n';
-			}
-			else if (index_tp < ParaNum) {
-				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
-			}
-			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t1, $s" << index_tp << '\n';
-			}
-			else {
-				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
-			}
-		}
-		str_tp = midcode[i + 1].argu1;
-		MipsOutput << "\tble $t0, $t1, " << str_tp << '\n';
-	}
-	else if (midcode[i].type == MOREOP) {
-		//bgt
-		if (str_is_num(midcode[i].argu1)) {
-			str_tp = midcode[i].argu1;
-			MipsOutput << "\tli $t0, " << str_tp << '\n';
-		}
-		else {
-			index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
-			if (index_tp == -1) {
-				str_tp = midcode[i].argu1;
-				MipsOutput << "\tlw $t0, " << str_tp << '\n';
-			}
-			else if (index_tp < ParaNum) {
-				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
-			}
-			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t0, $s" << index_tp << '\n';
-			}
-			else {
-				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
-			}
-		}
-
-		if (str_is_num(midcode[i].argu2)) {
-			str_tp = midcode[i].argu2;
-			MipsOutput << "\tli $t1, " << str_tp << '\n';
-		}
-		else {
-			index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
-			if (index_tp == -1) {
-				str_tp = midcode[i].argu2;
-				MipsOutput << "\tlw $t1, " << str_tp << '\n';
-			}
-			else if (index_tp < ParaNum) {
-				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
-			}
-			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t1, $s" << index_tp << '\n';
-			}
-			else {
-				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
-			}
-		}
-		str_tp = midcode[i + 1].argu1;
-		MipsOutput << "\tbgt $t0, $t1, " << str_tp << '\n';
-	}
-	else if (midcode[i].type == UNLESSOP) {
-		//bge
-		if (str_is_num(midcode[i].argu1)) {
-			str_tp = midcode[i].argu1;
-			MipsOutput << "\tli $t0, " << str_tp << '\n';
-		}
-		else {
-			index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
-			if (index_tp == -1) {
-				str_tp = midcode[i].argu1;
-				MipsOutput << "\tlw $t0, " << str_tp << '\n';
-			}
-			else if (index_tp < ParaNum) {
-				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
-			}
-			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t0, $s" << index_tp << '\n';
-			}
-			else {
-				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
-			}
-		}
-
-		if (str_is_num(midcode[i].argu2)) {
-			str_tp = midcode[i].argu2;
-			MipsOutput << "\tli $t1, " << str_tp << '\n';
-		}
-		else {
-			index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
-			if (index_tp == -1) {
-				str_tp = midcode[i].argu2;
-				MipsOutput << "\tlw $t1, " << str_tp << '\n';
-			}
-			else if (index_tp < ParaNum) {
-				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
-			}
-			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-				MipsOutput << "\tmove $t1, $s" << index_tp << '\n';
+				MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
 			}
 			else {
 				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
@@ -773,8 +636,148 @@ void ConditionHandler(int i) {
 		str_tp = midcode[i + 1].argu1;
 		MipsOutput << "\tbge $t0, $t1, " << str_tp << '\n';
 	}
+	else if (midcode[i].type == UNMOREOP) {
+		//bgt 大于跳转
+		if (str_is_num(midcode[i].argu1)) {
+			str_tp = midcode[i].argu1;
+			MipsOutput << "\tli $t0, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu1;
+				MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+		}
+
+		if (str_is_num(midcode[i].argu2)) {
+			str_tp = midcode[i].argu2;
+			MipsOutput << "\tli $t1, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu2;
+				MipsOutput << "\tlw $t1, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+		}
+		str_tp = midcode[i + 1].argu1;
+		MipsOutput << "\tbgt $t0, $t1, " << str_tp << '\n';
+	}
+	else if (midcode[i].type == MOREOP) {
+		//ble 小于等于跳转
+		if (str_is_num(midcode[i].argu1)) {
+			str_tp = midcode[i].argu1;
+			MipsOutput << "\tli $t0, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu1;
+				MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+		}
+
+		if (str_is_num(midcode[i].argu2)) {
+			str_tp = midcode[i].argu2;
+			MipsOutput << "\tli $t1, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu2;
+				MipsOutput << "\tlw $t1, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+		}
+		str_tp = midcode[i + 1].argu1;
+		MipsOutput << "\tble $t0, $t1, " << str_tp << '\n';
+	}
+	else if (midcode[i].type == UNLESSOP) {
+		//blt 小于跳转
+		if (str_is_num(midcode[i].argu1)) {
+			str_tp = midcode[i].argu1;
+			MipsOutput << "\tli $t0, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu1;
+				MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+		}
+
+		if (str_is_num(midcode[i].argu2)) {
+			str_tp = midcode[i].argu2;
+			MipsOutput << "\tli $t1, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu2;
+				MipsOutput << "\tlw $t1, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+		}
+		str_tp = midcode[i + 1].argu1;
+		MipsOutput << "\tblt $t0, $t1, " << str_tp << '\n';
+	}
+	//没有UNEQUOP
 	else if (midcode[i].type == EQUOP) {
 		if (midcode[i + 1].type == BZ) {
+			//argu1等于0跳转
 			if (str_is_num(midcode[i].argu1)) {
 				str_tp = midcode[i].argu1;
 				MipsOutput << "\tli $t0, " << str_tp << '\n';
@@ -792,7 +795,7 @@ void ConditionHandler(int i) {
 					MipsOutput << str_tp << '\n';
 				}
 				else if (index_tp >= 0 && index_tp <= 7) {
-					MipsOutput << "\tmove $t0, $s" << index_tp << '\n';
+					MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
 					MipsOutput << "\tbeq $t0, $0, ";
 					str_tp = midcode[i + 1].argu1;
 					MipsOutput << str_tp << '\n';
@@ -821,14 +824,35 @@ void ConditionHandler(int i) {
 					MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
 				}
 				else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-					MipsOutput << "\tmove $t0, $s" << index_tp << '\n';
+					MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
 				}
 				else {
 					MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
 				}
 			}
-			str_tp = midcode[i].argu2;
-			MipsOutput << "\tli $t1, " << str_tp;
+			if (str_is_num(midcode[i].argu2)) {
+				str_tp = midcode[i].argu2;
+				MipsOutput << "\tli $t1, " << str_tp << '\n';
+			}
+			else {
+				index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
+				if (index_tp == -1) {
+					str_tp = midcode[i].argu2;
+					MipsOutput << "\tlw $t1, " << str_tp << '\n';
+				}
+				else if (index_tp < ParaNum) {
+					MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+				}
+				else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+					MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
+				}
+				else {
+					MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+				}
+			}
+
+			/*str_tp = midcode[i].argu2;
+			MipsOutput << "\tli $t1, " << str_tp;*/
 			MipsOutput << "\tbne $t0, $t1, ";
 			str_tp = midcode[i + 1].argu1;
 			MipsOutput << str_tp << '\n';
@@ -853,7 +877,7 @@ void ScanIntHandler(int i) {
 	int index_tp;
 	string str_tp;
 	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
-	MipsOutput << "\tli $v0, 5\n";
+	MipsOutput << "#读取int\n\tli $v0, 5\n";
 	MipsOutput << "\tsyscall \n";
 	index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
 	if (index_tp == -1) {//是全局变量
@@ -864,7 +888,7 @@ void ScanIntHandler(int i) {
 		MipsOutput << "\tsw $v0, " << -addr_tp << "($fp)\n";
 	}
 	else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-		MipsOutput << "\tmove $s" << index_tp << ", $v0\n";
+		MipsOutput << "\tmove $s" << index_tp - ParaNum << ", $v0\n";
 	}
 	else {
 		MipsOutput << "\tsw $v0, " << -addr_tp << "($fp)\n";
@@ -875,7 +899,7 @@ void ScanCharHandler(int i) {
 	int index_tp;
 	string str_tp;
 	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
-	MipsOutput << "\tli $v0, 12\n";
+	MipsOutput << "#读取char\n\tli $v0, 12\n";
 	MipsOutput << "\tsyscall \n";
 	index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
 	if (index_tp == -1) {//是全局变量
@@ -886,7 +910,7 @@ void ScanCharHandler(int i) {
 		MipsOutput << "\tsw $v0, " << -addr_tp << "($fp)\n";
 	}
 	else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-		MipsOutput << "\tmove $s" << index_tp << ", $v0\n";
+		MipsOutput << "\tmove $s" << index_tp - ParaNum << ", $v0\n";
 	}
 	else {
 		MipsOutput << "\tsw $v0, " << -addr_tp << "($fp)\n";
@@ -899,27 +923,27 @@ void PrintIntHandler(int i) {
 	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
 	if (str_is_num(midcode[i].argu1)) {
 		str_tp = midcode[i].argu1;
-		MipsOutput << "\tli $a0, " << str_tp << '\n';
-		MipsOutput << "\tli $v0, 1\nsyscall\n";
+		MipsOutput << "#打印int\n\tli $a0, " << str_tp << '\n';
+		MipsOutput << "\tli $v0, 1\n\tsyscall\n";
 	}
 	else {
 		index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
 		if (index_tp == -1) {
 			str_tp = midcode[i].argu1;
-			MipsOutput << "\tlw $a0, " << str_tp << '\n';
-			MipsOutput << "\tli $v0, 1\nsyscall\n";
+			MipsOutput << "#打印int\n\tlw $a0, " << str_tp << '\n';
+			MipsOutput << "\tli $v0, 1\n\tsyscall\n";
 		}
 		else if (index_tp < ParaNum) {
-			MipsOutput << "\tlw $a0, " << -addr_tp << "($fp)\n";
-			MipsOutput << "\tli $v0, 1\nsyscall\n";
+			MipsOutput << "#打印int\n\tlw $a0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tli $v0, 1\n\tsyscall\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $a0, $s" << index_tp << '\n';
-			MipsOutput << "\tli $v0, 1\nsyscall\n";
+			MipsOutput << "#打印int\n\tmove $a0, $s" << index_tp - ParaNum << '\n';
+			MipsOutput << "\tli $v0, 1\n\tsyscall\n";
 		}
 		else {
-			MipsOutput << "\tlw $a0, " << -addr_tp << "($fp)\n";
-			MipsOutput << "\tli $v0, 1\nsyscall\n";
+			MipsOutput << "#打印int\n\tlw $a0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tli $v0, 1\n\tsyscall\n";
 		}
 	}
 }
@@ -930,34 +954,34 @@ void PrintCharHandler(int i) {
 	int ParaNum = FuncTab[FuncLoc].ParaNum;//当前函数的参数个数
 	if (str_is_num(midcode[i].argu1)) {
 		str_tp = midcode[i].argu1;
-		MipsOutput << "\tli $a0, " << str_tp << '\n';
+		MipsOutput << "#打印char\n\tli $a0, " << str_tp << '\n';
 		MipsOutput << "\tli $v0, 11\nsyscall\n";
 	}
 	else {
 		index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
 		if (index_tp == -1) {
 			str_tp = midcode[i].argu1;
-			MipsOutput << "\tlw $a0, " << str_tp << '\n';
+			MipsOutput << "#打印char\n\tlw $a0, " << str_tp << '\n';
 			MipsOutput << "\tli $v0, 11\nsyscall\n";
 		}
 		else if (index_tp < ParaNum) {
-			MipsOutput << "\tlw $a0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "#打印char\n\tlw $a0, " << -addr_tp << "($fp)\n";
 			MipsOutput << "\tli $v0, 11\nsyscall\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $a0, $s" << index_tp << '\n';
+			MipsOutput << "#打印char\n\tmove $a0, $s" << index_tp - ParaNum << '\n';
 			MipsOutput << "\tli $v0, 11\nsyscall\n";
 		}
 		else {
-			MipsOutput << "\tlw $a0, " << -addr_tp << "($fp)\n";
-			MipsOutput << "\tli $v0, 11\nsyscall\n";
+			MipsOutput << "#打印char\n\tlw $a0, " << -addr_tp << "($fp)\n";
+			MipsOutput << "\tli $v0, 11\n\tsyscall\n";
 		}
 	}
 }
 void PrintStrHandler(int i) {
 	string str_tp;
 	str_tp = midcode[i].argu1;
-	MipsOutput << "\tla $a0, " << str_tp << '\n';
+	MipsOutput << "#打印字符串\n\tla $a0, " << str_tp << '\n';
 	MipsOutput << "\tli $v0, 4\nsyscall\n";
 }
 void RetExprHandler(int i) {
@@ -980,7 +1004,7 @@ void RetExprHandler(int i) {
 			MipsOutput << "\tlw $v0, " << -addr_tp << "($fp)\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
-			MipsOutput << "\tmove $v0, $s" << index_tp << '\n';
+			MipsOutput << "\tmove $v0, $s" << index_tp - ParaNum << '\n';
 		}
 		else {
 			MipsOutput << "\tlw $v0, " << -addr_tp << "($fp)\n";
@@ -992,7 +1016,7 @@ void RetExprHandler(int i) {
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
-	MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4;
+	MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4 << '\n';
 	MipsOutput << "\tjr $ra\n";
 }
 void RetNullHandler(int i) {
@@ -1005,7 +1029,7 @@ void RetNullHandler(int i) {
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
-		MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4;
+		MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4 << "\n";
 		MipsOutput << "\tjr $ra\n";
 	}
 }
@@ -1191,9 +1215,11 @@ void mips() {
 			PrintIntHandler(i);
 			break;
 		case RETEXPR:
+			//return 表达式
 			RetExprHandler(i);
 			break;
 		case RETNULL:
+			//return;
 			RetNullHandler(i);
 			break;
 		default:

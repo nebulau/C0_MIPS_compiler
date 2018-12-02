@@ -95,7 +95,8 @@ int isRelation(int SYM) {
 }
 
 void nextch() {
-	chr = file.get();
+	//while(chr == ' ' || chr == '\t' || chr == '\n')
+		chr = file.get();
 	if (chr == '\n')    lc++;
 }
 void skip() {
