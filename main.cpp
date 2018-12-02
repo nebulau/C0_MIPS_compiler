@@ -5,7 +5,7 @@
 #include <string.h>
 #include "compiler.h"
 using namespace std;
-//C:\workspace\vsapp\Project2\Project2\test.txt
+//C:\workspace\vsapp\Project2\Project2\16061196_test.txt
 ifstream file;
 ofstream output;
 string errmsg[50];
@@ -373,6 +373,7 @@ void paramHandler() {
 	getsym();
 }
 void termHandler() {
+	expr_is_char = 0;
 	char factor_tp[idlen];//把上一个因子结果名字存起来
 	int op_tp;//缓存* / 
 	factorHandler();
@@ -391,6 +392,7 @@ void termHandler() {
 	处理因子
 */
 void factorHandler() {
+	expr_is_char = 0;
 	char token_tp[idlen];//缓存当前标识符名
 	int sym_tp;//缓存当前标识符类别码
 	int j;//返回数组或者函数在tab表的index
@@ -434,7 +436,7 @@ void factorHandler() {
 			insert_midcode(VARASSIGN, midcode[midcodec - 1].result, NULL, id_name_gen(), 0);
 			return; 
 		}
-		//既不是数组也不是函数，则是普通ident继续处理
+		//既不是数组也不是函数，则是普通ident继续处理，也可能是char
 		j = searchtab(token_tp, funcnum);
 		if (j == -1) { skip(); errormsg(29); getsym(); return; }
 		if (!(tab[j].type == const_int || tab[j].type == const_char ||
@@ -442,6 +444,8 @@ void factorHandler() {
 		      tab[j].type == int_para || tab[j].type == char_para)) {
 			skip(); errormsg(16); getsym(); return;
 		}
+		if (tab[j].type == const_char || tab[j].type == var_char || tab[j].type == char_para)
+			expr_is_char = 1;
 		insert_midcode(VARASSIGN, token_tp, NULL, id_name_gen(), 0);
 	}
 	else if (symbol == LPARSY){
@@ -491,9 +495,9 @@ void exprHandler() {
 	strcpy_s(term_tp, midcode[midcodec - 1].result);
 	while (symbol == PLUSSY || symbol == MINUSSY) {
 		sym_tp = symbol;
-		expr_is_char = 0;
 		getsym();
 		termHandler();
+		expr_is_char = 0;
 		insert_midcode((sym_tp == MINUSSY) ? SUBOP : ADDOP, term_tp, midcode[midcodec - 1].result, id_name_gen(), 0);
 		strcpy_s(term_tp, midcode[midcodec - 1].result);
 	}

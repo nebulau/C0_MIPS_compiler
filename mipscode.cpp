@@ -966,22 +966,22 @@ void PrintCharHandler(int i) {
 	if (str_is_num(midcode[i].argu1)) {
 		str_tp = midcode[i].argu1;
 		MipsOutput << "#打印char\n\tli $a0, " << str_tp << '\n';
-		MipsOutput << "\tli $v0, 11\nsyscall\n";
+		MipsOutput << "\tli $v0, 11\n\tsyscall\n";
 	}
 	else {
 		index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
 		if (index_tp == -1) {
 			str_tp = midcode[i].argu1;
 			MipsOutput << "#打印char\n\tlw $a0, " << str_tp << '\n';
-			MipsOutput << "\tli $v0, 11\nsyscall\n";
+			MipsOutput << "\tli $v0, 11\n\tsyscall\n";
 		}
 		else if (index_tp < ParaNum) {
 			MipsOutput << "#打印char\n\tlw $a0, " << -addr_tp << "($fp)\n";
-			MipsOutput << "\tli $v0, 11\nsyscall\n";
+			MipsOutput << "\tli $v0, 11\n\tsyscall\n";
 		}
 		else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
 			MipsOutput << "#打印char\n\tmove $a0, $s" << index_tp - ParaNum << '\n';
-			MipsOutput << "\tli $v0, 11\nsyscall\n";
+			MipsOutput << "\tli $v0, 11\n\tsyscall\n";
 		}
 		else {
 			MipsOutput << "#打印char\n\tlw $a0, " << -addr_tp << "($fp)\n";
@@ -993,7 +993,7 @@ void PrintStrHandler(int i) {
 	string str_tp;
 	str_tp = midcode[i].argu1;
 	MipsOutput << "#打印字符串\n\tla $a0, " << str_tp << '\n';
-	MipsOutput << "\tli $v0, 4\nsyscall\n";
+	MipsOutput << "\tli $v0, 4\n\tsyscall\n";
 }
 void RetExprHandler(int i) {
 	int addr_tp = 0;

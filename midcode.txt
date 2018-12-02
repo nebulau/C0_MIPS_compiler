@@ -165,7 +165,7 @@ printf("ch = ")
 printf(ch)
 printf(" ")
 
-$$75 = array[5]
+$$75 = array[0]
 
 $$77 = $$75 + 97
 

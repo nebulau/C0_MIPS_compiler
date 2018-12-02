@@ -58,7 +58,7 @@ void func(int x, int y){
   printf(" ,");
   printf("ch = ", ch);
   printf(" ");
-  printf(array[5] + 'a' +array['b'-'a']);
+  printf(array[0] + 'a' +array['b'-'a']);
 }
 
 

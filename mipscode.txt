@@ -144,7 +144,7 @@ func:
 #´òÓ¡×Ö·û´®
 	la $a0, $str0
 	li $v0, 4
-syscall
+	syscall
 	li $t0, 24
 	li $t1, 3
 	mul $s0, $t0, $t1
@@ -179,7 +179,7 @@ Label2:
 #´òÓ¡×Ö·û´®
 	la $a0, $str1
 	li $v0, 4
-syscall
+	syscall
 	li $t0, 95
 	sw $t0, ch
 	la $t0, array
@@ -222,7 +222,7 @@ main:
 #´òÓ¡×Ö·û´®
 	la $a0, $str2
 	li $v0, 4
-syscall
+	syscall
 Label4:
 	lw $t0, op
 	li $t1, 102
@@ -293,7 +293,7 @@ Label8:
 #´òÓ¡×Ö·û´®
 	la $a0, $str3
 	li $v0, 4
-syscall
+	syscall
 	move $t0, $s0
 	li $t1, 1
 	add $s3, $t0, $t1
@@ -304,7 +304,7 @@ syscall
 #´òÓ¡×Ö·û´®
 	la $a0, $str4
 	li $v0, 4
-syscall
+	syscall
 	move $t0, $s0
 	li $t1, 1
 	add $s4, $t0, $t1
@@ -327,7 +327,7 @@ Label9:
 #´òÓ¡×Ö·û´®
 	la $a0, $str5
 	li $v0, 4
-syscall
+	syscall
 #´òÓ¡int
 	lw $a0, tp
 	li $v0, 1
@@ -335,21 +335,21 @@ syscall
 #´òÓ¡×Ö·û´®
 	la $a0, $str6
 	li $v0, 4
-syscall
+	syscall
 #´òÓ¡×Ö·û´®
 	la $a0, $str7
 	li $v0, 4
-syscall
-#´òÓ¡int
+	syscall
+#´òÓ¡char
 	lw $a0, ch
-	li $v0, 1
+	li $v0, 11
 	syscall
 #´òÓ¡×Ö·û´®
 	la $a0, $str8
 	li $v0, 4
-syscall
+	syscall
 	la $t0, array
-	li $t1, 5
+	li $t1, 0
 	li $t2, 4
 	mul $t1, $t1, $t2
 	add $t0, $t0, $t1
@@ -374,7 +374,7 @@ syscall
 	lw $t1, -40($fp)
 	add $t0, $t0, $t1
 	sw $t0, -44($fp)
-#´òÓ¡char
+#´òÓ¡int
 	lw $a0, -44($fp)
-	li $v0, 11
+	li $v0, 1
 	syscall
