@@ -1,380 +1,53 @@
 .data
-	pt:.word 0
-	tp:.word 0
-	array:.word 0:4
-	op:.word 0
-	ch:.word 0
-	$str0:.asciiz "para1 >= para2"
-	$str1:.asciiz "para1 < para2"
-	$str2:.asciiz "pt equals to op"
-	$str3:.asciiz " fib "
-	$str4:.asciiz " "
-	$str5:.asciiz "tp = "
-	$str6:.asciiz " ,"
-	$str7:.asciiz "ch = "
-	$str8:.asciiz " "
 .text
 	j main
-fib:
-	sub $sp, $sp, 20
-#ÍËÕ»¿Õ¼ä£¬½Ó×Å±£´æsÏµ¼Ä´æÆ÷ºÍ$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#ÖÃ$fpÎª±»µ÷ÓÃÕß»ùµØÖ·
-	add $fp, $sp, 64
-	lw $t0, 0($fp)
-	li $t1, 2
-	bgt $t0, $t1, Label0
-	lw $v0, 0($fp)
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 24
-	jr $ra
-Label0:
-	lw $t0, 0($fp)
-	li $t1, 1
-	ble $t0, $t1, Label1
-	lw $t0, 0($fp)
-	li $t1, 1
-	sub $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal fib
-	move $s1, $v0
-	lw $t0, 0($fp)
-	li $t1, 2
-	sub $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal fib
-	move $s3, $v0
-	move $t0, $s1
-	move $t1, $s3
-	add $s4, $t0, $t1
-	move $v0, $s4
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 24
-	jr $ra
-Label1:
-func:
-	sub $sp, $sp, 12
-#ÍËÕ»¿Õ¼ä£¬½Ó×Å±£´æsÏµ¼Ä´æÆ÷ºÍ$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#ÖÃ$fpÎª±»µ÷ÓÃÕß»ùµØÖ·
-	add $fp, $sp, 60
-	lw $t0, -4($fp)
-	lw $t1, 0($fp)
-	blt $t0, $t1, Label2
-#´òÓ¡×Ö·û´®
-	la $a0, $str0
-	li $v0, 4
-	syscall
-	li $t0, 24
-	li $t1, 3
-	mul $s0, $t0, $t1
-	li $t0, 0
-	move $t1, $s0
-	sub $s1, $t0, $t1
-	move $t0, $s1
-	li $t1, 122
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, tp
-	li $t0, 56
-	sw $t0, ch
-	la $t0, array
-	li $t1, 1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 1
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, array
-	li $t1, 1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 0
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-Label2:
-	lw $t0, -4($fp)
-	lw $t1, 0($fp)
-	bge $t0, $t1, Label3
-#´òÓ¡×Ö·û´®
-	la $a0, $str1
-	li $v0, 4
-	syscall
-	li $t0, 95
-	sw $t0, ch
-	la $t0, array
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 0
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, array
-	li $t1, 1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 1
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-Label3:
 main:
 #±£´æÖ¡Ö¸Õë
 	move $fp, $sp
 #ÍËÕ»¿Õ¼ä
-	sub $sp, $sp, 48
-	li $t0, 0
-	move $s0, $t0
-#¶ÁÈ¡int
-	li $v0, 5
-	syscall 
-	sw $v0, pt
-#¶ÁÈ¡int
-	li $v0, 5
-	syscall 
-	sw $v0, pt
-#¶ÁÈ¡char
-	li $v0, 12
-	syscall 
-	sw $v0, op
-	lw $t0, pt
-	lw $t1, op
-	bne $t0, $t1, Label4
-#´òÓ¡×Ö·û´®
-	la $a0, $str2
-	li $v0, 4
-	syscall
-Label4:
-	lw $t0, op
-	li $t1, 102
-	bne $t0, $t1, Label6
-	lw $t0, pt
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal fib
-	move $s1, $v0
-	move $t0, $s1
-	li $t1, -10
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, tp
-	li $t0, 97
-	sw $t0, ch
-	la $t0, array
+	sub $sp, $sp, 424
+	la $t0, 0($fp)
 	li $t1, 0
 	li $t2, 4
 	mul $t1, $t1, $t2
-	li $t2, 1
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, array
-	li $t1, 1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 1
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	j Label5
-Label6:
-	lw $t0, op
-	li $t1, 107
-	bne $t0, $t1, Label7
-	lw $t0, pt
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	li $t0, -10
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal func
-	j Label5
-Label7:
-	li $t0, 0
-	sw $t0, tp
-	li $t0, 97
-	sw $t0, ch
-	la $t0, array
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 0
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, array
-	li $t1, 1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 0
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-Label5:
-Label8:
-	move $t0, $s0
-	li $t1, -10
-	bge $t0, $t1, Label9
-#´òÓ¡×Ö·û´®
-	la $a0, $str3
-	li $v0, 4
-	syscall
-	move $t0, $s0
-	li $t1, 1
-	add $s3, $t0, $t1
-#´òÓ¡int
-	move $a0, $s3
-	li $v0, 1
-	syscall
-#´òÓ¡×Ö·û´®
-	la $a0, $str4
-	li $v0, 4
-	syscall
-	move $t0, $s0
-	li $t1, 1
-	add $s4, $t0, $t1
-	move $t0, $s4
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal fib
-	move $s5, $v0
-#´òÓ¡int
-	move $a0, $s5
-	li $v0, 1
-	syscall
-	move $t0, $s0
-	li $t1, 3
-	add $s6, $t0, $t1
-	move $t0, $s6
-	move $s0, $t0
-	j Label8
-Label9:
-#´òÓ¡×Ö·û´®
-	la $a0, $str5
-	li $v0, 4
-	syscall
-#´òÓ¡int
-	lw $a0, tp
-	li $v0, 1
-	syscall
-#´òÓ¡×Ö·û´®
-	la $a0, $str6
-	li $v0, 4
-	syscall
-#´òÓ¡×Ö·û´®
-	la $a0, $str7
-	li $v0, 4
-	syscall
-#´òÓ¡char
-	lw $a0, ch
-	li $v0, 11
-	syscall
-#´òÓ¡×Ö·û´®
-	la $a0, $str8
-	li $v0, 4
-	syscall
-	la $t0, array
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s7, $t2
-	move $t0, $s7
-	li $t1, 97
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	li $t0, 98
-	li $t1, 97
+	li $t2, 23
 	sub $t0, $t0, $t1
-	sw $t0, -36($fp)
-	la $t0, array
-	lw $t1, -36($fp)
+	sw $t2, 0($t0)
+	la $t0, 0($fp)
+	li $t1, 0
 	li $t2, 4
 	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
+	sub $t0, $t0, $t1
 	lw $t2, 0($t0)
-	sw $t2, -40($fp)
-	lw $t0, -32($fp)
-	lw $t1, -40($fp)
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
+	move $s2, $t2
+	move $t0, $s2
+	li $t1, 23
+	sub $s3, $t0, $t1
+	la $t0, 0($fp)
+	move $t1, $s3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	move $s4, $t2
+	li $t0, 23
+	move $t1, $s4
+	sub $s5, $t0, $t1
+	la $t0, -4($fp)
+	move $t1, $s5
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 1
+	sub $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, -4($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	move $s6, $t2
 #´òÓ¡int
-	lw $a0, -44($fp)
+	move $a0, $s6
 	li $v0, 1
 	syscall

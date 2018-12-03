@@ -1,176 +1,18 @@
-const int tp_f = -10
-const char ch_s = 'a'
-const char ch_f = 'w'
-var int pt
-var int tp
-int array[1]
-var char op
-var char ch
-int fib()
-para_int x
-
-
-x <= 2
-BNZ Label0
-
-ret x
-Label0:
-
-
-x > 1
-BNZ Label1
-
-
-$$7 = x - 1
-push $$7
-call fib
-$$8 = RET
-
-
-
-$$12 = x - 2
-push $$12
-call fib
-$$13 = RET
-
-$$15 = $$8 + $$13
-ret $$15
-Label1:
-void func()
-para_int x
-para_int y
-const int u = 24
-const char c = 'z'
-
-
-y >= x
-BNZ Label2
-printf("para1 >= para2")
-
-
-
-$$21 = 24 * 3
-$$22 = 0 - $$21
-
-$$24 = $$22 + 122
-tp = $$24
-
-ch = 56
-
-
-array[1] = 1
-
-
-array[1] = 0
-Label2:
-
-
-y < x
-BNZ Label3
-printf("para1 < para2")
-
-ch = 95
-
-
-array[0] = 0
-
-
-array[1] = 1
-Label3:
 void main()
-var int n
-
-n = 0
-scanf(pt)
-scanf(pt)
-scanf(op)
+int arr[1]
+int arr2[100]
 
 
-pt == op
-BNZ Label4
-printf("pt equals to op")
-Label4:
-
-op == 102
-BNZ Label6
-
-push pt
-call fib
-$$42 = RET
+arr[0] = 23
 
 
-$$45 = $$42 + -10
-tp = $$45
+$$4 = arr[0]
 
-ch = 97
+$$6 = $$4 - 23
+$$7 = arr[$$6]
+$$8 = 23 - $$7
 
+arr2[$$8] = 1
 
-array[0] = 1
-
-
-array[1] = 1
-GOTO Label5
-Label6:
-op == 107
-BNZ Label7
-
-push pt
-
-push -10
-call func
-GOTO Label5
-Label7:
-
-tp = 0
-
-ch = 97
-
-
-array[0] = 0
-
-
-array[1] = 0
-Label5:
-Label8:
-
-
-n < -10
-BNZ Label9
-printf(" fib ")
-
-
-$$63 = n + 1
-printf($$63)
-printf(" ")
-
-
-$$66 = n + 1
-push $$66
-call fib
-$$67 = RET
-
-printf($$67)
-
-
-$$71 = n + 3
-n = $$71
-GOTO Label8
-Label9:
-printf("tp = ")
-
-printf(tp)
-printf(" ,")
-printf("ch = ")
-
-printf(ch)
-printf(" ")
-
-$$75 = array[0]
-
-$$77 = $$75 + 97
-
-
-$$80 = 98 - 97
-$$81 = array[$$80]
-$$82 = $$77 + $$81
-printf($$82)
+$$11 = arr2[0]
+printf($$11)

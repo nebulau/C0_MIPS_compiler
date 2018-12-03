@@ -1,0 +1,9 @@
+void main(){
+	int arr[1];
+	int arr2[100];
+
+	arr[0] = 23;
+	arr2[23- arr[arr[0]-23]] = 1;
+	printf(arr2[0]);
+	
+}

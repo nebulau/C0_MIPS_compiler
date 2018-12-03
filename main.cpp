@@ -1183,7 +1183,7 @@ void program() {
 int main()
 {
 	char path[100];
-	cout << "Input file path within 100 characters.(e.g. C:\\User\\Doc\\test.txt)\nOutput file in output.txt" << endl;
+	cout << "Input file path within 100 characters.(e.g. C:\\User\\Doc\\test.txt)" << endl;
 	cin.getline(path, 100);
 	file.open(path);
 	output.open("output.txt");
@@ -1205,6 +1205,8 @@ int main()
 	mips();
 	file.close();
 	output.close();
+	cout << "编译完成.\n语句信息以及报错信息已存入output.txt.\n中间代码已存入midcode.txt.\nMIPS代码已存入mipscode.txt.\n";
+	system("pause");
 	//system("pause");
 	//fclose(file);
 	//system("pause");
