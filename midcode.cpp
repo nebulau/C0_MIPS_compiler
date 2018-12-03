@@ -446,10 +446,13 @@ void delconst()                                                                 
 }
 /*
 	如果出现了一个临时变量$的赋值，且这个临时变量没出现在result位置，则可以全部替换
-	可能替换+ - * /
 */
 void generate1() {
-	//中间代码不会result位置有临时变量名的重复
+	/*
+		中间代码不会在result位置有临时变量名的重复
+		这里将 $$1 = 1或者$$1 = ident之后的argu1和argu2位置的
+		$$1替换成1或者ident
+	*/
 	int i, j, flag = 0;
 	for (i = 0; i < midcodec; i++) {
 		if (midcode[i].type == VARASSIGN && strlen(midcode[i].argu1) != 0

@@ -1,52 +1,994 @@
 .data
+	global_int1:.word 0
+	global_int2:.word 0
+	global_int_arr1:.word 0:20
+	global_int_arr2:.word 0:20
+	global_char1:.word 0
+	global_char2:.word 0
+	global_char_arr1:.word 0:20
+	global_char_arr2:.word 0:20
+	$str0:.asciiz "global const test:"
+	$str1:.asciiz "please input char and int"
+	$str2:.asciiz "string test:"
+	$str3:.asciiz "a"
+	$str4:.asciiz " "
+	$str5:.asciiz ""
+	$str6:.asciiz "A"
+	$str7:.asciiz "!"
+	$str8:.asciiz "'"
+	$str9:.asciiz "("
+	$str10:.asciiz ")"
+	$str11:.asciiz "*"
+	$str12:.asciiz "+"
+	$str13:.asciiz ","
+	$str14:.asciiz "0"
+	$str15:.asciiz ":"
+	$str16:.asciiz ";"
+	$str17:.asciiz "="
+	$str18:.asciiz "_"
+	$str19:.asciiz "["
+	$str20:.asciiz "]"
+	$str21:.asciiz "{"
+	$str22:.asciiz "}"
+	$str23:.asciiz "abcdeABCDE"
+	$str24:.asciiz "char test:"
+	$str25:.asciiz "switch test1:"
+	$str26:.asciiz "test1: case a"
+	$str27:.asciiz "test1: case _"
+	$str28:.asciiz "test1: default"
+	$str29:.asciiz "switch test2:"
+	$str30:.asciiz "test2: case a"
+	$str31:.asciiz "test2: case _"
+	$str32:.asciiz "switch test3:"
+	$str33:.asciiz "test3: case a"
+	$str34:.asciiz "test3: case b"
+	$str35:.asciiz "test3: default"
+	$str36:.asciiz "switch test4:"
+	$str37:.asciiz "test4: case 345"
+	$str38:.asciiz "test4: case -345"
+	$str39:.asciiz "test4: default"
+	$str40:.asciiz "switch test5:"
+	$str41:.asciiz "test5: case 345"
+	$str42:.asciiz "test5: case -345"
+	$str43:.asciiz "switch test6:"
+	$str44:.asciiz "test6: case 123"
+	$str45:.asciiz "test6: case 345"
+	$str46:.asciiz "test6: default"
+	$str47:.asciiz "while test1:"
+	$str48:.asciiz "var_int_while = "
+	$str49:.asciiz "while test2:"
+	$str50:.asciiz "var_int_while = "
+	$str51:.asciiz "if test1:"
+	$str52:.asciiz "var_int_if == 3"
+	$str53:.asciiz "var_int_if <= 2"
+	$str54:.asciiz "var_int_if > 0"
+	$str55:.asciiz "if test2:"
+	$str56:.asciiz "var_int_if == 3"
+	$str57:.asciiz "var_int_if > 0"
+	$str58:.asciiz "if test2:"
+	$str59:.asciiz "var_int_if == 3"
+	$str60:.asciiz "var_int_if <= 2"
+	$str61:.asciiz "after return"
 .text
 	j main
+void_0para:
+	sub $sp, $sp, 40
+#ÍËÕ»¿Õ¼ä£¬½Ó×Å±£´æsÏµ¼Ä´æÆ÷ºÍ$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#ÖÃ$fpÎª±»µ÷ÓÃÕß»ùµØÖ·
+	add $fp, $sp, 80
+#´òÓ¡int
+	li $a0, 0
+	li $v0, 1
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str0
+	li $v0, 4
+	syscall
+#´òÓ¡int
+	li $a0, 123
+	li $v0, 1
+	syscall
+#´òÓ¡int
+	li $a0, 234
+	li $v0, 1
+	syscall
+#´òÓ¡char
+	li $a0, 97
+	li $v0, 11
+	syscall
+#´òÓ¡char
+	li $a0, 98
+	li $v0, 11
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str1
+	li $v0, 4
+	syscall
+#¶ÁÈ¡int
+	li $v0, 5
+	syscall 
+	move $s5, $v0
+#¶ÁÈ¡char
+	li $v0, 12
+	syscall 
+	move $s2, $v0
+#´òÓ¡int
+	move $a0, $s5
+	li $v0, 1
+	syscall
+#´òÓ¡char
+	move $a0, $s2
+	li $v0, 11
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str2
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str3
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str4
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str5
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str6
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str7
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str8
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str9
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str10
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str11
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str12
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str13
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str14
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str15
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str16
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str17
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str18
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str19
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str20
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str21
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str22
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str23
+	li $v0, 4
+	syscall
+#´òÓ¡×Ö·û´®
+	la $a0, $str24
+	li $v0, 4
+	syscall
+	li $t0, 43
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 45
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 42
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 47
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 97
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 65
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 95
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 48
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 49
+	move $s0, $t0
+#´òÓ¡char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $t0, 95
+	move $s1, $t0
+#´òÓ¡×Ö·û´®
+	la $a0, $str25
+	li $v0, 4
+	syscall
+	move $t0, $s1
+	li $t1, 97
+	bne $t0, $t1, Label1
+#´òÓ¡×Ö·û´®
+	la $a0, $str26
+	li $v0, 4
+	syscall
+	j Label0
+Label1:
+	move $t0, $s1
+	li $t1, 95
+	bne $t0, $t1, Label2
+#´òÓ¡×Ö·û´®
+	la $a0, $str27
+	li $v0, 4
+	syscall
+	j Label0
+Label2:
+#´òÓ¡×Ö·û´®
+	la $a0, $str28
+	li $v0, 4
+	syscall
+Label0:
+#´òÓ¡×Ö·û´®
+	la $a0, $str29
+	li $v0, 4
+	syscall
+	move $t0, $s1
+	li $t1, 97
+	bne $t0, $t1, Label4
+#´òÓ¡×Ö·û´®
+	la $a0, $str30
+	li $v0, 4
+	syscall
+	j Label3
+Label4:
+	move $t0, $s1
+	li $t1, 95
+	bne $t0, $t1, Label5
+#´òÓ¡×Ö·û´®
+	la $a0, $str31
+	li $v0, 4
+	syscall
+	j Label3
+Label5:
+Label3:
+#´òÓ¡×Ö·û´®
+	la $a0, $str32
+	li $v0, 4
+	syscall
+	move $t0, $s1
+	li $t1, 97
+	bne $t0, $t1, Label7
+#´òÓ¡×Ö·û´®
+	la $a0, $str33
+	li $v0, 4
+	syscall
+	j Label6
+Label7:
+	move $t0, $s1
+	li $t1, 98
+	bne $t0, $t1, Label8
+#´òÓ¡×Ö·û´®
+	la $a0, $str34
+	li $v0, 4
+	syscall
+	j Label6
+Label8:
+#´òÓ¡×Ö·û´®
+	la $a0, $str35
+	li $v0, 4
+	syscall
+Label6:
+	li $t0, 0
+	li $t1, 345
+	sub $s7, $t0, $t1
+	move $t0, $s7
+	move $s3, $t0
+#´òÓ¡×Ö·û´®
+	la $a0, $str36
+	li $v0, 4
+	syscall
+	move $t0, $s3
+	li $t1, 345
+	bne $t0, $t1, Label10
+#´òÓ¡×Ö·û´®
+	la $a0, $str37
+	li $v0, 4
+	syscall
+	j Label9
+Label10:
+	move $t0, $s3
+	li $t1, -345
+	bne $t0, $t1, Label11
+#´òÓ¡×Ö·û´®
+	la $a0, $str38
+	li $v0, 4
+	syscall
+	j Label9
+Label11:
+#´òÓ¡×Ö·û´®
+	la $a0, $str39
+	li $v0, 4
+	syscall
+Label9:
+#´òÓ¡×Ö·û´®
+	la $a0, $str40
+	li $v0, 4
+	syscall
+	move $t0, $s3
+	li $t1, 345
+	bne $t0, $t1, Label13
+#´òÓ¡×Ö·û´®
+	la $a0, $str41
+	li $v0, 4
+	syscall
+	j Label12
+Label13:
+	move $t0, $s3
+	li $t1, -345
+	bne $t0, $t1, Label14
+#´òÓ¡×Ö·û´®
+	la $a0, $str42
+	li $v0, 4
+	syscall
+	j Label12
+Label14:
+Label12:
+#´òÓ¡×Ö·û´®
+	la $a0, $str43
+	li $v0, 4
+	syscall
+	move $t0, $s3
+	li $t1, 123
+	bne $t0, $t1, Label16
+#´òÓ¡×Ö·û´®
+	la $a0, $str44
+	li $v0, 4
+	syscall
+	j Label15
+Label16:
+	move $t0, $s3
+	li $t1, 345
+	bne $t0, $t1, Label17
+#´òÓ¡×Ö·û´®
+	la $a0, $str45
+	li $v0, 4
+	syscall
+	j Label15
+Label17:
+#´òÓ¡×Ö·û´®
+	la $a0, $str46
+	li $v0, 4
+	syscall
+Label15:
+#´òÓ¡×Ö·û´®
+	la $a0, $str47
+	li $v0, 4
+	syscall
+	li $t0, 0
+	move $s4, $t0
+Label18:
+	move $t0, $s4
+	li $t1, 3
+	bge $t0, $t1, Label19
+#´òÓ¡×Ö·û´®
+	la $a0, $str48
+	li $v0, 4
+	syscall
+#´òÓ¡int
+	move $a0, $s4
+	li $v0, 1
+	syscall
+	move $t0, $s4
+	li $t1, 1
+	add $t0, $t0, $t1
+	sw $t0, -32($fp)
+	lw $t0, -32($fp)
+	move $s4, $t0
+	j Label18
+Label19:
+#´òÓ¡×Ö·û´®
+	la $a0, $str49
+	li $v0, 4
+	syscall
+	li $t0, 0
+	move $s4, $t0
+Label20:
+	move $t0, $s4
+	li $t1, 0
+	bge $t0, $t1, Label21
+#´òÓ¡×Ö·û´®
+	la $a0, $str50
+	li $v0, 4
+	syscall
+#´òÓ¡int
+	move $a0, $s4
+	li $v0, 1
+	syscall
+	move $t0, $s4
+	li $t1, 1
+	add $t0, $t0, $t1
+	sw $t0, -36($fp)
+	lw $t0, -36($fp)
+	move $s4, $t0
+	j Label20
+Label21:
+	li $t0, 3
+	move $s6, $t0
+#´òÓ¡×Ö·û´®
+	la $a0, $str51
+	li $v0, 4
+	syscall
+	move $t0, $s6
+	li $t1, 3
+	bne $t0, $t1, Label22
+#´òÓ¡×Ö·û´®
+	la $a0, $str52
+	li $v0, 4
+	syscall
+Label22:
+	move $t0, $s6
+	li $t1, 2
+	bgt $t0, $t1, Label23
+#´òÓ¡×Ö·û´®
+	la $a0, $str53
+	li $v0, 4
+	syscall
+Label23:
+	move $t0, $s6
+	beq $t0, $0, Label24
+#´òÓ¡×Ö·û´®
+	la $a0, $str54
+	li $v0, 4
+	syscall
+Label24:
+	li $t0, 2
+	move $s6, $t0
+#´òÓ¡×Ö·û´®
+	la $a0, $str55
+	li $v0, 4
+	syscall
+	move $t0, $s6
+	li $t1, 3
+	bne $t0, $t1, Label25
+#´òÓ¡×Ö·û´®
+	la $a0, $str56
+	li $v0, 4
+	syscall
+Label25:
+	move $t0, $s6
+	li $t1, 2
+	bgt $t0, $t1, Label26
+Label26:
+	move $t0, $s6
+	beq $t0, $0, Label27
+#´òÓ¡×Ö·û´®
+	la $a0, $str57
+	li $v0, 4
+	syscall
+Label27:
+	li $t0, 4
+	move $s6, $t0
+#´òÓ¡×Ö·û´®
+	la $a0, $str58
+	li $v0, 4
+	syscall
+	move $t0, $s6
+	li $t1, 3
+	bne $t0, $t1, Label28
+#´òÓ¡×Ö·û´®
+	la $a0, $str59
+	li $v0, 4
+	syscall
+Label28:
+	move $t0, $s6
+	li $t1, 2
+	bgt $t0, $t1, Label29
+#´òÓ¡×Ö·û´®
+	la $a0, $str60
+	li $v0, 4
+	syscall
+Label29:
+	move $t0, $s6
+	beq $t0, $0, Label30
+Label30:
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 40
+	jr $ra
+#´òÓ¡×Ö·û´®
+	la $a0, $str61
+	li $v0, 4
+	syscall
+int_0para:
+	sub $sp, $sp, 24
+#ÍËÕ»¿Õ¼ä£¬½Ó×Å±£´æsÏµ¼Ä´æÆ÷ºÍ$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#ÖÃ$fpÎª±»µ÷ÓÃÕß»ùµØÖ·
+	add $fp, $sp, 64
+	li $t0, 0
+	li $t1, -6
+	sub $s3, $t0, $t1
+	move $t0, $s3
+	move $s0, $t0
+	li $t0, 7
+	move $s1, $t0
+	li $t0, 97
+	move $s2, $t0
+	move $t0, $s1
+	move $t1, $s2
+	mul $s4, $t0, $t1
+	move $t0, $s0
+	move $t1, $s4
+	add $s5, $t0, $t1
+	move $v0, $s5
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 24
+	jr $ra
+char_0para:
+	sub $sp, $sp, 52
+#ÍËÕ»¿Õ¼ä£¬½Ó×Å±£´æsÏµ¼Ä´æÆ÷ºÍ$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#ÖÃ$fpÎª±»µ÷ÓÃÕß»ùµØÖ·
+	add $fp, $sp, 92
+	li $t0, 1
+	move $s0, $t0
+	li $t0, 2
+	move $s1, $t0
+	li $t0, 3
+	move $s2, $t0
+	move $t0, $s0
+	move $t1, $s1
+	add $s3, $t0, $t1
+	move $t0, $s3
+	move $t1, $s2
+	mul $s4, $t0, $t1
+	li $t0, 0
+	move $t1, $s4
+	sub $s5, $t0, $t1
+	la $t0, global_int_arr1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	move $t2, $s5
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_arr1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	move $s6, $t2
+	move $t0, $s6
+	li $t1, 3
+	add $s7, $t0, $t1
+	la $t0, global_int_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	move $t2, $s7
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	jal int_0para
+	sw $v0, -32($fp)
+	la $t0, global_int_arr1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -32($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_arr1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -36($fp)
+#´òÓ¡int
+	lw $a0, -36($fp)
+	li $v0, 1
+	syscall
+	la $t0, global_int_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -40($fp)
+#´òÓ¡int
+	lw $a0, -40($fp)
+	li $v0, 1
+	syscall
+	la $t0, global_int_arr1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -44($fp)
+#´òÓ¡int
+	lw $a0, -44($fp)
+	li $v0, 1
+	syscall
+	la $t0, global_char_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 101
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -48($fp)
+	lw $v0, -48($fp)
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 52
+	jr $ra
+int_2para:
+	sub $sp, $sp, 4
+#ÍËÕ»¿Õ¼ä£¬½Ó×Å±£´æsÏµ¼Ä´æÆ÷ºÍ$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#ÖÃ$fpÎª±»µ÷ÓÃÕß»ùµØÖ·
+	add $fp, $sp, 52
+	lw $t0, 0($fp)
+	lw $t1, -4($fp)
+	add $s0, $t0, $t1
+	move $v0, $s0
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 12
+	jr $ra
+fact:
+	sub $sp, $sp, 12
+#ÍËÕ»¿Õ¼ä£¬½Ó×Å±£´æsÏµ¼Ä´æÆ÷ºÍ$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#ÖÃ$fpÎª±»µ÷ÓÃÕß»ùµØÖ·
+	add $fp, $sp, 56
+	lw $t0, 0($fp)
+	li $t1, 1
+	blt $t0, $t1, Label31
+	lw $t0, 0($fp)
+	li $t1, 1
+	sub $s0, $t0, $t1
+	move $t0, $s0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fact
+	move $s1, $v0
+	lw $t0, 0($fp)
+	move $t1, $s1
+	mul $s2, $t0, $t1
+	move $v0, $s2
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 16
+	jr $ra
+Label31:
+	li $v0, 1
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 16
+	jr $ra
 main:
 #±£´æÖ¡Ö¸Õë
 	move $fp, $sp
 #ÍËÕ»¿Õ¼ä
-	sub $sp, $sp, 424
-	la $t0, 0($fp)
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 23
-	sub $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, 0($fp)
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	sub $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s2, $t2
+	sub $sp, $sp, 28
+	jal void_0para
+	jal int_0para
+	move $s0, $v0
+#´òÓ¡int
+	move $a0, $s0
+	li $v0, 1
+	syscall
+	jal char_0para
+	li $t0, 3
+	li $t1, 4
+	mul $s1, $t0, $t1
+	li $t0, 2
+	move $t1, $s1
+	add $s2, $t0, $t1
 	move $t0, $s2
-	li $t1, 23
-	sub $s3, $t0, $t1
-	la $t0, 0($fp)
-	move $t1, $s3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	sub $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s4, $t2
-	li $t0, 23
-	move $t1, $s4
-	sub $s5, $t0, $t1
-	la $t0, -4($fp)
-	move $t1, $s5
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 1
-	sub $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, -4($fp)
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	sub $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s6, $t2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, 4
+	li $t1, 5
+	add $s3, $t0, $t1
+	move $t0, $s3
+	li $t1, 6
+	add $s4, $t0, $t1
+	move $t0, $s4
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal int_2para
+	move $s5, $v0
+#´òÓ¡int
+	move $a0, $s5
+	li $v0, 1
+	syscall
+	li $t0, 5
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fact
+	move $s6, $v0
 #´òÓ¡int
 	move $a0, $s6
 	li $v0, 1

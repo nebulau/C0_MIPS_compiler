@@ -221,6 +221,9 @@ int getsym() {
 				(chr > 34 && chr < 127)) {
 				catToken(); nextch();
 			}//检查字符串是否合法
+			/*else if (chr == '\\') {
+				token[strlen(token)] = '\\';
+			}*/
 			else { skip(); symbol = NOTSY; errormsg(3); return 2; }
 		}
 		if (chr != '\"') { skip(); symbol = NOTSY; errormsg(4); return 2; }
@@ -733,7 +736,7 @@ void overallcase(char* op_tp, char* label_name) {
 			sym_tp = symbol;
 			getsym();
 			if (symbol == INTVALUE) {
-				insert_midcode(EQUOP, op_tp, NULL, NULL, (sym_tp == PLUSSY) ? num : -num);
+				insert_midcode(EQUOP, op_tp, numtostr((sym_tp == PLUSSY) ? num : -num), NULL, 0);
 				insert_midcode(BNZ, case_label, NULL, NULL, 0);
 				getsym();
 				if (symbol == COLONSY) {

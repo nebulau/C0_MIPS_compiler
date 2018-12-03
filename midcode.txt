@@ -1,18 +1,399 @@
+const int const_int1 = 123
+const int const_int2 = 234
+const char const_char1 = 'a'
+const char const_char2 = 'b'
+var int global_int1
+var int global_int2
+int global_int_arr1[5]
+int global_int_arr2[5]
+var char global_char1
+var char global_char2
+char global_char_arr1[5]
+char global_char_arr2[5]
+void void_0para()
+const int _local_const_int = 0
+var char var_char
+var char var_char_switch
+var char var_char_input
+var int var_int_switch
+var int var_int_while
+var int var_int_input
+var int var_int_if
+
+printf(0)
+printf("global const test:")
+
+printf(123)
+
+printf(234)
+
+printf(97)
+
+printf(98)
+printf("please input char and int")
+scanf(var_int_input)
+scanf(var_char_input)
+
+printf(var_int_input)
+
+printf(var_char_input)
+printf("string test:")
+printf("a")
+printf(" ")
+printf("")
+printf("A")
+printf("!")
+printf("'")
+printf("(")
+printf(")")
+printf("*")
+printf("+")
+printf(",")
+printf("0")
+printf(":")
+printf(";")
+printf("=")
+printf("_")
+printf("[")
+printf("]")
+printf("{")
+printf("}")
+printf("abcdeABCDE")
+printf("char test:")
+
+var_char = 43
+
+printf(var_char)
+
+var_char = 45
+
+printf(var_char)
+
+var_char = 42
+
+printf(var_char)
+
+var_char = 47
+
+printf(var_char)
+
+var_char = 97
+
+printf(var_char)
+
+var_char = 65
+
+printf(var_char)
+
+var_char = 95
+
+printf(var_char)
+
+var_char = 48
+
+printf(var_char)
+
+var_char = 49
+
+printf(var_char)
+
+var_char_switch = 95
+printf("switch test1:")
+
+var_char_switch == 97
+BNZ Label1
+printf("test1: case a")
+GOTO Label0
+Label1:
+var_char_switch == 95
+BNZ Label2
+printf("test1: case _")
+GOTO Label0
+Label2:
+printf("test1: default")
+Label0:
+printf("switch test2:")
+
+var_char_switch == 97
+BNZ Label4
+printf("test2: case a")
+GOTO Label3
+Label4:
+var_char_switch == 95
+BNZ Label5
+printf("test2: case _")
+GOTO Label3
+Label5:
+Label3:
+printf("switch test3:")
+
+var_char_switch == 97
+BNZ Label7
+printf("test3: case a")
+GOTO Label6
+Label7:
+var_char_switch == 98
+BNZ Label8
+printf("test3: case b")
+GOTO Label6
+Label8:
+printf("test3: default")
+Label6:
+
+
+$$31 = 0 - 345
+var_int_switch = $$31
+printf("switch test4:")
+
+var_int_switch == 345
+BNZ Label10
+printf("test4: case 345")
+GOTO Label9
+Label10:
+var_int_switch == -345
+BNZ Label11
+printf("test4: case -345")
+GOTO Label9
+Label11:
+printf("test4: default")
+Label9:
+printf("switch test5:")
+
+var_int_switch == 345
+BNZ Label13
+printf("test5: case 345")
+GOTO Label12
+Label13:
+var_int_switch == -345
+BNZ Label14
+printf("test5: case -345")
+GOTO Label12
+Label14:
+Label12:
+printf("switch test6:")
+
+var_int_switch == 123
+BNZ Label16
+printf("test6: case 123")
+GOTO Label15
+Label16:
+var_int_switch == 345
+BNZ Label17
+printf("test6: case 345")
+GOTO Label15
+Label17:
+printf("test6: default")
+Label15:
+printf("while test1:")
+
+var_int_while = 0
+Label18:
+
+
+var_int_while < 3
+BNZ Label19
+printf("var_int_while = ")
+
+printf(var_int_while)
+
+
+$$41 = var_int_while + 1
+var_int_while = $$41
+GOTO Label18
+Label19:
+printf("while test2:")
+
+var_int_while = 0
+Label20:
+
+
+var_int_while < 0
+BNZ Label21
+printf("var_int_while = ")
+
+printf(var_int_while)
+
+
+$$48 = var_int_while + 1
+var_int_while = $$48
+GOTO Label20
+Label21:
+
+var_int_if = 3
+printf("if test1:")
+
+
+var_int_if == 3
+BNZ Label22
+printf("var_int_if == 3")
+Label22:
+
+
+var_int_if <= 2
+BNZ Label23
+printf("var_int_if <= 2")
+Label23:
+
+var_int_if == 
+BZ Label24
+printf("var_int_if > 0")
+Label24:
+
+var_int_if = 2
+printf("if test2:")
+
+
+var_int_if == 3
+BNZ Label25
+printf("var_int_if == 3")
+Label25:
+
+
+var_int_if <= 2
+BNZ Label26
+Label26:
+
+var_int_if == 
+BZ Label27
+printf("var_int_if > 0")
+Label27:
+
+var_int_if = 4
+printf("if test2:")
+
+
+var_int_if == 3
+BNZ Label28
+printf("var_int_if == 3")
+Label28:
+
+
+var_int_if <= 2
+BNZ Label29
+printf("var_int_if <= 2")
+Label29:
+
+var_int_if == 
+BZ Label30
+Label30:
+return null
+printf("after return")
+int int_0para()
+var int a
+var int b
+var char c
+
+
+$$69 = 0 - -6
+a = $$69
+
+b = 7
+
+c = 97
+
+
+
+$$75 = b * c
+$$76 = a + $$75
+ret $$76
+char char_0para()
+var int a
+var int b
+var int c
+
+a = 1
+
+b = 2
+
+c = 3
+
+
+
+
+$$84 = a + b
+
+
+$$87 = $$84 * c
+$$88 = 0 - $$87
+global_int_arr1[0] = $$88
+
+
+$$91 = global_int_arr1[0]
+
+$$93 = $$91 + 3
+global_int_arr1[1] = $$93
+
+call int_0para
+$$95 = RET
+
+global_int_arr1[2] = $$95
+
+$$98 = global_int_arr1[0]
+printf($$98)
+
+$$100 = global_int_arr1[1]
+printf($$100)
+
+$$102 = global_int_arr1[2]
+printf($$102)
+
+
+global_char_arr1[1] = 101
+
+$$106 = global_char_arr1[1]
+ret $$106
+int int_2para()
+para_int a
+para_int b
+
+
+$$109 = a + b
+ret $$109
+int fact()
+para_int n
+
+
+n >= 1
+BNZ Label31
+
+
+
+$$115 = n - 1
+push $$115
+call fact
+$$116 = RET
+
+$$118 = n * $$116
+ret $$118
+Label31:
+
+ret 1
 void main()
-int arr[1]
-int arr2[100]
+call void_0para
+call int_0para
+$$120 = RET
+
+printf($$120)
+call char_0para
 
 
-arr[0] = 23
+
+$$125 = 3 * 4
+$$126 = 2 + $$125
+push $$126
 
 
-$$4 = arr[0]
+$$129 = 4 + 5
 
-$$6 = $$4 - 23
-$$7 = arr[$$6]
-$$8 = 23 - $$7
+$$131 = $$129 + 6
+push $$131
+call int_2para
+$$132 = RET
 
-arr2[$$8] = 1
+printf($$132)
 
-$$11 = arr2[0]
-printf($$11)
+push 5
+call fact
+$$135 = RET
+
+printf($$135)
