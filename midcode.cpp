@@ -400,6 +400,22 @@ char* numtostr(int num) {
 	return buffer;
 
 }
+int strtonum(char* str) {
+	unsigned int i = 0;
+	int isMinus = 0;
+	int value = 0;
+	if (str[0] == '+')
+		i = 1;
+	else if (str[0] == '-') {
+		i = 1;
+		isMinus = 1;
+	}
+	for (; i < strlen(str); i++) {
+		value = value * 10 + str[i] - '0';
+	}
+	value = (isMinus) ? -value : value;
+	return value;
+}
 /*
 	将所有常量替换
 */
@@ -483,6 +499,65 @@ void generate1() {
 						strcpy_s(midcode[j].argu2, midcode[i].argu1);
 					}
 				}
+			}
+		}
+	}
+}
+/*
+	常量合并
+*/
+void generate2() {
+	//合并简单四则运算,只对临时起名的变量操作
+	int i = 0, j;
+	char result_tp[idlen];
+	for (i = 0; i < midcodec; i++) {
+		if (midcode[i].type == ADDOP && str_is_num(midcode[i].argu1) && str_is_num(midcode[i].argu2) && midcode[i].result[0] == '$') {
+			midcode[i].type = DEL;
+			strcpy_s(result_tp, midcode[i].result);
+			strcpy_s(midcode[i].result, numtostr(strtonum(midcode[i].argu1) + strtonum(midcode[i].argu2)));
+			for (j = i + 1; j < midcodec; j++) {
+				if (strcmp(midcode[j].result, result_tp) == 0)	break;
+				if (strcmp(midcode[j].argu1, result_tp) == 0)
+					strcpy_s(midcode[j].argu1, midcode[i].result);
+				else if (strcmp(midcode[j].argu2, result_tp) == 0)
+					strcpy_s(midcode[j].argu2, midcode[i].result);
+			}
+		}
+		else if (midcode[i].type == SUBOP && str_is_num(midcode[i].argu1) && str_is_num(midcode[i].argu2) && midcode[i].result[0] == '$') {
+			midcode[i].type = DEL;
+			strcpy_s(result_tp, midcode[i].result);
+			strcpy_s(midcode[i].result, numtostr(strtonum(midcode[i].argu1) -
+				strtonum(midcode[i].argu2)));
+			for (j = i + 1; j < midcodec; j++) {
+				if (strcmp(midcode[j].result, result_tp) == 0)	break;
+				if (strcmp(midcode[j].argu1, result_tp) == 0)
+					strcpy_s(midcode[j].argu1, midcode[i].result);
+				else if (strcmp(midcode[j].argu2, result_tp) == 0)
+					strcpy_s(midcode[j].argu2, midcode[i].result);
+			}
+		}
+		else if (midcode[i].type == MULOP && str_is_num(midcode[i].argu1) && str_is_num(midcode[i].argu2) && midcode[i].result[0] == '$') {
+			midcode[i].type = DEL;
+			strcpy_s(result_tp, midcode[i].result);
+			strcpy_s(midcode[i].result, numtostr(strtonum(midcode[i].argu1) * strtonum(midcode[i].argu2)));
+			for (j = i + 1; j < midcodec; j++) {
+				if (strcmp(midcode[j].result, result_tp) == 0)	break;
+				if (strcmp(midcode[j].argu1, result_tp) == 0)
+					strcpy_s(midcode[j].argu1, midcode[i].result);
+				else if (strcmp(midcode[j].argu2, result_tp) == 0)
+					strcpy_s(midcode[j].argu2, midcode[i].result);
+			}
+		}
+		else if (midcode[i].type == DIVOP && str_is_num(midcode[i].argu1) && str_is_num(midcode[i].argu2) && midcode[i].result[0] == '$') {
+			midcode[i].type = DEL;
+			strcpy_s(result_tp, midcode[i].result);
+			strcpy_s(midcode[i].result, numtostr(int(strtonum(midcode[i].argu1) / strtonum(midcode[i].argu2))));
+			for (j = i + 1; j < midcodec; j++) {
+				if (strcmp(midcode[j].result, result_tp) == 0)	break;
+				if (strcmp(midcode[j].argu1, result_tp) == 0)
+					strcpy_s(midcode[j].argu1, midcode[i].result);
+				else if (strcmp(midcode[j].argu2, result_tp) == 0)
+					strcpy_s(midcode[j].argu2, midcode[i].result);
 			}
 		}
 	}

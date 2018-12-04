@@ -165,6 +165,7 @@ int isRelation(int SYM);
 //º¯ÊıÉùÃ÷
 void nextch();
 void skip();
+void skipsym(std::initializer_list<int> const &items);
 void catToken();
 enum sym reserver();
 int transNum();
@@ -202,8 +203,10 @@ char* id_name_gen();
 void print_midcode();
 char* label_name_gen();
 char* numtostr(int num);
+int str_is_num(char* str);
 void delconst();
 void generate1();
+void generate2();
 char* str_name_gen();
 void mips();
 #endif // TEMP_H

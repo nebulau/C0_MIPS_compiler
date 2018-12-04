@@ -103,6 +103,22 @@ void skip() {
 	while (chr != ';')  nextch();
 	nextch();
 }
+/*
+	跳读直到遇到下一个正确语法成分的开头，
+	用initializer_list实现可变参数
+*/
+void skipsym(std::initializer_list<int> const &items) {
+	const int* p;
+	int flag = 0;
+	do {
+		getsym();
+		for (p = items.begin(); p != items.end(); p++) {
+			if (symbol == *p) {
+				flag = 1; break;
+			}
+		}
+	} while (flag == 0);	
+}
 void catToken() {	
 	if(strlen(token)<idlen)	token[strlen(token)] = chr;	
 }
@@ -1203,12 +1219,13 @@ int main()
 	program();
 	printtab();
 	generate1();
+	generate2();
 	delconst();
 	print_midcode();
 	mips();
 	file.close();
 	output.close();
-	cout << "编译完成.\n语句信息以及报错信息已存入output.txt.\n中间代码已存入midcode.txt.\nMIPS代码已存入mipscode.txt.\n";
+	cout << "编译完成.\n语法信息以及报错信息已存入output.txt.\n中间代码已存入midcode.txt.\nMIPS代码已存入mipscode.txt.\n";
 	system("pause");
 	//system("pause");
 	//fclose(file);
