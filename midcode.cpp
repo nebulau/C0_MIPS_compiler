@@ -378,7 +378,7 @@ void print_midcode() {
 				break;
 			}
 			case DEL: {
-				MidOutput << '\n';
+				//MidOutput << '\n';
 				break;
 			}
 			default: {

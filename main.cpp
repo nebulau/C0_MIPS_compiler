@@ -1218,8 +1218,15 @@ int main()
 	getsym();
 	program();
 	printtab();
-	generate1();
-	generate2();
+	char op;
+	cout << "Open generate1?(y/other)\n";
+	cin >> op;
+	if (op == 'y')
+		generate1();
+	cout << "Open generate2?(y/other)\n";
+	cin >> op;
+	if (op == 'y')
+		generate2();
 	delconst();
 	print_midcode();
 	mips();
@@ -1227,8 +1234,5 @@ int main()
 	output.close();
 	cout << "编译完成.\n语法信息以及报错信息已存入output.txt.\n中间代码已存入midcode.txt.\nMIPS代码已存入mipscode.txt.\n";
 	system("pause");
-	//system("pause");
-	//fclose(file);
-	//system("pause");
 	return 0;
 }

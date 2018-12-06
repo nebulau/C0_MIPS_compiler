@@ -5,10 +5,49 @@ main:
 #±£¥Ê÷°÷∏’Î
 	move $fp, $sp
 #ÕÀ’ªø’º‰
-	sub $sp, $sp, 4
-	li $t0, 65
-	move $s0, $t0
+	sub $sp, $sp, 424
+	la $t0, 0($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 23
+	sub $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, 0($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	move $s2, $t2
+	move $t0, $s2
+	li $t1, 23
+	sub $s3, $t0, $t1
+	la $t0, 0($fp)
+	move $t1, $s3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	move $s4, $t2
+	li $t0, 23
+	move $t1, $s4
+	sub $s5, $t0, $t1
+	la $t0, -4($fp)
+	move $t1, $s5
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 52
+	sub $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, -4($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	move $s6, $t2
 #¥Ú”°int
-	move $a0, $s0
+	move $a0, $s6
 	li $v0, 1
 	syscall

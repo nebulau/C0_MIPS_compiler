@@ -337,7 +337,7 @@ void DivHandler(int i) {
 		MipsOutput << "\tsw $t0, " << -addr_tp << "($fp)\n";
 	}
 }
-//todo
+
 void FuncHandler(int i) {
 	int addr_tp = 0;
 	//int index_tp;
@@ -364,7 +364,7 @@ void FuncHandler(int i) {
 	}
 
 }
-//todo
+
 void CallHandler(int i) {
 	string str_tp;
 	str_tp = midcode[i].argu1;

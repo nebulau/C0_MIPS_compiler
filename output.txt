@@ -1,7 +1,9 @@
 Line: 0, This is a mainfunc statement!
 Line: 2, This is a var definition statement!
-Line: 3, This is a assign statement!
-Line: 3, This is a printf statement!
+Line: 3, This is a var definition statement!
+Line: 5, This is a assign statement!
+Line: 6, This is a assign statement!
+Line: 6, This is a printf statement!
 
 ***************Finished***************
 
