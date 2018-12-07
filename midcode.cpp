@@ -49,7 +49,7 @@ void entertab(char *ident, int type, int value, int addr, int lev) {
 	curloc++;//当前位置+1
 }
 /*
-	查找符号表,查找到返回在tab的index，未查找到返回-1
+	查找符号表,查找到返回在tab的index，未查找到返回-1,funcnum表示第几个函数，从1开始计算
 */
 int searchtab(char* ident, int funcnum) {
 	int i;
@@ -97,7 +97,6 @@ void printtab() {
 	}
 	tabmsg.close();
 }
-//todo 填中间代码表
 void insert_midcode(int type, char* argu1, char* argu2, char* result, int value) { 
 	midcode[midcodec].type = type;
 	if (argu1 != NULL) {
@@ -421,18 +420,10 @@ int strtonum(char* str) {
 */
 void delconst()                                                                                                                                                                                                                       {
 	int i = 0, j = 0, k = 0;
-	//char const_tp[idlen];
-	//将函数内定义的常量在本函数内替换
-	/*for (i = 0; i < funcnum; i++) {
-		for (; j < midcodec; j++) {
-			if (midcode[j].type >= 6 && midcode[j].type <= 8) {
-				for (k = j + 1; k < midcodec; k++) {
-
-				}
-			}
-		}
-	}*/
-	//到达第一个函数在midcode的index
+	/*
+		到达第一个函数在midcode的index
+		将该函数内的所有常量替换成相应的值
+	*/
 	while (i < midcodec) {
 		for (; !(midcode[i].type >= 10 && midcode[i].type <= 12) && i < midcodec; i++);
 		for (j = i + 1; j < midcodec; j++) {
@@ -449,15 +440,27 @@ void delconst()                                                                 
 		}
 		i++;
 	}
-	for (i = 0; i < midcodec; i++) {
-		if (midcode[i].type == 0 || midcode[i].type == 1) {
-			for (j = i + 1; j < midcodec; j++) {
-				if (strcmp(midcode[j].argu1, midcode[i].argu1) == 0)
+	/*
+		替换全局常量，如果是局部变量或者局部常量则不替换
+	*/
+	int FuncNo = 0, index = 0;
+	for (i = 0; midcode[i].type == 0 || midcode[i].type == 1; i++) {
+		FuncNo = 0;
+		for (j = i + 1; j < midcodec; j++) {
+			if (midcode[j].type >= 10 && midcode[j].type <= 12)
+				FuncNo++;//是函数定义加1，获得当前位置，即在哪个函数中，进而查找在tab的下标获得lev
+			if (strcmp(midcode[j].argu1, midcode[i].argu1) == 0) {
+				index = searchtab(midcode[j].argu1, FuncNo);
+				if(tab[index].lev == 0)
 					strcpy_s(midcode[j].argu1, numtostr(midcode[i].value));
-				else if (strcmp(midcode[j].argu2, midcode[i].argu1) == 0)
-					strcpy_s(midcode[j].argu2, numtostr(midcode[i].value));
 			}
-		}
+				
+			else if (strcmp(midcode[j].argu2, midcode[i].argu1) == 0) {
+				index = searchtab(midcode[j].argu2, FuncNo);
+				if (tab[index].lev == 0)
+					strcpy_s(midcode[j].argu1, numtostr(midcode[i].value));
+			}
+		}		
 	}
 }
 /*

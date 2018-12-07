@@ -1,11 +1,368 @@
+const int const_int_postive = 1
+const int const_int_zero = 0
+const int const_int_negtive = -1
+const char const_char_a = 'a'
+const char const_char_b = 'b'
+const char const_char_c = 'c'
+const char const_char_A = 'A'
+const char const_char_num = '9'
+const char const_char_underline = '_'
+const char const_char_add = '+'
+const char const_char_mul = '*'
+var int int_global_var
+var char char_global_var
+void testIf()
+const int test_if_1 = 1
+const int test_if_2 = 2
+const char const_char_a = 'b'
+const char const_char_b = 'a'
+99 > 98
+BNZ Label0
+printf("b > a")
+Label0:
+99 >= 98
+BNZ Label1
+printf("b >= a")
+Label1:
+1 < 2
+BNZ Label2
+printf("1 < 2")
+Label2:
+1 <= 2
+BNZ Label3
+printf("1 <= 2")
+Label3:
+1 == 2
+BNZ Label4
+printf("1 == 2")
+Label4:
+1 != 2
+BNZ Label5
+printf("1 != 2")
+Label5:
+-1 == 
+BZ Label6
+printf("1 - 2 = true")
+Label6:
+int_global_var = -1
+char_global_var = 97
+return null
+void testWhile()
+para_int loop_length
+var int test_while_loop
+int array[50]
+var int mul
+test_while_loop = 0
+mul = 1
+Label7:
+test_while_loop < loop_length
+BNZ Label8
+printf("loop value : ")
+printf(test_while_loop)
+$$35 = test_while_loop + 1
+array[test_while_loop] = $$35
+$$38 = test_while_loop + 1
+test_while_loop = $$38
+GOTO Label7
+Label8:
+test_while_loop = 0
+Label9:
+test_while_loop < loop_length
+BNZ Label10
+$$44 = array[test_while_loop]
+$$45 = mul * $$44
+mul = $$45
+$$48 = test_while_loop + 1
+test_while_loop = $$48
+GOTO Label9
+Label10:
+printf("product value : ")
+printf(mul)
+int_global_var = -2
+char_global_var = 98
+return null
+void testSwitchCase()
+para_int test_switch_int
+para_char test_switch_char
+test_switch_int == -2
+BNZ Label12
+printf("First parameter is : ")
+printf(-2)
+GOTO Label11
+Label12:
+test_switch_int == -1
+BNZ Label13
+printf("First parameter is : ")
+printf(-1)
+GOTO Label11
+Label13:
+test_switch_int == 0
+BNZ Label14
+printf("First parameter is : ")
+printf(0)
+GOTO Label11
+Label14:
+test_switch_int == 1
+BNZ Label15
+printf("First parameter is : ")
+printf(1)
+GOTO Label11
+Label15:
+test_switch_int == 2
+BNZ Label16
+printf("First parameter is : ")
+printf(2)
+GOTO Label11
+Label16:
+printf("Bad integer test parameter : ")
+printf(test_switch_int)
+Label11:
+test_switch_char == 97
+BNZ Label18
+printf("Second parameter is : ")
+printf(97)
+GOTO Label17
+Label18:
+test_switch_char == 65
+BNZ Label19
+printf("Second parameter is : ")
+printf(65)
+GOTO Label17
+Label19:
+test_switch_char == 57
+BNZ Label20
+printf("Second parameter is : ")
+printf(57)
+GOTO Label17
+Label20:
+test_switch_char == 95
+BNZ Label21
+printf("Second parameter is : ")
+printf(95)
+GOTO Label17
+Label21:
+test_switch_char == 43
+BNZ Label22
+printf("Second parameter is : ")
+printf(43)
+GOTO Label17
+Label22:
+test_switch_char == 42
+BNZ Label23
+printf("Second parameter is : ")
+printf(42)
+GOTO Label17
+Label23:
+printf("Bad char test parameter : ")
+printf(test_switch_char)
+Label17:
+0 == 0
+BNZ Label25
+GOTO Label24
+Label25:
+Label24:
+int_global_var = -3
+char_global_var = 99
+return null
+int returnInt()
+ret 10
+char returnChar()
+ret 114
+int returnIntParameter()
+para_int int_parameter
+var int _tmp
+_tmp = int_parameter
+ret _tmp
+char returnCharParameter()
+para_char char_parameter
+var char _tmp
+_tmp = char_parameter
+ret _tmp
+void testAssign()
+const int test_assign_10 = 10
+var int int_test_assign
+int int_array_test_assign[3]
+var char char_test_assign
+char char_array_test_assign[3]
+int_array_test_assign[0] = 2
+call returnInt
+$$88 = RET
+$$90 = 0 - $$88
+call returnChar
+$$92 = RET
+$$95 = $$92 - 97
+$$97 = 10 * $$95
+push 97
+call returnIntParameter
+$$100 = RET
+$$102 = $$97 + $$100
+$$104 = $$90 + $$102
+int_array_test_assign[1] = $$104
+int_array_test_assign[2] = 1
+push -2
+call returnIntParameter
+$$115 = RET
+$$121 = $$115 * 2
+$$123 = int_array_test_assign[0]
+$$124 = $$121 / $$123
+$$125 = 10 + $$124
+int_test_assign = $$125
+char_array_test_assign[0] = 97
+$$130 = char_array_test_assign[0]
+push $$130
+call returnCharParameter
+$$131 = RET
+char_array_test_assign[1] = $$131
+call returnChar
+$$134 = RET
+char_array_test_assign[2] = $$134
+$$137 = char_array_test_assign[1]
+char_test_assign = $$137
+printf("int_test_assign : ")
+printf(int_test_assign)
+printf("char_test_assign : ")
+printf(char_test_assign)
+printf("int_test_assign[0] : ")
+$$141 = int_array_test_assign[0]
+printf($$141)
+printf("int_test_assign[1] : ")
+$$143 = int_array_test_assign[1]
+printf($$143)
+printf("int_test_assign[2] : ")
+$$145 = int_array_test_assign[2]
+printf($$145)
+printf("char_test_assign[0] : ")
+$$147 = char_array_test_assign[0]
+printf($$147)
+printf("char_test_assign[1] : ")
+$$149 = char_array_test_assign[1]
+printf($$149)
+printf("char_test_assign[2] : ")
+$$151 = char_array_test_assign[2]
+printf($$151)
+int_global_var = -4
+char_global_var = 100
+return null
+void testInputOutput()
+var int int_test_input
+var char char_test_input
+scanf(int_test_input)
+scanf(char_test_input)
+printf(int_test_input)
+printf(char_test_input)
+int_global_var = -5
+char_global_var = 101
+return null
+int testRecursion()
+para_int n
+n == 1
+BNZ Label26
+ret n
+Label26:
+$$168 = n - 1
+push $$168
+call testRecursion
+$$169 = RET
+$$171 = n * $$169
+ret $$171
+int testRecursion2()
+para_int n
+n == 0
+BNZ Label28
+ret 1
+GOTO Label27
+Label28:
+n == 1
+BNZ Label29
+ret 1
+GOTO Label27
+Label29:
+$$178 = n - 1
+push $$178
+call testRecursion2
+$$179 = RET
+$$181 = n * $$179
+ret $$181
+Label27:
+void testTrick()
+return null
+void testCallFunction()
+var int test_recursion_result
+printf("---------------test if---------------")
+call testIf
+printf("int_global_var : ")
+printf(int_global_var)
+printf("char_global_var : ")
+printf(char_global_var)
+printf("---------------test while---------------")
+push 5
+call testWhile
+printf("int_global_var : ")
+printf(int_global_var)
+printf("char_global_var : ")
+printf(char_global_var)
+printf("---------------test switch---------------")
+push 1
+push 97
+call testSwitchCase
+push -1
+push 43
+call testSwitchCase
+push 0
+push 42
+call testSwitchCase
+push -3
+push 95
+call testSwitchCase
+push 3
+push 57
+call testSwitchCase
+printf("int_global_var : ")
+printf(int_global_var)
+printf("char_global_var : ")
+printf(char_global_var)
+printf("---------------test assign---------------")
+call testAssign
+printf("int_global_var : ")
+printf(int_global_var)
+printf("char_global_var : ")
+printf(char_global_var)
+printf("---------------test in out---------------")
+call testInputOutput
+printf("int_global_var : ")
+printf(int_global_var)
+printf("char_global_var : ")
+printf(char_global_var)
+printf("---------------test recursion---------------")
+push 5
+call testRecursion
+$$206 = RET
+test_recursion_result = $$206
+printf("Factorial result is : ")
+printf(test_recursion_result)
+push 8
+call testRecursion
+$$210 = RET
+test_recursion_result = $$210
+printf("Factorial result is : ")
+printf(test_recursion_result)
+push 0
+call testRecursion2
+$$214 = RET
+test_recursion_result = $$214
+printf("Factorial result is : ")
+printf(test_recursion_result)
+int_global_var = -6
+char_global_var = 102
+return null
 void main()
-int arr[1]
-int arr2[100]
-arr[0] = 23
-$$4 = arr[0]
-$$6 = $$4 - 23
-$$7 = arr[$$6]
-$$8 = 23 - $$7
-arr2[$$8] = 52
-$$23 = arr2[0]
-printf($$23)
+var int int_global_var
+var char char_global_var
+call testCallFunction
+call testTrick
+int_global_var = 0
+char_global_var = 95
+printf("int_global_var : ")
+printf(int_global_var)
+printf("char_global_var : ")
+printf(char_global_var)

@@ -18,6 +18,7 @@ int lc = 0;//当前行数
 //临时存储要填符号表的全局变量
 int funcnum = 0;
 int expr_is_char = 0;//判断表达式是不是单个字符
+int occur_ret = 0;
 
 int type = 0;
 int value = 0;
@@ -439,6 +440,8 @@ void factorHandler() {
 				if (tab[j].type != int_array && tab[j].type != char_array) {
 					skip(); errormsg(26); getsym(); return;
 				}
+				if (tab[j].type == char_array)
+					expr_is_char = 1;
 				insert_midcode(ARRACCESS, token_tp, midcode[midcodec - 1].result, id_name_gen(), 0);
 				getsym(); return; 
 			}
@@ -452,6 +455,8 @@ void factorHandler() {
 				skip(); errormsg(30); getsym(); return; 
 			}
 			callrefuncHandler(token_tp); 
+			if (tab[j].type == return_char_func)
+				expr_is_char = 1;
 			insert_midcode(VARASSIGN, midcode[midcodec - 1].result, NULL, id_name_gen(), 0);
 			return; 
 		}
@@ -470,6 +475,7 @@ void factorHandler() {
 	else if (symbol == LPARSY){
 		getsym();
 		exprHandler();
+		expr_is_char = 0;
 		insert_midcode(VARASSIGN, midcode[midcodec - 1].result, NULL, id_name_gen(), 0);
 		if (symbol == RPARSY) { getsym(); }
 		else { skip(); errormsg(17); getsym(); return; }
@@ -563,6 +569,7 @@ void statementHandler() {
 		swicaseHandler();
 	}
 	else if (symbol == RETURNSY) {
+		occur_ret = 1;
 		returnHandler();//要处理之后的分号
 		if (symbol == SEMISY)  getsym(); 
 		else { skip(); errormsg(19); getsym(); return; }
@@ -843,13 +850,18 @@ void printfHandler() {
 		if (symbol == STRINGVALUE) {
 			insert_midcode(PRINTSTR, token, NULL, NULL, 0);
 			getsym();
+			if (symbol != COMMASY)	insert_midcode(PRINTNEWLINE, NULL, NULL, NULL, 0);
 			if (symbol == COMMASY) { 
 				getsym(); 
 				exprHandler(); 
-				if (expr_is_char)
+				if (expr_is_char) {
 					insert_midcode(PRINTCHAR, midcode[midcodec - 1].result, NULL, NULL, 0);
-				else
+					insert_midcode(PRINTNEWLINE, NULL, NULL, NULL, 0);
+				}
+				else {
 					insert_midcode(PRINTINT, midcode[midcodec - 1].result, NULL, NULL, 0);
+					insert_midcode(PRINTNEWLINE, NULL, NULL, NULL, 0);
+				}
 			}
 			if (symbol == RPARSY) {
 				output << "Line: " << lc << ", This is a printf statement!" << '\n';
@@ -859,10 +871,14 @@ void printfHandler() {
 		}
 		else {
 			exprHandler();
-			if (expr_is_char)
+			if (expr_is_char) {
 				insert_midcode(PRINTCHAR, midcode[midcodec - 1].result, NULL, NULL, 0);
-			else
+				insert_midcode(PRINTNEWLINE, NULL, NULL, NULL, 0);
+			}
+			else {
 				insert_midcode(PRINTINT, midcode[midcodec - 1].result, NULL, NULL, 0);
+				insert_midcode(PRINTNEWLINE, NULL, NULL, NULL, 0);
+			}
 			if (symbol == RPARSY) {
 				output << "Line: " << lc << ", This is a printf statement!" << '\n';
 				getsym();
@@ -1008,12 +1024,15 @@ void refuncHandler() {
 			}
 			else { skip(); errormsg(16); getsym(); continue; }
 		}
+		//检查有没有return
+		occur_ret = 0;
 		do {
 			statementHandler();
 		} while (symbol != RBRACE);
-		if (symbol == RBRACE) {
+		if(occur_ret == 0)
+			insert_midcode(RETNULL, NULL, NULL, NULL, 0);
+		if (symbol == RBRACE) 
 			getsym();
-		}
 		else { skip(); errormsg(16); getsym(); return; }
 	}
 	else { skip(); errormsg(16); getsym(); return; }
@@ -1218,6 +1237,7 @@ int main()
 	getsym();
 	program();
 	printtab();
+	delconst();//delconst需要在generate之前
 	char op;
 	cout << "Open generate1?(y/other)\n";
 	cin >> op;
@@ -1227,7 +1247,6 @@ int main()
 	cin >> op;
 	if (op == 'y')
 		generate2();
-	delconst();
 	print_midcode();
 	mips();
 	file.close();

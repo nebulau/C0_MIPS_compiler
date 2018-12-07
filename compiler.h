@@ -65,6 +65,7 @@
 #define RETNULL 37
 
 #define DEL 38
+#define PRINTNEWLINE 39	
 extern char chr;
 extern char token[idlen];//存储每一个获取的symbol，在每一次getsym初始化
 extern int num;//the value of int

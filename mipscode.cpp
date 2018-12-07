@@ -337,7 +337,6 @@ void DivHandler(int i) {
 		MipsOutput << "\tsw $t0, " << -addr_tp << "($fp)\n";
 	}
 }
-
 void FuncHandler(int i) {
 	int addr_tp = 0;
 	//int index_tp;
@@ -364,7 +363,6 @@ void FuncHandler(int i) {
 	}
 
 }
-
 void CallHandler(int i) {
 	string str_tp;
 	str_tp = midcode[i].argu1;
@@ -584,11 +582,6 @@ void ArrAccessHandler(int i) {
 		MipsOutput << "\tsw $t2, " << -addr_tp << "($fp)\n";
 	}
 }
-
-
-
-
-
 void ConditionHandler(int i) {
 	/*
 		需要将i+1所以传入指针
@@ -870,19 +863,16 @@ void ConditionHandler(int i) {
 		}
 	}
 }
-
 void SetLabelHandler(int i) {
 	string str_tp;
 	str_tp = midcode[i].argu1;
 	MipsOutput << str_tp << ":\n";
 }
-
 void GotoHandler(int i) {
 	string str_tp;
 	str_tp = midcode[i].argu1;
 	MipsOutput << "\tj " << str_tp << '\n';
 }
-
 void ScanIntHandler(int i) {
 	int addr_tp = 0;
 	int index_tp;
@@ -1233,12 +1223,12 @@ void mips() {
 			//return;
 			RetNullHandler(i);
 			break;
+		case PRINTNEWLINE:
+			MipsOutput << "\tli $a0, 10\n\tli $v0, 11\n\tsyscall\n";
+			break;
 		default:
 			break;
 		}
 	}
-
-
-
 	MipsOutput.close();
 }
