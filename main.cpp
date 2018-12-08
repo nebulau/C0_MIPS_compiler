@@ -234,6 +234,11 @@ int getsym() {
 	else if (chr == '\"') {
 		nextch();
 		while (chr != '\"') {
+			/*if (chr == '\\') {
+				if (strlen(token) < idlen)	token[strlen(token)] = '\\';
+				if (strlen(token) < idlen)	token[strlen(token)] = '\\';
+				nextch();
+			}*/
 			if ((chr == 32) | (chr == 33) |
 				(chr > 34 && chr < 127)) {
 				catToken(); nextch();
@@ -966,7 +971,7 @@ void callfuncHandler(char* token_tp) {
 	int j;
 	j = searchtab(token_tp, funcnum);
 	if (j == -1) { errormsg(30); }
-	if (!(tab[j].type >= 6 && tab[j].type <= 8)) { skip(); errormsg(30); getsym(); return; }
+	if (!(tab[j].type >= 6 && tab[j].type <= 8)) { errormsg(30); }
 	realparaHandler(j);
 	insert_midcode(CALL, token_tp, NULL, NULL, 0);
 }

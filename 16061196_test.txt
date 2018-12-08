@@ -1,66 +1,116 @@
-const int tp_f = -10;
-const char ch_s = 'a', ch_f = 'w';
-int pt, tp, array[1];
-char op, ch;
+const char const_char1 = 'a';
+int x;
+char op;
+char globalarr[5];
 int fib(int x){
-  if(x<=2)
-    return (x);
-  if(x>1){
-    return (fib(x-1) + fib(x-2));
-  }
+    if(x<=2)
+        return (1);
+    if(x >2)
+        return (fib(x-1)+fib(x-2));
 }
-void func(int x, int y){
-  const int u = +24;
-  const char c = 'z';
-  if(y >= x){
-    printf("para1 >= para2");
-    tp = - u * 3 + c;
-    ch = '8';
-    array[1] = 1;
-    array[1] = 0;
-  }
-  if(y < x) {
-    printf("para1 < para2")
-    tp = fib(x);
-    ch = '_';
-    array[0] = 0;
-    array[1] = 1;
-  }
+char retchar(){
+    return ('-');
 }
- void main(){
-  int n;
-  n = 0;
-  scanf(pt);
-  scanf(pt, op);
-  if(pt == op)  printf("pt equals to op");
-  switch (op) {
-    case 'f':{
-      tp = fib(pt) + tp_f;
-      ch = 'a';
-      array[0] = 1;
-      array[1] = 1;
+
+void testif(){
+    int x, y;
+    scanf(x);
+    scanf(y);
+    printf("x is");
+    printf(x);
+    printf("y is");
+    printf(y);
+    if(x>y)
+        printf("x>y the greater is ",x);
+    if(x>=y)
+        printf("x>=y ",x);
+    if(x<y)
+        printf("x<y the greater is ",y);
+    if(x<=y)
+        printf("x<=y ",y);
+    if(x==y)
+        printf("x==y ");
+    if(x!=y)
+        printf("x!=y ");
+    {}
+    ;
+    {}{}{};
+    {{{}}}
+    ;;;{;{;}};
+}
+void testwhile(){
+    int arr[4], _A2RR2[4];
+    int i;
+    i = 0;
+    while(i<=3){
+        arr[i] = i + i *i -i;
+        printf(arr[i]);
+        i = i+1;
     }
-    case 'k':
-      func(pt, tp_f);
-    default:{
-      tp = 0;
-      ch = 'a';
-      array[0] = 0;
-      array[1] = 0;
-    }
-  }
-  while(n < tp_f){
-    printf(" fib ", n + 1);
-    printf(" ", fib(n + 1));
-    n = n + 3;
-  }
-  printf("tp = ", tp);
-  printf(" ,");
-  printf("ch = ", ch);
-  printf(" ");
-  printf(array[0] + 'a' +array['b'-'a']);
+    while(i>4);
+    x=5;
+    arr[0]=23;
+    _A2RR2[+23-arr[arr[0]-+23]] = -1+-2+-3+-4++5++5+6+9+fib(5)+'*'+retchar()+1*-2+2+2/1-2 + const_char1 +x;
+    printf(_A2RR2[0]);
 }
-
-
-
-
+void testassign(){
+    int i;
+    globalarr[0]='+';
+    globalarr[1]='/';
+    globalarr[2]='a';
+    globalarr[3]='5';
+    globalarr[4]='A';
+    
+    i=0;
+    while(i<5){
+        printf(globalarr[i]);
+        i=i+1;
+    }
+    x=15;
+    if(x)   printf(x);
+    x=0;
+    if(x)   printf(x);
+}
+void testswitch(){
+    switch(x){
+        case 1:
+            printf(1);
+        case 2:
+            printf(2);
+        default:
+            printf(0);
+    }
+    switch(op){
+        case 'a':
+            printf('a');
+        case 'z':
+            printf('z');
+        default:
+            printf('*');
+    }
+}
+void callfunc(){
+    int i;
+    printf("input a choice:");
+    scanf(i);
+    switch(i){
+        case 1:
+            testif();
+        case 2:
+            testwhile();
+        case 3:
+            testassign();
+        case 4:{
+            scanf(x);
+            scanf(op);
+            testswitch();
+        }     
+    }
+}
+void main(){
+    int i;
+    scanf(i);
+    printf("i = ", i);
+    callfunc();
+    return;
+}

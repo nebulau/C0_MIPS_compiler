@@ -999,7 +999,7 @@ void RetExprHandler(int i) {
 		index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
 		if (index_tp == -1) {
 			str_tp = midcode[i].argu1;
-			MipsOutput << "\tlw $$v0, " << str_tp << '\n';
+			MipsOutput << "\tlw $v0, " << str_tp << '\n';
 		}
 		else if (index_tp < ParaNum) {
 			MipsOutput << "\tlw $v0, " << -addr_tp << "($fp)\n";
@@ -1023,7 +1023,7 @@ void RetExprHandler(int i) {
 void RetNullHandler(int i) {
 	if (FuncLoc == funcnum - 1)
 		//mainº¯Êý·µ»Ø
-		MipsOutput << "\tli $v0, 10\nsyscall\n";
+		MipsOutput << "\tli $v0, 10\n\tsyscall\n";
 	else {
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $fp, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $ra, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s7, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s6, 0($sp)\n";

@@ -458,7 +458,7 @@ void delconst()                                                                 
 			else if (strcmp(midcode[j].argu2, midcode[i].argu1) == 0) {
 				index = searchtab(midcode[j].argu2, FuncNo);
 				if (tab[index].lev == 0)
-					strcpy_s(midcode[j].argu1, numtostr(midcode[i].value));
+					strcpy_s(midcode[j].argu2, numtostr(midcode[i].value));
 			}
 		}		
 	}
