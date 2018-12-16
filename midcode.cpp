@@ -91,9 +91,7 @@ void printtab() {
 	type[6] = "return_int_func";	type[7] = "return_char_func";
 	type[8] = "void_func";	type[9] = "int_para";	type[10] = "char_para";
 	for (i = 0; i < curloc; i++) {
-		tabmsg << tab[i].ident << ' ' << type[tab[i].type] << ' '
-			<< tab[i].value << ' ' << tab[i].size << ' '
-			<< tab[i].lev << '\n';
+		tabmsg << tab[i].ident << ' ' << type[tab[i].type] << " field " << tab[i].lev << '\n';
 	}
 	tabmsg.close();
 }

@@ -1,5 +1,199 @@
+const char const_char1 = 'a'
+var int x
+var char op
+char globalarr[5]
+int fib()
+para_int x
+x <= 2
+BNZ Label0
+ret 1
+Label0:
+x > 2
+BNZ Label1
+$$7 = x - 1
+push $$7
+call fib
+$$8 = RET
+$$12 = x - 2
+push $$12
+call fib
+$$13 = RET
+$$15 = $$8 + $$13
+ret $$15
+Label1:
+char retchar()
+ret 45
+void testif()
+var int x
+var int y
+scanf(x)
+scanf(y)
+printf("x is")
+printf(x)
+printf("y is")
+printf(y)
+x > y
+BNZ Label2
+printf("x>y the greater is ")
+printf(x)
+Label2:
+x >= y
+BNZ Label3
+printf("x>=y ")
+printf(x)
+Label3:
+x < y
+BNZ Label4
+printf("x<y the greater is ")
+printf(y)
+Label4:
+x <= y
+BNZ Label5
+printf("x<=y ")
+printf(y)
+Label5:
+x == y
+BNZ Label6
+printf("x==y ")
+Label6:
+x != y
+BNZ Label7
+printf("x!=y ")
+Label7:
+return null
+void testwhile()
+int arr[4]
+int _A2RR2[4]
+var int i
+i = 0
+Label8:
+i <= 3
+BNZ Label9
+$$42 = i * i
+$$43 = i + $$42
+$$45 = $$43 - i
+arr[i] = $$45
+$$47 = arr[i]
+printf($$47)
+$$50 = i + 1
+i = $$50
+GOTO Label8
+Label9:
+Label10:
+i > 4
+BNZ Label11
+GOTO Label10
+Label11:
+x = 5
+arr[0] = 23
+$$58 = arr[0]
+$$60 = $$58 - 23
+$$61 = arr[$$60]
+$$62 = 23 - $$61
+push 5
+call fib
+$$81 = RET
+$$83 = 15 + $$81
+$$85 = $$83 + 42
+call retchar
+$$86 = RET
+$$88 = $$85 + $$86
+$$92 = $$88 + -2
+$$94 = $$92 + 2
+$$98 = $$94 + 2
+$$100 = $$98 - 2
+$$102 = $$100 + 97
+$$104 = $$102 + x
+_A2RR2[$$62] = $$104
+$$106 = _A2RR2[0]
+printf($$106)
+return null
+void testassign()
+var int i
+globalarr[0] = 43
+globalarr[1] = 47
+globalarr[2] = 97
+globalarr[3] = 53
+globalarr[4] = 65
+i = 0
+Label12:
+i < 5
+BNZ Label13
+$$121 = globalarr[i]
+printf($$121)
+$$124 = i + 1
+i = $$124
+GOTO Label12
+Label13:
+x = 15
+x == 
+BZ Label14
+printf(x)
+Label14:
+x = 0
+x == 
+BZ Label15
+printf(x)
+Label15:
+return null
+void testswitch()
+x == 1
+BNZ Label17
+printf(1)
+GOTO Label16
+Label17:
+x == 2
+BNZ Label18
+printf(2)
+GOTO Label16
+Label18:
+printf(0)
+Label16:
+op == 97
+BNZ Label20
+printf(97)
+GOTO Label19
+Label20:
+op == 122
+BNZ Label21
+printf(122)
+GOTO Label19
+Label21:
+printf(42)
+Label19:
+return null
+void callfunc()
+var int i
+printf("input a choice:")
+scanf(i)
+i == 1
+BNZ Label23
+call testif
+GOTO Label22
+Label23:
+i == 2
+BNZ Label24
+call testwhile
+GOTO Label22
+Label24:
+i == 3
+BNZ Label25
+call testassign
+GOTO Label22
+Label25:
+i == 4
+BNZ Label26
+scanf(x)
+scanf(op)
+call testswitch
+GOTO Label22
+Label26:
+Label22:
+return null
 void main()
-char a[5]
-a[0] = 97
-$$3 = a[0]
-printf($$3)
+var int i
+scanf(i)
+printf("i = ")
+printf(i)
+call callfunc
+return null

@@ -173,7 +173,10 @@ int getsym() {
 	symbol = NOTSY;
 	while (isSpace() || isNewline() || isTab())    nextch();
 	if (file.eof()) {
-		output << "end of file, incomplete C0_program\n"; exit(0);
+		output << "end of file, incomplete C0_program.\n"; 
+		cout << "end of file, incomplete C0_program.\n";
+		system("pause");
+		exit(0);
 	}
 	if (isLetter()) {
 		while (isLetter() || isDigit() || (chr == '_')) { catToken(); nextch(); }
@@ -405,9 +408,9 @@ void termHandler() {
 	strcpy_s(factor_tp, midcode[midcodec - 1].result);
 	while (symbol == STARSY || symbol == DIVISY) {
 		op_tp = (symbol == STARSY) ? MULOP : DIVOP;
-		expr_is_char = 0;
 		getsym();
 		factorHandler();
+		expr_is_char = 0;
 		insert_midcode(op_tp, factor_tp, midcode[midcodec - 1].result,
 			id_name_gen(), 0);
 		strcpy_s(factor_tp, midcode[midcodec - 1].result);
@@ -699,32 +702,35 @@ void assignHandler(char *token) {
 		if(j == -1) { skip(); errormsg(23); return; }//已经读到分号 去除getsym
 		if (is_array) {
 			if (tab[j].type == int_array) {
-				if(expr_is_char) { errormsg(25); }
-				else {
+				//char赋值给int，输出报错信息，还可以继续运行
+				if(expr_is_char) { 
+					errormsg(25); 
 					insert_midcode(ARRASSIGN, index, result, token, 0);
 				}
+				else 
+					insert_midcode(ARRASSIGN, index, result, token, 0);
 			}
 			else if (tab[j].type == char_array) {
-				if (!expr_is_char) { errormsg(25);  }
-				else {
+				if (!expr_is_char) { errormsg(25); }
+				else 
 					insert_midcode(ARRASSIGN, index, result, token, 0);
-				}
 			}
 			else{ errormsg(26); }
 		}
 		else {
 			if (tab[j].type == var_int || tab[j].type == int_para) {
-				if (expr_is_char) {  errormsg(27);  }
-				else {
+				//char赋值给int，输出报错信息，还可以继续运行
+				if (expr_is_char) {  
+					errormsg(27);  
 					insert_midcode(VARASSIGN, result, NULL, token, 0);
-					//var_int = !expr_is_char
 				}
+				else 
+					insert_midcode(VARASSIGN, result, NULL, token, 0);
 			}
 			else if (tab[j].type == var_char || tab[j].type == char_para) {
 				if (!expr_is_char) { errormsg(28); }
-				else {
+				else 
 					insert_midcode(VARASSIGN, result, NULL, token, 0);
-				}
 			}
 			else { errormsg(29); }
 		}
@@ -1230,7 +1236,7 @@ int main()
 	cin.getline(path, 100);
 	file.open(path);
 	output.open("output.txt");
-	if (!file) { cout << "No such file!"; return -1; }//file does not exist
+	if (!file) { cout << "No such file!"; system("pause");  return -1; }//file does not exist
 	setup();
 	/*
 		预读一个字符

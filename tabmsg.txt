@@ -1,2 +1,21 @@
-main void_func 0 0 0
-a char_array 5 20 1
+const_char1 const_char field 0
+x var_int field 0
+op var_char field 0
+globalarr char_array field 0
+fib return_int_func field 0
+x int_para field 1
+retchar return_char_func field 0
+testif void_func field 0
+x var_int field 1
+y var_int field 1
+testwhile void_func field 0
+arr int_array field 1
+_A2RR2 int_array field 1
+i var_int field 1
+testassign void_func field 0
+i var_int field 1
+testswitch void_func field 0
+callfunc void_func field 0
+i var_int field 1
+main void_func field 0
+i var_int field 1
