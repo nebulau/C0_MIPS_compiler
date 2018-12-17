@@ -101,7 +101,14 @@ void nextch() {
 	if (chr == '\n')    lc++;
 }
 void skip() {
-	while (chr != ';')  nextch();
+	while (chr != ';') {
+		if (file.eof()) {
+			cout << "skip towards end of file with exit code 0.\n";
+			system("pause");
+			exit(0);
+		}
+		nextch();
+	}
 	nextch();
 }
 /*
@@ -510,7 +517,9 @@ void exprHandler() {
 	char term_tp[idlen];//缓存上一个term的结果名
 	int is_minus = 0;
 	int sym_tp = 0;
+	int first_is_plus_minus = 0;
 	if (symbol == PLUSSY || symbol == MINUSSY) {
+		first_is_plus_minus = 1;
 		sym_tp = symbol;
 		expr_is_char = 0;
 		getsym();
@@ -522,6 +531,7 @@ void exprHandler() {
 		}
 	}
 	termHandler();
+	expr_is_char = !first_is_plus_minus&&expr_is_char ? 1 : 0;
 	if (is_minus) {
 		insert_midcode(SUBOP, term_tp, midcode[midcodec - 1].result, id_name_gen(), 0);
 	}
@@ -1087,7 +1097,7 @@ void program() {
 							insert_midcode((sym_tp == INTSY) ? INT_ARR : CHAR_ARR, token_tp, NULL,NULL,num_tp);
 							getsym();
 						}
-						else { skip(); errormsg(14); getsym(); return; }
+						else { skip(); errormsg(14); getsym(); continue; }
 					}
 					else { skip(); errormsg(13); getsym(); continue; }
 				}
@@ -1105,7 +1115,11 @@ void program() {
 			else { skip(); errormsg(16); getsym(); continue; }
 		}
 		if (symbol == VOIDSY)	break;
-		if (symbol != INTSY && symbol != CHARSY && symbol != VOIDSY)	exit(3);
+		if (symbol != INTSY && symbol != CHARSY && symbol != VOIDSY) {
+			cout << "incomplete C0_program with exit code 3.\n";
+			system("pause");
+			exit(3);
+		}
 	}
 	/*
 		遇到有返回值函数定义

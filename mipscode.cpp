@@ -862,6 +862,52 @@ void ConditionHandler(int i) {
 			MipsOutput << str_tp << '\n';
 		}
 	}
+	else if (midcode[i].type == UNEQUOP) {
+		//beq $t0, $t1, label 大于等于跳转
+		if (str_is_num(midcode[i].argu1)) {
+			str_tp = midcode[i].argu1;
+			MipsOutput << "\tli $t0, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu1, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu1;
+				MipsOutput << "\tlw $t0, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t0, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t0, " << -addr_tp << "($fp)\n";
+			}
+		}
+
+		if (str_is_num(midcode[i].argu2)) {
+			str_tp = midcode[i].argu2;
+			MipsOutput << "\tli $t1, " << str_tp << '\n';
+		}
+		else {
+			index_tp = get_index(midcode[i].argu2, FuncLoc, &addr_tp);
+			if (index_tp == -1) {
+				str_tp = midcode[i].argu2;
+				MipsOutput << "\tlw $t1, " << str_tp << '\n';
+			}
+			else if (index_tp < ParaNum) {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+			else if (index_tp >= ParaNum + 0 && index_tp <= ParaNum + 7) {
+				MipsOutput << "\tmove $t1, $s" << index_tp - ParaNum << '\n';
+			}
+			else {
+				MipsOutput << "\tlw $t1, " << -addr_tp << "($fp)\n";
+			}
+		}
+		str_tp = midcode[i + 1].argu1;
+		MipsOutput << "\tbeq $t0, $t1, " << str_tp << '\n';
+	}
 }
 void SetLabelHandler(int i) {
 	string str_tp;

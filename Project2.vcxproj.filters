@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="temp.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="compiler.h">
       <Filter>头文件</Filter>
     </ClInclude>
