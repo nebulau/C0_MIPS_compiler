@@ -352,14 +352,16 @@ void FuncHandler(int i) {
 		str_tp = midcode[i].argu1;
 		MipsOutput << str_tp << ":\n";
 		//MipsOutput << "\tadd $fp, $sp, " << FuncTab[FuncLoc].ParaNum * 4 << "\n#置$fp为被调用者基地址\n";
-		MipsOutput << "\tsub $sp, $sp, " << (FuncTab[FuncLoc].VariNum - FuncTab[FuncLoc].ParaNum) * 4 << '\n';
+		//MipsOutput << "\tsub $sp, $sp, " << (FuncTab[FuncLoc].VariNum - FuncTab[FuncLoc].ParaNum) * 4 << '\n';
+		MipsOutput << "\tsub $sp, $sp, " << FuncTab[FuncLoc].InfoSize - FuncTab[FuncLoc].ParaNum * 4 << '\n';
 		MipsOutput << "#退栈空间，接着保存s系寄存器和$ra,$fp\n";
 		MipsOutput << "\tsw $s0, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s1, 0($sp)\n\tsub $sp, $sp, 4\n";
 		MipsOutput << "\tsw $s2, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s3, 0($sp)\n\tsub $sp, $sp, 4\n";
 		MipsOutput << "\tsw $s4, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s5, 0($sp)\n\tsub $sp, $sp, 4\n";
 		MipsOutput << "\tsw $s6, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s7, 0($sp)\n\tsub $sp, $sp, 4\n";
 		MipsOutput << "\tsw $ra, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $fp, 0($sp)\n\tsub $sp, $sp, 4\n";
-		MipsOutput << "#置$fp为被调用者基地址\n\tadd $fp, $sp, " << FuncTab[FuncLoc].VariNum * 4 + 40<< "\n";
+		//MipsOutput << "#置$fp为被调用者基地址\n\tadd $fp, $sp, " << FuncTab[FuncLoc].VariNum * 4 + 40<< "\n";
+		MipsOutput << "#置$fp为被调用者基地址\n\tadd $fp, $sp, " << FuncTab[FuncLoc].InfoSize + 40 << "\n";
 	}
 
 }
@@ -1063,7 +1065,8 @@ void RetExprHandler(int i) {
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
-	MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4 << '\n';
+	//MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4 << '\n';
+	MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].InfoSize << '\n';
 	MipsOutput << "\tjr $ra\n";
 }
 void RetNullHandler(int i) {
@@ -1076,7 +1079,7 @@ void RetNullHandler(int i) {
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
-		MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4 << "\n";
+		MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].InfoSize << '\n';
 		MipsOutput << "\tjr $ra\n";
 	}
 }
