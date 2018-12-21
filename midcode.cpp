@@ -563,3 +563,19 @@ void generate2() {
 		}
 	}
 }
+/*
+	窥孔优化，出现一个临时变量$的运算，并且下一条中间代码是赋值语句，临时变量$在右式
+	将这两条相邻的中间代码合并为一条
+	这里相邻通过简单+1，因为这样的两条中间代码之间不会有DEL的中间代码
+*/
+void peephole() {
+	for (int i = 0; i < midcodec - 1; i++) {
+		if (midcode[i].type == ADDOP || midcode[i].type == SUBOP || midcode[i].type == MULOP
+			|| midcode[i].type == DIVOP || midcode[i].type == ARRACCESS) {
+			if (midcode[i + 1].type == VARASSIGN && strcmp(midcode[i].result, midcode[i + 1].argu1) == 0 && strlen(midcode[i + 1].argu2) == 0) {
+				strcpy_s(midcode[i].result, midcode[i + 1].result);
+				midcode[i + 1].type = DEL;
+			}
+		}
+	}
+}

@@ -208,6 +208,7 @@ int str_is_num(char* str);
 void delconst();
 void generate1();
 void generate2();
+void peephole();
 char* str_name_gen();
 void mips();
 #endif // TEMP_H

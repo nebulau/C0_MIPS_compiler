@@ -1,421 +1,166 @@
 Line: 1, This is a const definition statement!
 Line: 2, This is a const definition statement!
-Line: 3, This is a const definition statement!
-Line: 4, This is a const definition statement!
-Line: 5, This is a const definition statement!
+Line: 3, This is a var definition statement!
+Line: 4, This is a var definition statement!
+Line: 5, This is a var definition statement!
 Line: 6, This is a var definition statement!
-Line: 7, This is a var definition statement!
-Line: 8, This is a var definition statement!
-Line: 9, This is a var definition statement!
-Line: 10, This is a var definition statement!
-Line: 13, This is a function definition statement!
-Line: 15, This is a var definition statement!
-Line: 16, This is a assign statement!
-Line: 17, This is a assign statement!
-Line: 18, This is a assign statement!
-Line: 18, This is a if statement!
-Line: 20, This is a assign statement!
-Line: 21, This is a assign statement!
-Line: 22, This is a return statement!
-Line: 27, This is a function definition statement!
-Line: 29, This is a assign statement!
-Line: 29, This is a return statement!
-Line: 33, This is a function definition statement!
-Line: 34, This is a return statement!
-Line: 39, This is a function definition statement!
-Line: 41, This is a assign statement!
+Line: 7, This is a function definition statement!
+Line: 9, This is a const definition statement!
+Line: 11, This is a var definition statement!
+Line: 12, This is a var definition statement!
+Line: 13, This is a printf statement!
+Line: 15, This is a printf statement!
+Line: 16, This is a printf statement!
+Line: 17, This is a printf statement!
+Line: 18, This is a printf statement!
+Line: 19, This is a printf statement!
+Line: 21, This is a printf statement!
+Line: 22, This is a scanf statement!
+Line: 23, This is a printf statement!
+Line: 24, This is a printf statement!
+Line: 26, This is a printf statement!
+Line: 27, This is a printf statement!
+Line: 28, This is a printf statement!
+Line: 29, This is a printf statement!
+Line: 30, This is a printf statement!
+Line: 31, This is a printf statement!
+Line: 32, This is a printf statement!
+Line: 33, This is a printf statement!
+Line: 34, This is a printf statement!
+Line: 35, This is a printf statement!
+Line: 36, This is a printf statement!
+Line: 37, This is a printf statement!
+Line: 38, This is a printf statement!
+Line: 39, This is a printf statement!
+Line: 40, This is a printf statement!
 Line: 41, This is a printf statement!
-Line: 42, This is a return statement!
-Line: 47, This is a function definition statement!
-Line: 49, This is a var definition statement!
-Line: 50, This is a assign statement!
+Line: 42, This is a printf statement!
+Line: 43, This is a printf statement!
+Line: 44, This is a printf statement!
+Line: 45, This is a printf statement!
+Line: 46, This is a printf statement!
+Line: 47, This is a printf statement!
+Line: 49, This is a printf statement!
 Line: 51, This is a assign statement!
-Line: 52, This is a assign statement!
+Line: 51, This is a printf statement!
 Line: 53, This is a assign statement!
-Line: 54, This is a assign statement!
+Line: 53, This is a printf statement!
 Line: 55, This is a assign statement!
-Line: 56, This is a assign statement!
+Line: 55, This is a printf statement!
 Line: 57, This is a assign statement!
-Line: 58, This is a assign statement!
-Line: 58, This is a printf statement!
+Line: 57, This is a printf statement!
+Line: 59, This is a assign statement!
 Line: 59, This is a printf statement!
-Line: 60, This is a printf statement!
+Line: 61, This is a assign statement!
 Line: 61, This is a printf statement!
-Line: 62, This is a printf statement!
+Line: 63, This is a assign statement!
 Line: 63, This is a printf statement!
-Line: 65, This is a if statement!
+Line: 65, This is a assign statement!
+Line: 65, This is a printf statement!
 Line: 67, This is a assign statement!
-Line: 69, This is a if statement!
-Line: 71, This is a assign statement!
-Line: 72, This is a assign statement!
-Line: 73, This is a if statement!
-Line: 75, This is a assign statement!
-Line: 78, This is a assign statement!
-Line: 79, This is a assign statement!
-Line: 80, This is a assign statement!
-Line: 81, This is a assign statement!
-Line: 82, This is a assign statement!
-Line: 84, This is a assign statement!
-Line: 85, This is a if statement!
-Line: 86, This is a assign statement!
-Line: 86, This is a if statement!
-Line: 88, This is a assign statement!
-Line: 90, This is a if statement!
-Line: 91, This is a assign statement!
-Line: 93, This is a assign statement!
-Line: 94, This is a if statement!
-Line: 95, This is a assign statement!
-Line: 95, This is a if statement!
-Line: 97, This is a assign statement!
-Line: 98, This is a assign statement!
-Line: 100, This is a if statement!
-Line: 101, This is a assign statement!
-Line: 103, This is a assign statement!
-Line: 104, This is a if statement!
-Line: 105, This is a assign statement!
-Line: 105, This is a if statement!
-Line: 107, This is a assign statement!
-Line: 108, This is a assign statement!
-Line: 110, This is a if statement!
-Line: 111, This is a assign statement!
-Line: 113, This is a assign statement!
-Line: 114, This is a if statement!
+Line: 67, This is a printf statement!
+Line: 70, This is a assign statement!
+Line: 70, This is a printf statement!
+Line: 71, This is a switch statement!
+Line: 72, This is a printf statement!
+Line: 73, This is a printf statement!
+Line: 74, This is a printf statement!
+Line: 76, This is a switch_case statement!
+Line: 76, This is a printf statement!
+Line: 77, This is a switch statement!
+Line: 78, This is a printf statement!
+Line: 79, This is a printf statement!
+Line: 81, This is a switch_case statement!
+Line: 81, This is a printf statement!
+Line: 82, This is a switch statement!
+Line: 83, This is a printf statement!
+Line: 84, This is a printf statement!
+Line: 85, This is a printf statement!
+Line: 87, This is a switch_case statement!
+Line: 89, This is a assign statement!
+Line: 89, This is a printf statement!
+Line: 90, This is a switch statement!
+Line: 91, This is a printf statement!
+Line: 92, This is a printf statement!
+Line: 93, This is a printf statement!
+Line: 95, This is a switch_case statement!
+Line: 95, This is a printf statement!
+Line: 96, This is a switch statement!
+Line: 97, This is a printf statement!
+Line: 98, This is a printf statement!
+Line: 100, This is a switch_case statement!
+Line: 100, This is a printf statement!
+Line: 101, This is a switch statement!
+Line: 102, This is a printf statement!
+Line: 103, This is a printf statement!
+Line: 104, This is a printf statement!
+Line: 106, This is a switch_case statement!
+Line: 107, This is a printf statement!
+Line: 109, This is a assign statement!
+Line: 109, This is a while statement!
+Line: 110, This is a printf statement!
+Line: 112, This is a assign statement!
+Line: 113, This is a printf statement!
 Line: 115, This is a assign statement!
-Line: 115, This is a if statement!
-Line: 117, This is a assign statement!
+Line: 115, This is a while statement!
+Line: 116, This is a printf statement!
 Line: 118, This is a assign statement!
-Line: 120, This is a if statement!
 Line: 121, This is a assign statement!
-Line: 123, This is a assign statement!
-Line: 124, This is a if statement!
-Line: 125, This is a assign statement!
+Line: 121, This is a printf statement!
+Line: 122, This is a if statement!
+Line: 123, This is a printf statement!
 Line: 125, This is a if statement!
-Line: 127, This is a assign statement!
-Line: 128, This is a assign statement!
-Line: 130, This is a if statement!
-Line: 131, This is a assign statement!
-Line: 134, This is a return statement!
-Line: 136, This is a function definition statement!
-Line: 138, This is a var definition statement!
-Line: 139, This is a var definition statement!
-Line: 140, This is a assign statement!
-Line: 141, This is a if statement!
-Line: 142, This is a assign statement!
-Line: 143, This is a if statement!
-Line: 144, This is a assign statement!
-Line: 145, This is a if statement!
-Line: 146, This is a assign statement!
+Line: 126, This is a printf statement!
+Line: 128, This is a if statement!
+Line: 129, This is a printf statement!
+Line: 132, This is a assign statement!
+Line: 132, This is a printf statement!
+Line: 133, This is a if statement!
+Line: 134, This is a printf statement!
+Line: 136, This is a if statement!
+Line: 139, This is a if statement!
+Line: 140, This is a printf statement!
+Line: 143, This is a assign statement!
+Line: 143, This is a printf statement!
+Line: 144, This is a if statement!
+Line: 145, This is a printf statement!
 Line: 147, This is a if statement!
-Line: 148, This is a assign statement!
-Line: 149, This is a if statement!
-Line: 150, This is a assign statement!
-Line: 151, This is a if statement!
-Line: 152, This is a assign statement!
-Line: 153, This is a if statement!
-Line: 154, This is a assign statement!
-Line: 156, This is a assign statement!
-Line: 157, This is a assign statement!
-Line: 157, This is a if statement!
-Line: 158, This is a assign statement!
-Line: 159, This is a switch statement!
+Line: 148, This is a printf statement!
+Line: 150, This is a if statement!
+Line: 155, This is a return statement!
+Line: 155, This is a printf statement!
+Line: 158, This is a function definition statement!
+Line: 160, This is a var definition statement!
+Line: 161, This is a var definition statement!
 Line: 162, This is a assign statement!
+Line: 163, This is a assign statement!
 Line: 164, This is a assign statement!
-Line: 165, This is a switch_case statement!
-Line: 166, This is a switch statement!
-Line: 169, This is a assign statement!
+Line: 164, This is a return statement!
+Line: 167, This is a function definition statement!
+Line: 169, This is a var definition statement!
+Line: 171, This is a assign statement!
 Line: 172, This is a assign statement!
-Line: 174, This is a switch_case statement!
+Line: 173, This is a assign statement!
+Line: 174, This is a assign statement!
+Line: 175, This is a assign statement!
 Line: 176, This is a assign statement!
-Line: 176, This is a while statement!
-Line: 178, This is a assign statement!
-Line: 179, This is a assign statement!
-Line: 184, This is a function definition statement!
-Line: 186, This is a assign statement!
-Line: 198, This is a return statement!
-Line: 201, This is a function definition statement!
-Line: 203, This is a var definition statement!
-Line: 204, This is a assign statement!
-Line: 205, This is a assign statement!
-Line: 206, This is a assign statement!
-Line: 206, This is a if statement!
-Line: 208, This is a assign statement!
-Line: 209, This is a if statement!
-Line: 211, This is a assign statement!
-Line: 212, This is a if statement!
-Line: 214, This is a assign statement!
-Line: 215, This is a assign statement!
-Line: 216, This is a if statement!
-Line: 218, This is a assign statement!
-Line: 219, This is a if statement!
-Line: 221, This is a assign statement!
-Line: 223, This is a assign statement!
-Line: 223, This is a while statement!
-Line: 224, This is a if statement!
-Line: 226, This is a assign statement!
-Line: 228, This is a assign statement!
-Line: 230, This is a assign statement!
-Line: 230, This is a while statement!
-Line: 231, This is a if statement!
-Line: 233, This is a assign statement!
-Line: 235, This is a assign statement!
-Line: 240, This is a function definition statement!
-Line: 242, This is a var definition statement!
-Line: 243, This is a var definition statement!
-Line: 244, This is a assign statement!
-Line: 245, This is a assign statement!
-Line: 246, This is a assign statement!
-Line: 247, This is a assign statement!
-Line: 247, This is a assign statement!
-Line: 248, This is a assign statement!
-Line: 249, This is a assign statement!
-Line: 249, This is a if statement!
-Line: 250, This is a assign statement!
-Line: 251, This is a assign statement!
-Line: 251, This is a if statement!
-Line: 252, This is a assign statement!
-Line: 253, This is a assign statement!
-Line: 253, This is a if statement!
-Line: 254, This is a assign statement!
-Line: 255, This is a assign statement!
-Line: 255, This is a if statement!
-Line: 256, This is a assign statement!
-Line: 257, This is a assign statement!
-Line: 257, This is a if statement!
-Line: 258, This is a assign statement!
-Line: 259, This is a assign statement!
-Line: 259, This is a if statement!
-Line: 260, This is a assign statement!
-Line: 261, This is a assign statement!
-Line: 261, This is a if statement!
-Line: 262, This is a assign statement!
-Line: 263, This is a assign statement!
-Line: 263, This is a if statement!
-Line: 264, This is a assign statement!
-Line: 265, This is a assign statement!
-Line: 265, This is a if statement!
-Line: 266, This is a assign statement!
-Line: 267, This is a assign statement!
-Line: 267, This is a if statement!
-Line: 268, This is a assign statement!
-Line: 269, This is a assign statement!
-Line: 269, This is a if statement!
-Line: 270, This is a assign statement!
-Line: 272, This is a assign statement!
-Line: 273, This is a assign statement!
-Line: 273, This is a if statement!
-Line: 274, This is a assign statement!
-Line: 276, This is a return statement!
-Line: 279, This is a function definition statement!
-Line: 281, This is a var definition statement!
-Line: 283, This is a assign statement!
-Line: 283, This is a while statement!
-Line: 285, This is a if statement!
-Line: 286, This is a assign statement!
-Line: 287, This is a assign statement!
-Line: 290, This is a assign statement!
-Line: 290, This is a while statement!
-Line: 291, This is a switch statement!
-Line: 294, This is a assign statement!
-Line: 297, This is a assign statement!
-Line: 300, This is a assign statement!
-Line: 302, This is a switch_case statement!
-Line: 303, This is a assign statement!
-Line: 306, This is a assign statement!
-Line: 307, This is a assign statement!
-Line: 307, This is a while statement!
-Line: 309, This is a assign statement!
-Line: 309, This is a while statement!
-Line: 311, This is a assign statement!
-Line: 312, This is a assign statement!
-Line: 314, This is a assign statement!
-Line: 318, This is a assign statement!
-Line: 319, This is a assign statement!
-Line: 319, This is a while statement!
-Line: 321, This is a assign statement!
-Line: 322, This is a assign statement!
-Line: 323, This is a assign statement!
-Line: 324, This is a assign statement!
-Line: 327, This is a return statement!
-Line: 330, This is a function definition statement!
-Line: 332, This is a var definition statement!
-Line: 333, This is a var definition statement!
-Line: 334, This is a assign statement!
-Line: 335, This is a assign statement!
-Line: 336, This is a assign statement!
-Line: 336, This is a if statement!
-Line: 341, This is a if statement!
-Line: 343, This is a if statement!
-Line: 348, This is a assign statement!
-Line: 348, This is a while statement!
-Line: 349, This is a if statement!
-Line: 350, This is a if statement!
-Line: 352, This is a assign statement!
-Line: 353, This is a assign statement!
-Line: 354, This is a if statement!
-Line: 356, This is a assign statement!
-Line: 359, This is a assign statement!
-Line: 360, This is a assign statement!
-Line: 363, This is a assign statement!
-Line: 363, This is a if statement!
-Line: 364, This is a while statement!
-Line: 366, This is a assign statement!
-Line: 367, This is a assign statement!
-Line: 372, This is a assign statement!
-Line: 372, This is a while statement!
-Line: 373, This is a if statement!
-Line: 374, This is a switch statement!
-Line: 377, This is a assign statement!
-Line: 380, This is a assign statement!
-Line: 381, This is a switch_case statement!
-Line: 383, This is a assign statement!
-Line: 387, This is a assign statement!
-Line: 388, This is a assign statement!
-Line: 388, This is a if statement!
-Line: 390, This is a assign statement!
-Line: 392, This is a if statement!
-Line: 394, This is a assign statement!
-Line: 395, This is a assign statement!
-Line: 396, This is a if statement!
-Line: 398, This is a assign statement!
-Line: 402, This is a return statement!
-Line: 405, This is a function definition statement!
-Line: 407, This is a var definition statement!
-Line: 408, This is a var definition statement!
-Line: 409, This is a assign statement!
-Line: 410, This is a assign statement!
-Line: 411, This is a assign statement!
-Line: 412, This is a assign statement!
-Line: 412, This is a while statement!
-Line: 413, This is a switch statement!
-Line: 415, This is a if statement!
-Line: 417, This is a assign statement!
-Line: 418, This is a assign statement!
-Line: 419, This is a assign statement!
-Line: 420, This is a if statement!
-Line: 422, This is a assign statement!
-Line: 423, This is a assign statement!
-Line: 424, This is a if statement!
-Line: 426, This is a assign statement!
-Line: 428, This is a assign statement!
-Line: 431, This is a assign statement!
-Line: 432, This is a assign statement!
-Line: 432, This is a while statement!
-Line: 434, This is a assign statement!
-Line: 435, This is a assign statement!
-Line: 437, This is a assign statement!
-Line: 443, This is a assign statement!
-Line: 443, This is a switch statement!
-Line: 446, This is a assign statement!
-Line: 447, This is a assign statement!
-Line: 450, This is a switch_case statement!
-Line: 450, This is a if statement!
-Line: 452, This is a assign statement!
-Line: 454, This is a assign statement!
-Line: 456, This is a switch_case statement!
-Line: 457, This is a if statement!
-Line: 459, This is a assign statement!
-Line: 461, This is a assign statement!
-Line: 462, This is a assign statement!
-Line: 465, This is a assign statement!
-Line: 465, This is a while statement!
-Line: 467, This is a if statement!
-Line: 468, This is a assign statement!
-Line: 469, This is a if statement!
-Line: 470, This is a assign statement!
-Line: 471, This is a if statement!
-Line: 472, This is a assign statement!
-Line: 472, This is a switch statement!
-Line: 475, This is a assign statement!
-Line: 478, This is a assign statement!
-Line: 481, This is a assign statement!
-Line: 483, This is a switch_case statement!
-Line: 484, This is a assign statement!
-Line: 487, This is a assign statement!
-Line: 487, This is a switch statement!
-Line: 490, This is a switch_case statement!
-Line: 493, This is a return statement!
-Line: 496, This is a function definition statement!
-Line: 498, This is a var definition statement!
-Line: 499, This is a var definition statement!
-Line: 501, This is a assign statement!
-Line: 502, This is a assign statement!
-Line: 503, This is a assign statement!
-Line: 503, This is a printf statement!
-Line: 505, This is a printf statement!
-Line: 507, This is a printf statement!
-Line: 510, This is a callfunc statement!
-Line: 513, This is a return statement!
-Line: 516, This is a function definition statement!
-Line: 518, This is a var definition statement!
-Line: 519, This is a assign statement!
-Line: 520, This is a assign statement!
-Line: 520, This is a printf statement!
-Line: 521, This is a printf statement!
-Line: 524, This is a assign statement!
-Line: 524, This is a printf statement!
-Line: 528, This is a return statement!
-Line: 530, This is a function definition statement!
-Line: 532, This is a var definition statement!
-Line: 533, This is a var definition statement!
-Line: 534, This is a assign statement!
-Line: 535, This is a scanf statement!
-Line: 536, This is a printf statement!
-Line: 537, This is a printf statement!
-Line: 538, This is a scanf statement!
-Line: 540, This is a assign statement!
-Line: 540, This is a printf statement!
-Line: 541, This is a scanf statement!
-Line: 543, This is a assign statement!
-Line: 543, This is a printf statement!
-Line: 546, This is a return statement!
-Line: 549, This is a function definition statement!
-Line: 551, This is a assign statement!
-Line: 551, This is a if statement!
-Line: 553, This is a assign statement!
-Line: 555, This is a return statement!
-Line: 558, This is a function definition statement!
-Line: 560, This is a var definition statement!
-Line: 561, This is a assign statement!
-Line: 562, This is a assign statement!
-Line: 563, This is a if statement!
-Line: 564, This is a assign statement!
-Line: 565, This is a callfunc statement!
-Line: 566, This is a return statement!
-Line: 569, This is a function definition statement!
-Line: 571, This is a assign statement!
-Line: 571, This is a return statement!
-Line: 574, This is a function definition statement!
-Line: 576, This is a assign statement!
-Line: 576, This is a return statement!
-Line: 579, This is a function definition statement!
-Line: 581, This is a assign statement!
-Line: 582, This is a return statement!
-Line: 584, This is a function definition statement!
-Line: 586, This is a assign statement!
-Line: 587, This is a callfunc statement!
-Line: 588, This is a callfunc statement!
-Line: 589, This is a callfunc statement!
-Line: 590, This is a return statement!
-Line: 592, This is a mainfunc statement!
-Line: 596, This is a var definition statement!
-Line: 597, This is a assign statement!
-Line: 598, This is a assign statement!
-Line: 599, This is a assign statement!
-Line: 600, This is a callfunc statement!
-Line: 602, This is a callfunc statement!
-Line: 604, This is a callfunc statement!
-Line: 606, This is a callfunc statement!
-Line: 608, This is a callfunc statement!
-Line: 610, This is a callfunc statement!
-Line: 612, This is a callfunc statement!
-Line: 614, This is a callfunc statement!
-Line: 616, This is a callfunc statement!
-Line: 618, This is a callfunc statement!
-Line: 620, This is a callfunc statement!
-Line: 622, This is a callfunc statement!
-Line: 624, This is a callfunc statement!
-Line: 625, This is a printf statement!
-Line: 628, This is a return statement!
+Line: 176, This is a printf statement!
+Line: 177, This is a printf statement!
+Line: 178, This is a printf statement!
+Line: 180, This is a assign statement!
+Line: 180, This is a return statement!
+Line: 183, This is a function definition statement!
+Line: 184, This is a return statement!
+Line: 187, This is a function definition statement!
+Line: 188, This is a if statement!
+Line: 188, This is a return statement!
+Line: 189, This is a return statement!
+Line: 192, This is a mainfunc statement!
+Line: 194, This is a callfunc statement!
+Line: 194, This is a printf statement!
+Line: 196, This is a callfunc statement!
+Line: 196, This is a printf statement!
+Line: 197, This is a printf statement!
 
 ***************Finished***************
 

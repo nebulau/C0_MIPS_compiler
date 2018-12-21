@@ -1,29 +1,77 @@
 .data
-	count:.word 0
-	num:.word 0:40
-	letter:.word 0:20
-	s:.word 0
-	_:.word 0
-	__:.word 0
-	___:.word 0
-	__a__:.word 0
-	_a_:.word 0
-	judge:.word 0
-	$str0:.asciiz " !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
-	$str1:.asciiz "global:"
-	$str2:.asciiz "FUNC:"
-	$str3:.asciiz "FUNC:"
-	$str4:.asciiz "FUNC:"
-	$str5:.asciiz "x="
-	$str6:.asciiz "test printf:"
-	$str7:.asciiz "x:"
-	$str8:.asciiz "m:"
-	$str9:.asciiz "letter[3]:"
-	$str10:.asciiz "num[3]:"
-	$str11:.asciiz "all test:"
+	global_int1:.word 0
+	global_int2:.word 0
+	global_int_arr1:.word 0:20
+	global_int_arr2:.word 0:20
+	global_char1:.word 0
+	global_char2:.word 0
+	global_char_arr1:.word 0:20
+	global_char_arr2:.word 0:20
+	$str0:.asciiz "global const test:"
+	$str1:.asciiz "please input char and int"
+	$str2:.asciiz "string test:"
+	$str3:.asciiz "a"
+	$str4:.asciiz " "
+	$str5:.asciiz ""
+	$str6:.asciiz "A"
+	$str7:.asciiz "!"
+	$str8:.asciiz "'"
+	$str9:.asciiz "("
+	$str10:.asciiz ")"
+	$str11:.asciiz "*"
+	$str12:.asciiz "+"
+	$str13:.asciiz ","
+	$str14:.asciiz "0"
+	$str15:.asciiz ":"
+	$str16:.asciiz ";"
+	$str17:.asciiz "="
+	$str18:.asciiz "_"
+	$str19:.asciiz "["
+	$str20:.asciiz "]"
+	$str21:.asciiz "{"
+	$str22:.asciiz "}"
+	$str23:.asciiz "abcdeABCDE"
+	$str24:.asciiz "char test:"
+	$str25:.asciiz "switch test1:"
+	$str26:.asciiz "test1: case a"
+	$str27:.asciiz "test1: case _"
+	$str28:.asciiz "test1: default"
+	$str29:.asciiz "switch test2:"
+	$str30:.asciiz "test2: case a"
+	$str31:.asciiz "test2: case _"
+	$str32:.asciiz "switch test3:"
+	$str33:.asciiz "test3: case a"
+	$str34:.asciiz "test3: case b"
+	$str35:.asciiz "test3: default"
+	$str36:.asciiz "switch test4:"
+	$str37:.asciiz "test4: case 345"
+	$str38:.asciiz "test4: case -345"
+	$str39:.asciiz "test4: default"
+	$str40:.asciiz "switch test5:"
+	$str41:.asciiz "test5: case 345"
+	$str42:.asciiz "test5: case -345"
+	$str43:.asciiz "switch test6:"
+	$str44:.asciiz "test6: case 123"
+	$str45:.asciiz "test6: case 345"
+	$str46:.asciiz "test6: default"
+	$str47:.asciiz "while test1:"
+	$str48:.asciiz "var_int_while = "
+	$str49:.asciiz "while test2:"
+	$str50:.asciiz "var_int_while = "
+	$str51:.asciiz "if test1:"
+	$str52:.asciiz "var_int_if == 3"
+	$str53:.asciiz "var_int_if <= 2"
+	$str54:.asciiz "var_int_if > 0"
+	$str55:.asciiz "if test2:"
+	$str56:.asciiz "var_int_if == 3"
+	$str57:.asciiz "var_int_if > 0"
+	$str58:.asciiz "if test2:"
+	$str59:.asciiz "var_int_if == 3"
+	$str60:.asciiz "var_int_if <= 2"
+	$str61:.asciiz "after return"
 .text
 	j main
-get_sum:
+void_0para:
 	sub $sp, $sp, 28
 #退栈空间，接着保存s系寄存器和$ra,$fp
 	sw $s0, 0($sp)
@@ -47,200 +95,14 @@ get_sum:
 	sw $fp, 0($sp)
 	sub $sp, $sp, 4
 #置$fp为被调用者基地址
-	add $fp, $sp, 72
-	lw $t0, judge
-	li $t1, 1
-	add $s1, $t0, $t1
-	move $t0, $s1
-	sw $t0, judge
-	lw $t0, count
-	li $t1, 1
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, count
-	li $t0, 0
-	move $s0, $t0
-	lw $t0, 0($fp)
-	li $t1, 1
-	beq $t0, $t1, Label0
-	lw $t0, 0($fp)
-	li $t1, 1
-	sub $s3, $t0, $t1
-	move $t0, $s3
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal get_sum
-	move $s4, $v0
-	move $t0, $s4
-	move $s0, $t0
-	lw $t0, judge
-	li $t1, 1
-	add $s5, $t0, $t1
-	move $t0, $s5
-	sw $t0, judge
-Label0:
-	move $t0, $s0
-	lw $t1, 0($fp)
-	add $s6, $t0, $t1
-	move $v0, $s6
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 32
-	jr $ra
-count_to_10:
-	sub $sp, $sp, 8
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 48
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
-	li $t0, 10
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal get_sum
-	move $s1, $v0
-	move $v0, $s1
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 8
-	jr $ra
-higher:
-	sub $sp, $sp, 0
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 44
-	li $v0, 65
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 4
-	jr $ra
-prt_message:
-	sub $sp, $sp, 4
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 44
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
+	add $fp, $sp, 68
+#打印int
+	li $a0, 0
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
 #打印字符串
 	la $a0, $str0
 	li $v0, 4
@@ -248,1794 +110,66 @@ prt_message:
 	li $a0, 10
 	li $v0, 11
 	syscall
-	li $v0, 97
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 4
-	jr $ra
-test_global_variable:
-	sub $sp, $sp, 100
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 140
-	lw $t0, judge
-	li $t1, 1
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, judge
-	li $t0, 0
-	move $s0, $t0
-	li $t0, 0
-	move $s1, $t0
-	li $t0, 2
-	sw $t0, count
-	la $t0, letter
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 97
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, letter
-	li $t1, 1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 49
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, letter
-	li $t1, 2
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 95
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, letter
-	li $t1, 3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 43
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, letter
-	li $t1, 4
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 65
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-#打印字符串
-	la $a0, $str1
-	li $v0, 4
-	syscall
 #打印int
-	lw $a0, count
+	li $a0, 123
 	li $v0, 1
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	la $t0, letter
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s3, $t2
+#打印int
+	li $a0, 234
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
 #打印char
-	move $a0, $s3
+	li $a0, 97
 	li $v0, 11
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	la $t0, letter
-	li $t1, 1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s4, $t2
 #打印char
-	move $a0, $s4
+	li $a0, 98
 	li $v0, 11
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	la $t0, letter
-	li $t1, 2
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s5, $t2
-#打印char
+#打印字符串
+	la $a0, $str1
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#读取int
+	li $v0, 5
+	syscall 
+	move $s5, $v0
+#读取char
+	li $v0, 12
+	syscall 
+	move $s2, $v0
+#打印int
 	move $a0, $s5
-	li $v0, 11
+	li $v0, 1
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	la $t0, letter
-	li $t1, 3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s6, $t2
 #打印char
-	move $a0, $s6
+	move $a0, $s2
 	li $v0, 11
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	la $t0, letter
-	li $t1, 4
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s7, $t2
-#打印char
-	move $a0, $s7
-	li $v0, 11
-	syscall
-	li $a0, 10
-	li $v0, 11
-	syscall
-	lw $t0, count
-	li $t1, 2
-	bne $t0, $t1, Label1
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	sw $t0, judge
-Label1:
-	lw $t0, count
-	li $t1, 1
-	bne $t0, $t1, Label2
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -36($fp)
-	lw $t0, -36($fp)
-	sw $t0, judge
-	li $t0, 1
-	move $s1, $t0
-Label2:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label3
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	sw $t0, judge
-Label3:
-	li $t0, 1
-	sw $t0, _
-	li $t0, 2
-	sw $t0, __
-	li $t0, 3
-	sw $t0, ___
-	li $t0, 4
-	sw $t0, __a__
-	li $t0, 5
-	sw $t0, _a_
-	li $t0, 0
-	move $s1, $t0
-	lw $t0, _
-	li $t1, 1
-	bne $t0, $t1, Label4
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -44($fp)
-	sw $t0, judge
-Label4:
-	lw $t0, _
-	li $t1, 0
-	bne $t0, $t1, Label5
-	li $t0, 1
-	move $s1, $t0
-Label5:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label6
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -48($fp)
-	lw $t0, -48($fp)
-	sw $t0, judge
-Label6:
-	li $t0, 0
-	move $s1, $t0
-	lw $t0, __
-	li $t1, 2
-	bne $t0, $t1, Label7
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -52($fp)
-	lw $t0, -52($fp)
-	sw $t0, judge
-Label7:
-	lw $t0, __
-	li $t1, 0
-	bne $t0, $t1, Label8
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -56($fp)
-	lw $t0, -56($fp)
-	sw $t0, judge
-	li $t0, 1
-	move $s1, $t0
-Label8:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label9
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -60($fp)
-	lw $t0, -60($fp)
-	sw $t0, judge
-Label9:
-	li $t0, 0
-	move $s1, $t0
-	lw $t0, ___
-	li $t1, 3
-	bne $t0, $t1, Label10
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -64($fp)
-	lw $t0, -64($fp)
-	sw $t0, judge
-Label10:
-	lw $t0, ___
-	li $t1, 0
-	bne $t0, $t1, Label11
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -68($fp)
-	lw $t0, -68($fp)
-	sw $t0, judge
-	li $t0, 1
-	move $s1, $t0
-Label11:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label12
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -72($fp)
-	lw $t0, -72($fp)
-	sw $t0, judge
-Label12:
-	li $t0, 0
-	move $s1, $t0
-	lw $t0, __a__
-	li $t1, 4
-	bne $t0, $t1, Label13
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -76($fp)
-	lw $t0, -76($fp)
-	sw $t0, judge
-Label13:
-	lw $t0, __a__
-	li $t1, 0
-	bne $t0, $t1, Label14
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -80($fp)
-	lw $t0, -80($fp)
-	sw $t0, judge
-	li $t0, 1
-	move $s1, $t0
-Label14:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label15
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -84($fp)
-	lw $t0, -84($fp)
-	sw $t0, judge
-Label15:
-	li $t0, 0
-	move $s1, $t0
-	lw $t0, _a_
-	li $t1, 5
-	bne $t0, $t1, Label16
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -88($fp)
-	lw $t0, -88($fp)
-	sw $t0, judge
-Label16:
-	lw $t0, _a_
-	li $t1, 0
-	bne $t0, $t1, Label17
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -92($fp)
-	lw $t0, -92($fp)
-	sw $t0, judge
-	li $t0, 1
-	move $s1, $t0
-Label17:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label18
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -96($fp)
-	lw $t0, -96($fp)
-	sw $t0, judge
-Label18:
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 100
-	jr $ra
-test_global_const:
-	sub $sp, $sp, 72
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 112
-	lw $t0, judge
-	li $t1, 1
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, judge
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label19
-	lw $t0, judge
-	li $t1, 1
-	add $s3, $t0, $t1
-	move $t0, $s3
-	sw $t0, judge
-Label19:
-	li $t0, 2
-	li $t1, 2
-	bne $t0, $t1, Label20
-	lw $t0, judge
-	li $t1, 1
-	add $s4, $t0, $t1
-	move $t0, $s4
-	sw $t0, judge
-Label20:
-	li $t0, 3
-	li $t1, 3
-	bne $t0, $t1, Label21
-	lw $t0, judge
-	li $t1, 1
-	add $s5, $t0, $t1
-	move $t0, $s5
-	sw $t0, judge
-Label21:
-	li $t0, 97
-	li $t1, 97
-	bne $t0, $t1, Label22
-	lw $t0, judge
-	li $t1, 1
-	add $s6, $t0, $t1
-	move $t0, $s6
-	sw $t0, judge
-Label22:
-	li $t0, 98
-	li $t1, 98
-	bne $t0, $t1, Label23
-	lw $t0, judge
-	li $t1, 1
-	add $s7, $t0, $t1
-	move $t0, $s7
-	sw $t0, judge
-Label23:
-	li $t0, 99
-	li $t1, 99
-	bne $t0, $t1, Label24
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	sw $t0, judge
-Label24:
-	li $t0, 95
-	li $t1, 95
-	bne $t0, $t1, Label25
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -36($fp)
-	lw $t0, -36($fp)
-	sw $t0, judge
-Label25:
-	li $t0, 97
-	move $s1, $t0
-	move $t0, $s1
-	li $t1, 97
-	add $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 194
-	bne $t0, $t1, Label26
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -44($fp)
-	sw $t0, judge
-Label26:
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label28
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -48($fp)
-	lw $t0, -48($fp)
-	sw $t0, judge
-	j Label27
-Label28:
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -52($fp)
-	lw $t0, -52($fp)
-	sw $t0, judge
-Label27:
-	li $t0, 1
-	li $t1, 0
-	bne $t0, $t1, Label30
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -56($fp)
-	lw $t0, -56($fp)
-	sw $t0, judge
-	j Label29
-Label30:
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -60($fp)
-	lw $t0, -60($fp)
-	sw $t0, judge
-Label29:
-	li $t0, 0
-	move $s0, $t0
-Label31:
-	move $t0, $s0
-	li $t1, 2
-	bge $t0, $t1, Label32
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -64($fp)
-	lw $t0, -64($fp)
-	sw $t0, judge
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -68($fp)
-	lw $t0, -68($fp)
-	move $s0, $t0
-	j Label31
-Label32:
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 72
-	jr $ra
-test_brackets:
-	sub $sp, $sp, 4
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 44
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 4
-	jr $ra
-test_compare_operator:
-	sub $sp, $sp, 48
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 88
-	li $t0, 0
-	move $s0, $t0
-	li $t0, 1
-	move $s1, $t0
-	li $t0, 0
-	move $s2, $t0
-	move $t0, $s0
-	move $t1, $s1
-	bge $t0, $t1, Label33
-	lw $t0, judge
-	li $t1, 1
-	add $s3, $t0, $t1
-	move $t0, $s3
-	sw $t0, judge
-Label33:
-	move $t0, $s1
-	move $t1, $s0
-	ble $t0, $t1, Label34
-	lw $t0, judge
-	li $t1, 1
-	add $s4, $t0, $t1
-	move $t0, $s4
-	sw $t0, judge
-Label34:
-	move $t0, $s0
-	move $t1, $s1
-	bne $t0, $t1, Label35
-	lw $t0, judge
-	li $t1, 1
-	add $s5, $t0, $t1
-	move $t0, $s5
-	sw $t0, judge
-	li $t0, 1
-	move $s2, $t0
-Label35:
-	move $t0, $s2
-	li $t1, 0
-	bne $t0, $t1, Label36
-	lw $t0, judge
-	li $t1, 1
-	add $s6, $t0, $t1
-	move $t0, $s6
-	sw $t0, judge
-Label36:
-	move $t0, $s0
-	move $t1, $s1
-	beq $t0, $t1, Label37
-	lw $t0, judge
-	li $t1, 1
-	add $s7, $t0, $t1
-	move $t0, $s7
-	sw $t0, judge
-Label37:
-	li $t0, 0
-	move $s0, $t0
-Label38:
-	move $t0, $s0
-	li $t1, 1
-	bgt $t0, $t1, Label39
-	move $t0, $s0
-	move $t1, $s1
-	bgt $t0, $t1, Label40
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	sw $t0, judge
-Label40:
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -36($fp)
-	lw $t0, -36($fp)
-	move $s0, $t0
-	j Label38
-Label39:
-	li $t0, 0
-	move $s0, $t0
-Label41:
-	move $t0, $s0
-	li $t1, 1
-	bgt $t0, $t1, Label42
-	move $t0, $s1
-	move $t1, $s0
-	blt $t0, $t1, Label43
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	sw $t0, judge
-Label43:
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -44($fp)
-	move $s0, $t0
-	j Label41
-Label42:
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 48
-	jr $ra
-test_expression:
-	sub $sp, $sp, 136
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 176
-	li $t0, 0
-	move $s0, $t0
-	li $t0, 0
-	move $s1, $t0
-	li $t0, 97
-	move $s2, $t0
-	li $t0, 98
-	move $s3, $t0
-	li $t0, 99
-	move $s4, $t0
-	lw $t0, judge
-	li $t1, 1
-	add $s5, $t0, $t1
-	move $t0, $s5
-	sw $t0, judge
-	move $t0, $s0
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 0
-	bne $t0, $t1, Label44
-	lw $t0, judge
-	li $t1, 1
-	add $s6, $t0, $t1
-	move $t0, $s6
-	sw $t0, judge
-Label44:
-	li $t0, 0
-	move $t1, $s0
-	sub $s7, $t0, $t1
-	move $t0, $s7
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 0
-	bne $t0, $t1, Label45
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	sw $t0, judge
-Label45:
-	move $t0, $s2
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 97
-	bne $t0, $t1, Label46
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -36($fp)
-	lw $t0, -36($fp)
-	sw $t0, judge
-Label46:
-	li $t0, 0
-	move $t1, $s2
-	sub $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, -97
-	bne $t0, $t1, Label47
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -44($fp)
-	sw $t0, judge
-Label47:
-	li $t0, 3
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 3
-	bne $t0, $t1, Label48
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -48($fp)
-	lw $t0, -48($fp)
-	sw $t0, judge
-Label48:
-	li $t0, -1
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, -1
-	bne $t0, $t1, Label49
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -52($fp)
-	lw $t0, -52($fp)
-	sw $t0, judge
-Label49:
-	li $t0, 1
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 1
-	bne $t0, $t1, Label50
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -56($fp)
-	lw $t0, -56($fp)
-	sw $t0, judge
-Label50:
-	li $t0, 1
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 1
-	bne $t0, $t1, Label51
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -60($fp)
-	lw $t0, -60($fp)
-	sw $t0, judge
-Label51:
-	li $t0, -1
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, -1
-	bne $t0, $t1, Label52
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -64($fp)
-	lw $t0, -64($fp)
-	sw $t0, judge
-Label52:
-	li $t0, 1
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 1
-	bne $t0, $t1, Label53
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -68($fp)
-	lw $t0, -68($fp)
-	sw $t0, judge
-Label53:
-	li $t0, -9
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, -9
-	bne $t0, $t1, Label54
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -72($fp)
-	lw $t0, -72($fp)
-	sw $t0, judge
-Label54:
-	li $t0, 5
-	move $s1, $t0
-	la $t0, num
-	move $t1, $s1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	sw $t2, -76($fp)
-	move $t0, $s1
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -80($fp)
-	la $t0, num
-	lw $t1, -80($fp)
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	sw $t2, -84($fp)
-	lw $t0, -76($fp)
-	lw $t1, -84($fp)
-	add $t0, $t0, $t1
-	sw $t0, -88($fp)
-	lw $t0, -88($fp)
-	li $t1, 3
-	add $t0, $t0, $t1
-	sw $t0, -92($fp)
-	jal count_to_10
-	sw $v0, -96($fp)
-	lw $t0, -92($fp)
-	lw $t1, -96($fp)
-	mul $t0, $t0, $t1
-	sw $t0, -100($fp)
-	lw $t0, -100($fp)
-	li $t1, 3
-	div $t0, $t0, $t1
-	sw $t0, -104($fp)
-	li $t0, 0
-	lw $t1, -104($fp)
-	sub $t0, $t0, $t1
-	sw $t0, -108($fp)
-	lw $t0, -108($fp)
-	li $t1, 97
-	add $t0, $t0, $t1
-	sw $t0, -112($fp)
-	lw $t0, -112($fp)
-	li $t1, 97
-	add $t0, $t0, $t1
-	sw $t0, -116($fp)
-	lw $t0, -116($fp)
-	li $t1, 2
-	sub $t0, $t0, $t1
-	sw $t0, -120($fp)
-	la $t0, letter
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	sw $t2, -124($fp)
-	lw $t0, -120($fp)
-	lw $t1, -124($fp)
-	add $t0, $t0, $t1
-	sw $t0, -128($fp)
-	lw $t0, -128($fp)
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 33
-	bne $t0, $t1, Label55
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -132($fp)
-	lw $t0, -132($fp)
-	sw $t0, judge
-Label55:
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 136
-	jr $ra
-test_while:
-	sub $sp, $sp, 64
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 104
-	li $t0, 9
-	move $s1, $t0
-Label56:
-	move $t0, $s1
-	li $t1, 0
-	blt $t0, $t1, Label57
-	move $t0, $s1
-	li $t1, 5
-	blt $t0, $t1, Label58
-	lw $t0, judge
-	li $t1, 1
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, judge
-Label58:
-	move $t0, $s1
-	li $t1, 1
-	sub $s3, $t0, $t1
-	move $t0, $s3
-	move $s1, $t0
-	j Label56
-Label57:
-	li $t0, 0
-	move $s1, $t0
-Label59:
-	move $t0, $s1
-	li $t1, 2
-	bgt $t0, $t1, Label60
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label62
-	lw $t0, judge
-	li $t1, 1
-	add $s4, $t0, $t1
-	move $t0, $s4
-	sw $t0, judge
-	j Label61
-Label62:
-	move $t0, $s1
-	li $t1, 1
-	bne $t0, $t1, Label63
-	lw $t0, judge
-	li $t1, 1
-	add $s5, $t0, $t1
-	move $t0, $s5
-	sw $t0, judge
-	j Label61
-Label63:
-	lw $t0, judge
-	li $t1, 1
-	add $s6, $t0, $t1
-	move $t0, $s6
-	sw $t0, judge
-Label61:
-	move $t0, $s1
-	li $t1, 1
-	add $s7, $t0, $t1
-	move $t0, $s7
-	move $s1, $t0
-	j Label59
-Label60:
-	li $t0, 0
-	move $s1, $t0
-	li $t0, 0
-	move $s0, $t0
-Label64:
-	move $t0, $s0
-	li $t1, 2
-	bgt $t0, $t1, Label65
-	li $t0, 0
-	move $s1, $t0
-Label66:
-	move $t0, $s1
-	li $t1, 2
-	bgt $t0, $t1, Label67
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	sw $t0, judge
-	move $t0, $s1
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -36($fp)
-	lw $t0, -36($fp)
-	move $s1, $t0
-	j Label66
-Label67:
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	move $s0, $t0
-	j Label64
-Label65:
-	li $t0, 0
-	move $s1, $t0
-	li $t0, 11
-	move $s0, $t0
-Label68:
-	move $t0, $s1
-	li $t1, 10
-	bge $t0, $t1, Label69
-	move $t0, $s1
-	move $t1, $s0
-	mul $t0, $t0, $t1
-	sw $t0, -44($fp)
-	la $t0, num
-	move $t1, $s1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	lw $t2, -44($fp)
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	la $t0, num
-	move $t1, $s1
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	sw $t2, -48($fp)
-	lw $t0, judge
-	lw $t1, -48($fp)
-	add $t0, $t0, $t1
-	sw $t0, -52($fp)
-	lw $t0, -52($fp)
-	sw $t0, judge
-	move $t0, $s1
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -56($fp)
-	lw $t0, -56($fp)
-	move $s1, $t0
-	move $t0, $s0
-	li $t1, 2
-	add $t0, $t0, $t1
-	sw $t0, -60($fp)
-	lw $t0, -60($fp)
-	move $s0, $t0
-	j Label68
-Label69:
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 64
-	jr $ra
-test_if:
-	sub $sp, $sp, 60
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 100
-	li $t0, 0
-	move $s0, $t0
-	li $t0, 0
-	move $s1, $t0
-	lw $t0, judge
-	li $t1, 1
-	add $s3, $t0, $t1
-	move $t0, $s3
-	sw $t0, judge
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label70
-Label70:
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label71
-Label71:
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label72
-Label72:
-	li $t0, 0
-	move $s0, $t0
-Label73:
-	move $t0, $s0
-	li $t1, 1
-	bgt $t0, $t1, Label74
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label75
-	move $t0, $s0
-	li $t1, 0
-	bne $t0, $t1, Label76
-	lw $t0, judge
-	li $t1, 1
-	add $s4, $t0, $t1
-	move $t0, $s4
-	sw $t0, judge
-	li $t0, 1
-	move $s1, $t0
-Label76:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label77
-	lw $t0, judge
-	li $t1, 1
-	add $s5, $t0, $t1
-	move $t0, $s5
-	sw $t0, judge
-Label77:
-Label75:
-	li $t0, 0
-	move $s1, $t0
-	move $t0, $s0
-	li $t1, 1
-	add $s6, $t0, $t1
-	move $t0, $s6
-	move $s0, $t0
-	j Label73
-Label74:
-	li $t0, 0
-	move $s0, $t0
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label78
-Label79:
-	move $t0, $s0
-	li $t1, 2
-	bge $t0, $t1, Label80
-	lw $t0, judge
-	li $t1, 1
-	add $s7, $t0, $t1
-	move $t0, $s7
-	sw $t0, judge
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	move $s0, $t0
-	j Label79
-Label80:
-Label78:
-	li $t0, 0
-	move $s0, $t0
-Label81:
-	move $t0, $s0
-	li $t1, 1
-	bgt $t0, $t1, Label82
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label83
-	move $t0, $s0
-	li $t1, 0
-	bne $t0, $t1, Label85
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -36($fp)
-	lw $t0, -36($fp)
-	sw $t0, judge
-	j Label84
-Label85:
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	sw $t0, judge
-Label84:
-Label83:
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -44($fp)
-	move $s0, $t0
-	j Label81
-Label82:
-	li $t0, 0
-	move $s1, $t0
-	li $t0, 97
-	move $s2, $t0
-	move $t0, $s2
-	li $t1, 97
-	bne $t0, $t1, Label86
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -48($fp)
-	lw $t0, -48($fp)
-	sw $t0, judge
-Label86:
-	move $t0, $s2
-	li $t1, 98
-	bne $t0, $t1, Label87
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -52($fp)
-	lw $t0, -52($fp)
-	sw $t0, judge
-	li $t0, 1
-	move $s1, $t0
-Label87:
-	move $t0, $s1
-	li $t1, 0
-	bne $t0, $t1, Label88
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -56($fp)
-	lw $t0, -56($fp)
-	sw $t0, judge
-Label88:
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 60
-	jr $ra
-test_switch:
-	sub $sp, $sp, 88
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 128
-	li $t0, 0
-	move $s2, $t0
-	li $t0, 0
-	move $s3, $t0
-	li $t0, 0
-	move $s0, $t0
-	li $t0, 0
-	move $s1, $t0
-Label89:
-	move $t0, $s0
-	li $t1, 6
-	bgt $t0, $t1, Label90
-	move $t0, $s0
-	li $t1, 0
-	bne $t0, $t1, Label92
-	li $t0, 1
-	li $t1, 1
-	bne $t0, $t1, Label93
-	lw $t0, judge
-	li $t1, 1
-	add $s5, $t0, $t1
-	move $t0, $s5
-	sw $t0, judge
-	la $t0, num
-	li $t1, 0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	li $t2, 3
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-	li $t0, 3
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal get_sum
-	move $s6, $v0
-	la $t0, num
-	li $t1, 3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	move $t2, $s6
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
-Label93:
-	li $t0, 1
-	li $t1, 0
-	bne $t0, $t1, Label94
-	lw $t0, judge
-	li $t1, 1
-	add $s7, $t0, $t1
-	move $t0, $s7
-	sw $t0, judge
-	li $t0, 1
-	move $s2, $t0
-Label94:
-	move $t0, $s2
-	li $t1, 0
-	bne $t0, $t1, Label95
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	sw $t0, judge
-Label95:
-	li $t0, 1
-	move $s3, $t0
-	j Label91
-Label92:
-	move $t0, $s0
-	li $t1, 1
-	bne $t0, $t1, Label96
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -36($fp)
-	lw $t0, -36($fp)
-	sw $t0, judge
-	li $t0, 0
-	move $s1, $t0
-Label97:
-	move $t0, $s1
-	li $t1, 2
-	bgt $t0, $t1, Label98
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	sw $t0, judge
-	move $t0, $s1
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -44($fp)
-	move $s1, $t0
-	j Label97
-Label98:
-	li $t0, 1
-	move $s3, $t0
-	j Label91
-Label96:
-	move $t0, $s0
-	li $t1, 2
-	bne $t0, $t1, Label99
-	j Label91
-Label99:
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -48($fp)
-	lw $t0, -48($fp)
-	sw $t0, judge
-	move $t0, $s0
-	li $t1, 3
-	div $t0, $t0, $t1
-	sw $t0, -52($fp)
-	lw $t0, -52($fp)
-	li $t1, 1
-	bne $t0, $t1, Label101
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -56($fp)
-	lw $t0, -56($fp)
-	sw $t0, judge
-	li $t0, 1
-	move $s3, $t0
-	j Label100
-Label101:
-Label100:
-	move $t0, $s3
-	li $t1, 0
-	bne $t0, $t1, Label102
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -60($fp)
-	lw $t0, -60($fp)
-	sw $t0, judge
-Label102:
-	li $t0, 1
-	move $s3, $t0
-Label91:
-	move $t0, $s3
-	li $t1, 0
-	bne $t0, $t1, Label103
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -64($fp)
-	lw $t0, -64($fp)
-	sw $t0, judge
-Label103:
-	li $t0, 0
-	move $s3, $t0
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -68($fp)
-	lw $t0, -68($fp)
-	move $s0, $t0
-	j Label89
-Label90:
-	li $t0, 0
-	move $s0, $t0
-Label104:
-	move $t0, $s0
-	li $t1, 3
-	bge $t0, $t1, Label105
-	move $t0, $s0
-	li $t1, 0
-	bne $t0, $t1, Label106
-	li $t0, 97
-	move $s4, $t0
-Label106:
-	move $t0, $s0
-	li $t1, 1
-	bne $t0, $t1, Label107
-	li $t0, 98
-	move $s4, $t0
-Label107:
-	move $t0, $s0
-	li $t1, 2
-	bne $t0, $t1, Label108
-	li $t0, 99
-	move $s4, $t0
-Label108:
-	move $t0, $s4
-	li $t1, 97
-	bne $t0, $t1, Label110
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -72($fp)
-	lw $t0, -72($fp)
-	sw $t0, judge
-	j Label109
-Label110:
-	move $t0, $s4
-	li $t1, 98
-	bne $t0, $t1, Label111
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -76($fp)
-	lw $t0, -76($fp)
-	sw $t0, judge
-	j Label109
-Label111:
-	lw $t0, judge
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -80($fp)
-	lw $t0, -80($fp)
-	sw $t0, judge
-Label109:
-	move $t0, $s0
-	li $t1, 1
-	add $t0, $t0, $t1
-	sw $t0, -84($fp)
-	lw $t0, -84($fp)
-	move $s0, $t0
-	j Label104
-Label105:
-	li $t0, 1
-	move $s0, $t0
-	move $t0, $s0
-	li $t1, 1
-	bne $t0, $t1, Label113
-	j Label112
-Label113:
-Label112:
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 88
-	jr $ra
-test_function:
-	sub $sp, $sp, 24
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 64
-	li $t0, 11
-	move $s0, $t0
-	li $t0, 97
-	move $s1, $t0
-	lw $t0, judge
-	li $t1, 1
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, judge
 #打印字符串
 	la $a0, $str2
 	li $v0, 4
-	syscall
-	move $t0, $s1
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal higher
-	move $s3, $v0
-#打印char
-	move $a0, $s3
-	li $v0, 11
 	syscall
 	li $a0, 10
 	li $v0, 11
@@ -2044,15 +178,6 @@ test_function:
 	la $a0, $str3
 	li $v0, 4
 	syscall
-	move $t0, $s0
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal get_sum
-	move $s4, $v0
-#打印int
-	move $a0, $s4
-	li $v0, 1
-	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
@@ -2060,217 +185,26 @@ test_function:
 	la $a0, $str4
 	li $v0, 4
 	syscall
-	jal count_to_10
-	move $s5, $v0
-#打印int
-	move $a0, $s5
-	li $v0, 1
-	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	jal prt_message
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 24
-	jr $ra
-test_printf:
-	sub $sp, $sp, 56
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 96
-	li $t0, 1
-	move $s0, $t0
-	lw $t0, judge
-	li $t1, 1
-	add $s1, $t0, $t1
-	move $t0, $s1
-	sw $t0, judge
 #打印字符串
 	la $a0, $str5
 	li $v0, 4
 	syscall
-#打印int
-	move $a0, $s0
-	li $v0, 1
-	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-#打印int
-	move $a0, $s0
-	li $v0, 1
-	syscall
-	li $a0, 10
-	li $v0, 11
-	syscall
-	li $t0, 5
-	move $s0, $t0
 #打印字符串
 	la $a0, $str6
 	li $v0, 4
 	syscall
-	la $t0, num
-	move $t1, $s0
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s2, $t2
-	move $t0, $s0
-	li $t1, 1
-	add $s3, $t0, $t1
-	la $t0, num
-	move $t1, $s3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s4, $t2
-	move $t0, $s2
-	move $t1, $s4
-	add $s5, $t0, $t1
-	move $t0, $s5
-	li $t1, 3
-	add $s6, $t0, $t1
-	jal count_to_10
-	move $s7, $v0
-	move $t0, $s6
-	move $t1, $s7
-	mul $t0, $t0, $t1
-	sw $t0, -32($fp)
-	lw $t0, -32($fp)
-	li $t1, 3
-	div $t0, $t0, $t1
-	sw $t0, -36($fp)
-	li $t0, 0
-	lw $t1, -36($fp)
-	sub $t0, $t0, $t1
-	sw $t0, -40($fp)
-	lw $t0, -40($fp)
-	li $t1, 97
-	add $t0, $t0, $t1
-	sw $t0, -44($fp)
-	lw $t0, -44($fp)
-	li $t1, 97
-	add $t0, $t0, $t1
-	sw $t0, -48($fp)
-	lw $t0, -48($fp)
-	li $t1, 2
-	sub $t0, $t0, $t1
-	sw $t0, -52($fp)
-#打印int
-	lw $a0, -52($fp)
-	li $v0, 1
-	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 56
-	jr $ra
-test_scanf:
-	sub $sp, $sp, 36
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 76
-	lw $t0, judge
-	li $t1, 1
-	add $s6, $t0, $t1
-	move $t0, $s6
-	sw $t0, judge
-#读取int
-	li $v0, 5
-	syscall 
-	move $s0, $v0
-#读取char
-	li $v0, 12
-	syscall 
-	move $s3, $v0
 #打印字符串
 	la $a0, $str7
 	li $v0, 4
-	syscall
-#打印int
-	move $a0, $s0
-	li $v0, 1
 	syscall
 	li $a0, 10
 	li $v0, 11
@@ -2279,71 +213,593 @@ test_scanf:
 	la $a0, $str8
 	li $v0, 4
 	syscall
-#打印char
-	move $a0, $s3
-	li $v0, 11
-	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-#读取char
-	li $v0, 12
-	syscall 
-	move $s3, $v0
-	la $t0, letter
-	li $t1, 3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	move $t2, $s3
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
 #打印字符串
 	la $a0, $str9
 	li $v0, 4
 	syscall
-	la $t0, letter
-	li $t1, 3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	move $s7, $t2
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str10
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str11
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str12
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str13
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str14
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str15
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str16
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str17
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str18
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str19
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str20
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str21
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str22
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str23
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str24
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 43
+	move $s0, $t0
 #打印char
-	move $a0, $s7
+	move $a0, $s0
 	li $v0, 11
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-#读取int
-	li $v0, 5
-	syscall 
-	move $s0, $v0
-	la $t0, num
-	li $t1, 3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	move $t2, $s0
-	add $t0, $t0, $t1
-	sw $t2, 0($t0)
+	li $t0, 45
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 42
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 47
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 97
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 65
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 95
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 48
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 49
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 95
+	move $s1, $t0
 #打印字符串
-	la $a0, $str10
+	la $a0, $str25
 	li $v0, 4
 	syscall
-	la $t0, num
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s1
+	li $t1, 97
+	bne $t0, $t1, Label1
+#打印字符串
+	la $a0, $str26
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label0
+Label1:
+	move $t0, $s1
+	li $t1, 95
+	bne $t0, $t1, Label2
+#打印字符串
+	la $a0, $str27
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label0
+Label2:
+#打印字符串
+	la $a0, $str28
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label0:
+#打印字符串
+	la $a0, $str29
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s1
+	li $t1, 97
+	bne $t0, $t1, Label4
+#打印字符串
+	la $a0, $str30
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label3
+Label4:
+	move $t0, $s1
+	li $t1, 95
+	bne $t0, $t1, Label5
+#打印字符串
+	la $a0, $str31
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label3
+Label5:
+Label3:
+#打印字符串
+	la $a0, $str32
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s1
+	li $t1, 97
+	bne $t0, $t1, Label7
+#打印字符串
+	la $a0, $str33
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label6
+Label7:
+	move $t0, $s1
+	li $t1, 98
+	bne $t0, $t1, Label8
+#打印字符串
+	la $a0, $str34
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label6
+Label8:
+#打印字符串
+	la $a0, $str35
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label6:
+	li $t0, -345
+	move $s3, $t0
+#打印字符串
+	la $a0, $str36
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s3
+	li $t1, 345
+	bne $t0, $t1, Label10
+#打印字符串
+	la $a0, $str37
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label9
+Label10:
+	move $t0, $s3
+	li $t1, -345
+	bne $t0, $t1, Label11
+#打印字符串
+	la $a0, $str38
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label9
+Label11:
+#打印字符串
+	la $a0, $str39
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label9:
+#打印字符串
+	la $a0, $str40
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s3
+	li $t1, 345
+	bne $t0, $t1, Label13
+#打印字符串
+	la $a0, $str41
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label12
+Label13:
+	move $t0, $s3
+	li $t1, -345
+	bne $t0, $t1, Label14
+#打印字符串
+	la $a0, $str42
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label12
+Label14:
+Label12:
+#打印字符串
+	la $a0, $str43
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s3
+	li $t1, 123
+	bne $t0, $t1, Label16
+#打印字符串
+	la $a0, $str44
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label15
+Label16:
+	move $t0, $s3
+	li $t1, 345
+	bne $t0, $t1, Label17
+#打印字符串
+	la $a0, $str45
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	j Label15
+Label17:
+#打印字符串
+	la $a0, $str46
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label15:
+#打印字符串
+	la $a0, $str47
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 0
+	move $s4, $t0
+Label18:
+	move $t0, $s4
 	li $t1, 3
-	li $t2, 4
-	mul $t1, $t1, $t2
-	add $t0, $t0, $t1
-	lw $t2, 0($t0)
-	sw $t2, -32($fp)
+	bge $t0, $t1, Label19
+#打印字符串
+	la $a0, $str48
+	li $v0, 4
+	syscall
 #打印int
-	lw $a0, -32($fp)
+	move $a0, $s4
 	li $v0, 1
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
+	move $t0, $s4
+	li $t1, 1
+	add $s4, $t0, $t1
+	j Label18
+Label19:
+#打印字符串
+	la $a0, $str49
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 0
+	move $s4, $t0
+Label20:
+	move $t0, $s4
+	li $t1, 0
+	bge $t0, $t1, Label21
+#打印字符串
+	la $a0, $str50
+	li $v0, 4
+	syscall
+#打印int
+	move $a0, $s4
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s4
+	li $t1, 1
+	add $s4, $t0, $t1
+	j Label20
+Label21:
+	li $t0, 3
+	move $s6, $t0
+#打印字符串
+	la $a0, $str51
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s6
+	li $t1, 3
+	bne $t0, $t1, Label22
+#打印字符串
+	la $a0, $str52
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label22:
+	move $t0, $s6
+	li $t1, 2
+	bgt $t0, $t1, Label23
+#打印字符串
+	la $a0, $str53
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label23:
+	move $t0, $s6
+	beq $t0, $0, Label24
+#打印字符串
+	la $a0, $str54
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label24:
+	li $t0, 2
+	move $s6, $t0
+#打印字符串
+	la $a0, $str55
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s6
+	li $t1, 3
+	bne $t0, $t1, Label25
+#打印字符串
+	la $a0, $str56
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label25:
+	move $t0, $s6
+	li $t1, 2
+	bgt $t0, $t1, Label26
+Label26:
+	move $t0, $s6
+	beq $t0, $0, Label27
+#打印字符串
+	la $a0, $str57
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label27:
+	li $t0, 4
+	move $s6, $t0
+#打印字符串
+	la $a0, $str58
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	move $t0, $s6
+	li $t1, 3
+	bne $t0, $t1, Label28
+#打印字符串
+	la $a0, $str59
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label28:
+	move $t0, $s6
+	li $t1, 2
+	bgt $t0, $t1, Label29
+#打印字符串
+	la $a0, $str60
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+Label29:
+	move $t0, $s6
+	beq $t0, $0, Label30
+Label30:
 	add $sp, $sp, 4
 	lw $fp, 0($sp)
 	add $sp, $sp, 4
@@ -2364,10 +820,17 @@ test_scanf:
 	lw $s1, 0($sp)
 	add $sp, $sp, 4
 	lw $s0, 0($sp)
-	add $sp, $sp, 36
+	add $sp, $sp, 28
 	jr $ra
-test_varib2:
-	sub $sp, $sp, 8
+#打印字符串
+	la $a0, $str61
+	li $v0, 4
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+int_0para:
+	sub $sp, $sp, 20
 #退栈空间，接着保存s系寄存器和$ra,$fp
 	sw $s0, 0($sp)
 	sub $sp, $sp, 4
@@ -2390,21 +853,20 @@ test_varib2:
 	sw $fp, 0($sp)
 	sub $sp, $sp, 4
 #置$fp为被调用者基地址
-	add $fp, $sp, 48
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
-	lw $t0, _
-	li $t1, 1
-	bne $t0, $t1, Label114
-	lw $t0, judge
-	li $t1, 1
-	add $s1, $t0, $t1
+	add $fp, $sp, 60
+	li $t0, 6
+	move $s0, $t0
+	li $t0, 7
+	move $s1, $t0
+	li $t0, 97
+	move $s2, $t0
 	move $t0, $s1
-	sw $t0, judge
-Label114:
+	move $t1, $s2
+	mul $s3, $t0, $t1
+	move $t0, $s0
+	move $t1, $s3
+	add $s4, $t0, $t1
+	move $v0, $s4
 	add $sp, $sp, 4
 	lw $fp, 0($sp)
 	add $sp, $sp, 4
@@ -2425,9 +887,212 @@ Label114:
 	lw $s1, 0($sp)
 	add $sp, $sp, 4
 	lw $s0, 0($sp)
-	add $sp, $sp, 8
+	add $sp, $sp, 20
 	jr $ra
-test_varib:
+char_0para:
+	sub $sp, $sp, 52
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#置$fp为被调用者基地址
+	add $fp, $sp, 92
+	li $t0, 1
+	move $s0, $t0
+	li $t0, 2
+	move $s1, $t0
+	li $t0, 3
+	move $s2, $t0
+	move $t0, $s0
+	move $t1, $s1
+	add $s3, $t0, $t1
+	move $t0, $s3
+	move $t1, $s2
+	mul $s4, $t0, $t1
+	li $t0, 0
+	move $t1, $s4
+	sub $s5, $t0, $t1
+	la $t0, global_int_arr1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	move $t2, $s5
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_arr1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	move $s6, $t2
+	move $t0, $s6
+	li $t1, 3
+	add $s7, $t0, $t1
+	la $t0, global_int_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	move $t2, $s7
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	jal int_0para
+	sw $v0, -32($fp)
+	la $t0, global_int_arr1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -32($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_arr1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -36($fp)
+#打印int
+	lw $a0, -36($fp)
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	la $t0, global_int_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -40($fp)
+#打印int
+	lw $a0, -40($fp)
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	la $t0, global_int_arr1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -44($fp)
+#打印int
+	lw $a0, -44($fp)
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	la $t0, global_char_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 101
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_arr1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -48($fp)
+	lw $v0, -48($fp)
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 52
+	jr $ra
+int_2para:
+	sub $sp, $sp, 4
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	sw $s4, 0($sp)
+	sub $sp, $sp, 4
+	sw $s5, 0($sp)
+	sub $sp, $sp, 4
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	sw $ra, 0($sp)
+	sub $sp, $sp, 4
+	sw $fp, 0($sp)
+	sub $sp, $sp, 4
+#置$fp为被调用者基地址
+	add $fp, $sp, 52
+	lw $t0, 0($fp)
+	lw $t1, -4($fp)
+	add $s0, $t0, $t1
+	move $v0, $s0
+	add $sp, $sp, 4
+	lw $fp, 0($sp)
+	add $sp, $sp, 4
+	lw $ra, 0($sp)
+	add $sp, $sp, 4
+	lw $s7, 0($sp)
+	add $sp, $sp, 4
+	lw $s6, 0($sp)
+	add $sp, $sp, 4
+	lw $s5, 0($sp)
+	add $sp, $sp, 4
+	lw $s4, 0($sp)
+	add $sp, $sp, 4
+	lw $s3, 0($sp)
+	add $sp, $sp, 4
+	lw $s2, 0($sp)
+	add $sp, $sp, 4
+	lw $s1, 0($sp)
+	add $sp, $sp, 4
+	lw $s0, 0($sp)
+	add $sp, $sp, 12
+	jr $ra
+fact:
 	sub $sp, $sp, 12
 #退栈空间，接着保存s系寄存器和$ra,$fp
 	sw $s0, 0($sp)
@@ -2451,24 +1116,22 @@ test_varib:
 	sw $fp, 0($sp)
 	sub $sp, $sp, 4
 #置$fp为被调用者基地址
-	add $fp, $sp, 52
-	lw $t0, judge
+	add $fp, $sp, 56
+	lw $t0, 0($fp)
 	li $t1, 1
-	add $s1, $t0, $t1
-	move $t0, $s1
-	sw $t0, judge
-	li $t0, 100
-	move $s0, $t0
+	blt $t0, $t1, Label31
+	lw $t0, 0($fp)
+	li $t1, 1
+	sub $s0, $t0, $t1
 	move $t0, $s0
-	li $t1, 100
-	bne $t0, $t1, Label115
-	lw $t0, judge
-	li $t1, 1
-	add $s2, $t0, $t1
-	move $t0, $s2
-	sw $t0, judge
-Label115:
-	jal test_varib2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fact
+	move $s1, $v0
+	lw $t0, 0($fp)
+	move $t1, $s1
+	mul $s2, $t0, $t1
+	move $v0, $s2
 	add $sp, $sp, 4
 	lw $fp, 0($sp)
 	add $sp, $sp, 4
@@ -2489,38 +1152,9 @@ Label115:
 	lw $s1, 0($sp)
 	add $sp, $sp, 4
 	lw $s0, 0($sp)
-	add $sp, $sp, 12
+	add $sp, $sp, 16
 	jr $ra
-test_para1:
-	sub $sp, $sp, 4
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 52
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
+Label31:
 	li $v0, 1
 	add $sp, $sp, 4
 	lw $fp, 0($sp)
@@ -2542,223 +1176,48 @@ test_para1:
 	lw $s1, 0($sp)
 	add $sp, $sp, 4
 	lw $s0, 0($sp)
-	add $sp, $sp, 12
-	jr $ra
-test_para2:
-	sub $sp, $sp, 4
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 52
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
-	li $v0, 97
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 12
-	jr $ra
-test_para3:
-	sub $sp, $sp, 4
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 52
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 12
-	jr $ra
-test_para:
-	sub $sp, $sp, 4
-#退栈空间，接着保存s系寄存器和$ra,$fp
-	sw $s0, 0($sp)
-	sub $sp, $sp, 4
-	sw $s1, 0($sp)
-	sub $sp, $sp, 4
-	sw $s2, 0($sp)
-	sub $sp, $sp, 4
-	sw $s3, 0($sp)
-	sub $sp, $sp, 4
-	sw $s4, 0($sp)
-	sub $sp, $sp, 4
-	sw $s5, 0($sp)
-	sub $sp, $sp, 4
-	sw $s6, 0($sp)
-	sub $sp, $sp, 4
-	sw $s7, 0($sp)
-	sub $sp, $sp, 4
-	sw $ra, 0($sp)
-	sub $sp, $sp, 4
-	sw $fp, 0($sp)
-	sub $sp, $sp, 4
-#置$fp为被调用者基地址
-	add $fp, $sp, 44
-	lw $t0, judge
-	li $t1, 1
-	add $s0, $t0, $t1
-	move $t0, $s0
-	sw $t0, judge
-	li $t0, 1
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	li $t0, 2
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal test_para1
-	li $t0, 97
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	li $t0, 98
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal test_para2
-	li $t0, 97
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	li $t0, 1
-	sw $t0, 0($sp)
-	sub $sp, $sp, 4
-	jal test_para3
-	add $sp, $sp, 4
-	lw $fp, 0($sp)
-	add $sp, $sp, 4
-	lw $ra, 0($sp)
-	add $sp, $sp, 4
-	lw $s7, 0($sp)
-	add $sp, $sp, 4
-	lw $s6, 0($sp)
-	add $sp, $sp, 4
-	lw $s5, 0($sp)
-	add $sp, $sp, 4
-	lw $s4, 0($sp)
-	add $sp, $sp, 4
-	lw $s3, 0($sp)
-	add $sp, $sp, 4
-	lw $s2, 0($sp)
-	add $sp, $sp, 4
-	lw $s1, 0($sp)
-	add $sp, $sp, 4
-	lw $s0, 0($sp)
-	add $sp, $sp, 4
+	add $sp, $sp, 16
 	jr $ra
 main:
 #保存帧指针
 	move $fp, $sp
 #退栈空间
-	sub $sp, $sp, 8
-	li $t0, 0
-	sw $t0, judge
-	lw $t0, judge
-	li $t1, 1
-	add $s1, $t0, $t1
-	move $t0, $s1
-	sw $t0, judge
-	li $t0, 0
-	move $s0, $t0
-	jal test_global_variable
-	jal test_global_const
-	jal test_brackets
-	jal test_compare_operator
-	jal test_expression
-	jal test_while
-	jal test_if
-	jal test_switch
-	jal test_function
-	jal test_printf
-	jal test_scanf
-	jal test_varib
-	jal test_para
-#打印字符串
-	la $a0, $str11
-	li $v0, 4
-	syscall
+	sub $sp, $sp, 12
+	jal void_0para
+	jal int_0para
+	move $s0, $v0
 #打印int
-	lw $a0, judge
+	move $a0, $s0
 	li $v0, 1
 	syscall
 	li $a0, 10
 	li $v0, 11
 	syscall
-	li $v0, 10
+	jal char_0para
+	li $t0, 14
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, 15
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal int_2para
+	move $s1, $v0
+#打印int
+	move $a0, $s1
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
+	syscall
+	li $t0, 5
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fact
+	move $s2, $v0
+#打印int
+	move $a0, $s2
+	li $v0, 1
+	syscall
+	li $a0, 10
+	li $v0, 11
 	syscall

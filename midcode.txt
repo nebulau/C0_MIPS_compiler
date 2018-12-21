@@ -1,872 +1,281 @@
-const int const_1 = 1
-const int const_2 = 2
-const int const_3 = 3
-const char const_a = 'a'
-const char const_b = 'b'
-const char const_c = 'c'
-const char const_ = '_'
-var int count
-int num[10]
-char letter[5]
-var char s
-var int _
-var int __
-var int ___
-var int __a__
-var int _a_
-var int judge
-int get_sum()
-para_int a
-var int b
-$$2 = judge + 1
-judge = $$2
-$$5 = count + 1
-count = $$5
-b = 0
-a != 1
-BNZ Label0
-$$11 = a - 1
-push $$11
-call get_sum
-$$12 = RET
-b = $$12
-$$16 = judge + 1
-judge = $$16
-Label0:
-$$19 = b + a
-ret $$19
-int count_to_10()
-$$22 = judge + 1
-judge = $$22
-push 10
-call get_sum
-$$24 = RET
-ret $$24
-char higher()
-para_char a
-ret 65
-char prt_message()
-$$29 = judge + 1
-judge = $$29
-printf(" !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~")
-ret 97
-void test_global_variable()
-var int a
-var int flag
-$$33 = judge + 1
-judge = $$33
-a = 0
-flag = 0
-count = 2
-letter[0] = 97
-letter[1] = 49
-letter[2] = 95
-letter[3] = 43
-letter[4] = 65
-printf("global:")
-printf(count)
-$$49 = letter[0]
-printf($$49)
-$$51 = letter[1]
-printf($$51)
-$$53 = letter[2]
-printf($$53)
-$$55 = letter[3]
-printf($$55)
-$$57 = letter[4]
-printf($$57)
-count == 2
+const int const_int1 = 123
+const int const_int2 = 234
+const char const_char1 = 'a'
+const char const_char2 = 'b'
+var int global_int1
+var int global_int2
+int global_int_arr1[5]
+int global_int_arr2[5]
+var char global_char1
+var char global_char2
+char global_char_arr1[5]
+char global_char_arr2[5]
+void void_0para()
+const int _local_const_int = 0
+var char var_char
+var char var_char_switch
+var char var_char_input
+var int var_int_switch
+var int var_int_while
+var int var_int_input
+var int var_int_if
+printf(0)
+printf("global const test:")
+printf(123)
+printf(234)
+printf(97)
+printf(98)
+printf("please input char and int")
+scanf(var_int_input)
+scanf(var_char_input)
+printf(var_int_input)
+printf(var_char_input)
+printf("string test:")
+printf("a")
+printf(" ")
+printf("")
+printf("A")
+printf("!")
+printf("'")
+printf("(")
+printf(")")
+printf("*")
+printf("+")
+printf(",")
+printf("0")
+printf(":")
+printf(";")
+printf("=")
+printf("_")
+printf("[")
+printf("]")
+printf("{")
+printf("}")
+printf("abcdeABCDE")
+printf("char test:")
+var_char = 43
+printf(var_char)
+var_char = 45
+printf(var_char)
+var_char = 42
+printf(var_char)
+var_char = 47
+printf(var_char)
+var_char = 97
+printf(var_char)
+var_char = 65
+printf(var_char)
+var_char = 95
+printf(var_char)
+var_char = 48
+printf(var_char)
+var_char = 49
+printf(var_char)
+var_char_switch = 95
+printf("switch test1:")
+var_char_switch == 97
 BNZ Label1
-$$62 = judge + 1
-judge = $$62
+printf("test1: case a")
+GOTO Label0
 Label1:
-count == 1
+var_char_switch == 95
 BNZ Label2
-$$67 = judge + 1
-judge = $$67
-flag = 1
+printf("test1: case _")
+GOTO Label0
 Label2:
-flag == 0
-BNZ Label3
-$$73 = judge + 1
-judge = $$73
-Label3:
-_ = 1
-__ = 2
-___ = 3
-__a__ = 4
-_a_ = 5
-flag = 0
-_ == 1
+printf("test1: default")
+Label0:
+printf("switch test2:")
+var_char_switch == 97
 BNZ Label4
-$$84 = judge + 1
-judge = $$84
+printf("test2: case a")
+GOTO Label3
 Label4:
-_ == 0
+var_char_switch == 95
 BNZ Label5
-flag = 1
+printf("test2: case _")
+GOTO Label3
 Label5:
-flag == 0
-BNZ Label6
-$$92 = judge + 1
-judge = $$92
-Label6:
-flag = 0
-__ == 2
+Label3:
+printf("switch test3:")
+var_char_switch == 97
 BNZ Label7
-$$98 = judge + 1
-judge = $$98
+printf("test3: case a")
+GOTO Label6
 Label7:
-__ == 0
+var_char_switch == 98
 BNZ Label8
-$$103 = judge + 1
-judge = $$103
-flag = 1
+printf("test3: case b")
+GOTO Label6
 Label8:
-flag == 0
-BNZ Label9
-$$109 = judge + 1
-judge = $$109
-Label9:
-flag = 0
-___ == 3
+printf("test3: default")
+Label6:
+var_int_switch = -345
+printf("switch test4:")
+var_int_switch == 345
 BNZ Label10
-$$115 = judge + 1
-judge = $$115
+printf("test4: case 345")
+GOTO Label9
 Label10:
-___ == 0
+var_int_switch == -345
 BNZ Label11
-$$120 = judge + 1
-judge = $$120
-flag = 1
+printf("test4: case -345")
+GOTO Label9
 Label11:
-flag == 0
-BNZ Label12
-$$126 = judge + 1
-judge = $$126
-Label12:
-flag = 0
-__a__ == 4
+printf("test4: default")
+Label9:
+printf("switch test5:")
+var_int_switch == 345
 BNZ Label13
-$$132 = judge + 1
-judge = $$132
+printf("test5: case 345")
+GOTO Label12
 Label13:
-__a__ == 0
+var_int_switch == -345
 BNZ Label14
-$$137 = judge + 1
-judge = $$137
-flag = 1
+printf("test5: case -345")
+GOTO Label12
 Label14:
-flag == 0
-BNZ Label15
-$$143 = judge + 1
-judge = $$143
-Label15:
-flag = 0
-_a_ == 5
+Label12:
+printf("switch test6:")
+var_int_switch == 123
 BNZ Label16
-$$149 = judge + 1
-judge = $$149
+printf("test6: case 123")
+GOTO Label15
 Label16:
-_a_ == 0
+var_int_switch == 345
 BNZ Label17
-$$154 = judge + 1
-judge = $$154
-flag = 1
+printf("test6: case 345")
+GOTO Label15
 Label17:
-flag == 0
-BNZ Label18
-$$160 = judge + 1
-judge = $$160
+printf("test6: default")
+Label15:
+printf("while test1:")
+var_int_while = 0
 Label18:
-return null
-void test_global_const()
-var int x
-var char y
-$$163 = judge + 1
-judge = $$163
-1 == 1
+var_int_while < 3
 BNZ Label19
-$$168 = judge + 1
-judge = $$168
+printf("var_int_while = ")
+printf(var_int_while)
+var_int_while = var_int_while + 1
+GOTO Label18
 Label19:
-2 == 2
-BNZ Label20
-$$173 = judge + 1
-judge = $$173
+printf("while test2:")
+var_int_while = 0
 Label20:
-3 == 3
+var_int_while < 0
 BNZ Label21
-$$178 = judge + 1
-judge = $$178
+printf("var_int_while = ")
+printf(var_int_while)
+var_int_while = var_int_while + 1
+GOTO Label20
 Label21:
-97 == 97
+var_int_if = 3
+printf("if test1:")
+var_int_if == 3
 BNZ Label22
-$$183 = judge + 1
-judge = $$183
+printf("var_int_if == 3")
 Label22:
-98 == 98
+var_int_if <= 2
 BNZ Label23
-$$188 = judge + 1
-judge = $$188
+printf("var_int_if <= 2")
 Label23:
-99 == 99
-BNZ Label24
-$$193 = judge + 1
-judge = $$193
+var_int_if == 
+BZ Label24
+printf("var_int_if > 0")
 Label24:
-95 == 95
+var_int_if = 2
+printf("if test2:")
+var_int_if == 3
 BNZ Label25
-$$198 = judge + 1
-judge = $$198
+printf("var_int_if == 3")
 Label25:
-y = 97
-$$202 = y + 97
-x = $$202
-x == 194
+var_int_if <= 2
 BNZ Label26
-$$207 = judge + 1
-judge = $$207
 Label26:
-1 == 1
-BNZ Label28
-$$211 = judge + 1
-judge = $$211
-GOTO Label27
-Label28:
-$$214 = judge + 1
-judge = $$214
+var_int_if == 
+BZ Label27
+printf("var_int_if > 0")
 Label27:
-1 == 0
-BNZ Label30
-$$218 = judge + 1
-judge = $$218
-GOTO Label29
-Label30:
-$$221 = judge + 1
-judge = $$221
+var_int_if = 4
+printf("if test2:")
+var_int_if == 3
+BNZ Label28
+printf("var_int_if == 3")
+Label28:
+var_int_if <= 2
+BNZ Label29
+printf("var_int_if <= 2")
 Label29:
-x = 0
-Label31:
-x < 2
-BNZ Label32
-$$227 = judge + 1
-judge = $$227
-$$230 = x + 1
-x = $$230
-GOTO Label31
-Label32:
+var_int_if == 
+BZ Label30
+Label30:
 return null
-void test_brackets()
-$$233 = judge + 1
-judge = $$233
-return null
-void test_compare_operator()
-var int x
-var int y
-var int flag
-x = 0
-y = 1
-flag = 0
-x < y
-BNZ Label33
-$$241 = judge + 1
-judge = $$241
-Label33:
-y > x
-BNZ Label34
-$$246 = judge + 1
-judge = $$246
-Label34:
-x == y
-BNZ Label35
-$$251 = judge + 1
-judge = $$251
-flag = 1
-Label35:
-flag == 0
-BNZ Label36
-$$257 = judge + 1
-judge = $$257
-Label36:
-x != y
-BNZ Label37
-$$262 = judge + 1
-judge = $$262
-Label37:
-x = 0
-Label38:
-x <= 1
-BNZ Label39
-x <= y
-BNZ Label40
-$$270 = judge + 1
-judge = $$270
-Label40:
-$$273 = x + 1
-x = $$273
-GOTO Label38
-Label39:
-x = 0
-Label41:
-x <= 1
-BNZ Label42
-y >= x
-BNZ Label43
-$$281 = judge + 1
-judge = $$281
-Label43:
-$$284 = x + 1
-x = $$284
-GOTO Label41
-Label42:
-return null
-void test_expression()
+printf("after return")
+int int_0para()
 var int a
 var int b
 var char c
-var char d
-var char e
-a = 0
-b = 0
+a = 6
+b = 7
 c = 97
-d = 98
-e = 99
-$$292 = judge + 1
-judge = $$292
-a = a
-a == 0
-BNZ Label44
-$$298 = judge + 1
-judge = $$298
-Label44:
-$$301 = 0 - a
-a = $$301
-a == 0
-BNZ Label45
-$$306 = judge + 1
-judge = $$306
-Label45:
-a = c
-a == 97
-BNZ Label46
-$$312 = judge + 1
-judge = $$312
-Label46:
-$$315 = 0 - c
-a = $$315
-a == -97
-BNZ Label47
-$$322 = judge + 1
-judge = $$322
-Label47:
-a = 3
-a == 3
-BNZ Label48
-$$328 = judge + 1
-judge = $$328
-Label48:
-a = -1
-a == -1
-BNZ Label49
-$$336 = judge + 1
-judge = $$336
-Label49:
-a = 1
-a == 1
-BNZ Label50
-$$344 = judge + 1
-judge = $$344
-Label50:
-a = 1
-a == 1
-BNZ Label51
-$$350 = judge + 1
-judge = $$350
-Label51:
-a = -1
-a == -1
-BNZ Label52
-$$360 = judge + 1
-judge = $$360
-Label52:
-a = 1
-a == 1
-BNZ Label53
-$$369 = judge + 1
-judge = $$369
-Label53:
-a = -9
-a == -9
-BNZ Label54
-$$379 = judge + 1
-judge = $$379
-Label54:
-b = 5
-$$383 = num[b]
-$$386 = b + 1
-$$387 = num[$$386]
-$$388 = $$383 + $$387
-$$390 = $$388 + 3
-call count_to_10
-$$392 = RET
-$$394 = $$390 * $$392
-$$396 = $$394 / 3
-$$397 = 0 - $$396
-$$399 = $$397 + 97
-$$401 = $$399 + 97
-$$407 = $$401 - 2
-$$409 = letter[0]
-$$410 = $$407 + $$409
-a = $$410
-a == 33
-BNZ Label55
-$$415 = judge + 1
-judge = $$415
-Label55:
-return null
-void test_while()
+$$75 = b * c
+$$76 = a + $$75
+ret $$76
+char char_0para()
 var int a
 var int b
-b = 9
-Label56:
-b >= 0
-BNZ Label57
-b >= 5
-BNZ Label58
-$$423 = judge + 1
-judge = $$423
-Label58:
-$$426 = b - 1
-b = $$426
-GOTO Label56
-Label57:
-b = 0
-Label59:
-b <= 2
-BNZ Label60
-b == 0
-BNZ Label62
-$$433 = judge + 1
-judge = $$433
-GOTO Label61
-Label62:
-b == 1
-BNZ Label63
-$$436 = judge + 1
-judge = $$436
-GOTO Label61
-Label63:
-$$439 = judge + 1
-judge = $$439
-Label61:
-$$442 = b + 1
-b = $$442
-GOTO Label59
-Label60:
-b = 0
-a = 0
-Label64:
-a <= 2
-BNZ Label65
-b = 0
-Label66:
-b <= 2
-BNZ Label67
-$$452 = judge + 1
-judge = $$452
-$$455 = b + 1
-b = $$455
-GOTO Label66
-Label67:
-$$458 = a + 1
-a = $$458
-GOTO Label64
-Label65:
-b = 0
-a = 11
-Label68:
-b < 10
-BNZ Label69
-$$466 = b * a
-num[b] = $$466
-$$469 = num[b]
-$$470 = judge + $$469
-judge = $$470
-$$473 = b + 1
-b = $$473
-$$476 = a + 2
-a = $$476
-GOTO Label68
-Label69:
-return null
-void test_if()
-var int a
-var int flag
-var char c
-a = 0
-flag = 0
-$$481 = judge + 1
-judge = $$481
-1 == 1
-BNZ Label70
-Label70:
-1 == 1
-BNZ Label71
-Label71:
-1 == 1
-BNZ Label72
-Label72:
-a = 0
-Label73:
-a <= 1
-BNZ Label74
-1 == 1
-BNZ Label75
-a == 0
-BNZ Label76
-$$497 = judge + 1
-judge = $$497
-flag = 1
-Label76:
-flag == 0
-BNZ Label77
-$$503 = judge + 1
-judge = $$503
-Label77:
-Label75:
-flag = 0
-$$507 = a + 1
-a = $$507
-GOTO Label73
-Label74:
-a = 0
-1 == 1
-BNZ Label78
-Label79:
-a < 2
-BNZ Label80
-$$515 = judge + 1
-judge = $$515
-$$518 = a + 1
-a = $$518
-GOTO Label79
-Label80:
-Label78:
-a = 0
-Label81:
-a <= 1
-BNZ Label82
-1 == 1
-BNZ Label83
-a == 0
-BNZ Label85
-$$527 = judge + 1
-judge = $$527
-GOTO Label84
-Label85:
-$$530 = judge + 1
-judge = $$530
-Label84:
-Label83:
-$$533 = a + 1
-a = $$533
-GOTO Label81
-Label82:
-flag = 0
-c = 97
-c == 97
-BNZ Label86
-$$540 = judge + 1
-judge = $$540
-Label86:
-c == 98
-BNZ Label87
-$$545 = judge + 1
-judge = $$545
-flag = 1
-Label87:
-flag == 0
-BNZ Label88
-$$551 = judge + 1
-judge = $$551
-Label88:
-return null
-void test_switch()
-var int a
-var int b
-var int flag
-var int test
-var char c
-flag = 0
-test = 0
-a = 0
-b = 0
-Label89:
-a <= 6
-BNZ Label90
-a == 0
-BNZ Label92
-1 == 1
-BNZ Label93
-$$563 = judge + 1
-judge = $$563
-num[0] = 3
-push 3
-call get_sum
-$$568 = RET
-num[3] = $$568
-Label93:
-1 == 0
-BNZ Label94
-$$574 = judge + 1
-judge = $$574
-flag = 1
-Label94:
-flag == 0
-BNZ Label95
-$$580 = judge + 1
-judge = $$580
-Label95:
-test = 1
-GOTO Label91
-Label92:
-a == 1
-BNZ Label96
-$$584 = judge + 1
-judge = $$584
-b = 0
-Label97:
-b <= 2
-BNZ Label98
-$$590 = judge + 1
-judge = $$590
-$$593 = b + 1
-b = $$593
-GOTO Label97
-Label98:
-test = 1
-GOTO Label91
-Label96:
-a == 2
-BNZ Label99
-GOTO Label91
-Label99:
-$$597 = judge + 1
-judge = $$597
-$$600 = a / 3
-$$600 == 1
-BNZ Label101
-$$603 = judge + 1
-judge = $$603
-test = 1
-GOTO Label100
-Label101:
-Label100:
-test == 0
-BNZ Label102
-$$609 = judge + 1
-judge = $$609
-Label102:
-test = 1
-Label91:
-test == 0
-BNZ Label103
-$$615 = judge + 1
-judge = $$615
-Label103:
-test = 0
-$$619 = a + 1
-a = $$619
-GOTO Label89
-Label90:
-a = 0
-Label104:
-a < 3
-BNZ Label105
-a == 0
-BNZ Label106
-c = 97
-Label106:
-a == 1
-BNZ Label107
-c = 98
-Label107:
-a == 2
-BNZ Label108
-c = 99
-Label108:
-c == 97
-BNZ Label110
-$$635 = judge + 1
-judge = $$635
-GOTO Label109
-Label110:
-c == 98
-BNZ Label111
-$$638 = judge + 1
-judge = $$638
-GOTO Label109
-Label111:
-$$641 = judge + 1
-judge = $$641
-Label109:
-$$644 = a + 1
-a = $$644
-GOTO Label104
-Label105:
+var int c
 a = 1
-a == 1
-BNZ Label113
-GOTO Label112
-Label113:
-Label112:
-return null
-void test_function()
-var int a
-var char c
-a = 11
-c = 97
-$$651 = judge + 1
-judge = $$651
-printf("FUNC:")
-push c
-call higher
-$$653 = RET
-printf($$653)
-printf("FUNC:")
-push a
-call get_sum
-$$656 = RET
-printf($$656)
-printf("FUNC:")
-call count_to_10
-$$658 = RET
-printf($$658)
-call prt_message
-return null
-void test_printf()
-var int x
-x = 1
-$$663 = judge + 1
-judge = $$663
-printf("x=")
-printf(x)
-printf(x)
-x = 5
-printf("test printf:")
-$$669 = num[x]
-$$672 = x + 1
-$$673 = num[$$672]
-$$674 = $$669 + $$673
-$$676 = $$674 + 3
-call count_to_10
-$$678 = RET
-$$680 = $$676 * $$678
-$$682 = $$680 / 3
-$$683 = 0 - $$682
-$$685 = $$683 + 97
-$$687 = $$685 + 97
-$$693 = $$687 - 2
-printf($$693)
-return null
-void test_scanf()
-var int x
-var int y
-var int z
-var char m
-var char n
-var char q
-$$696 = judge + 1
-judge = $$696
-scanf(x)
-scanf(m)
-printf("x:")
-printf(x)
-printf("m:")
-printf(m)
-scanf(m)
-letter[3] = m
-printf("letter[3]:")
-$$702 = letter[3]
-printf($$702)
-scanf(x)
-num[3] = x
-printf("num[3]:")
-$$706 = num[3]
-printf($$706)
-return null
-void test_varib2()
-$$709 = judge + 1
-judge = $$709
-_ == 1
-BNZ Label114
-$$714 = judge + 1
-judge = $$714
-Label114:
-return null
-void test_varib()
-var int _
-$$717 = judge + 1
-judge = $$717
-_ = 100
-_ == 100
-BNZ Label115
-$$723 = judge + 1
-judge = $$723
-Label115:
-call test_varib2
-return null
-int test_para1()
+b = 2
+c = 3
+$$84 = a + b
+$$87 = $$84 * c
+$$88 = 0 - $$87
+global_int_arr1[0] = $$88
+$$91 = global_int_arr1[0]
+$$93 = $$91 + 3
+global_int_arr1[1] = $$93
+call int_0para
+$$95 = RET
+global_int_arr1[2] = $$95
+$$98 = global_int_arr1[0]
+printf($$98)
+$$100 = global_int_arr1[1]
+printf($$100)
+$$102 = global_int_arr1[2]
+printf($$102)
+global_char_arr1[1] = 101
+$$106 = global_char_arr1[1]
+ret $$106
+int int_2para()
 para_int a
 para_int b
-$$726 = judge + 1
-judge = $$726
+$$109 = a + b
+ret $$109
+int fact()
+para_int n
+n >= 1
+BNZ Label31
+$$115 = n - 1
+push $$115
+call fact
+$$116 = RET
+$$118 = n * $$116
+ret $$118
+Label31:
 ret 1
-char test_para2()
-para_char a
-para_char b
-$$730 = judge + 1
-judge = $$730
-ret 97
-void test_para3()
-para_char a
-para_int b
-$$734 = judge + 1
-judge = $$734
-return null
-void test_para()
-$$737 = judge + 1
-judge = $$737
-push 1
-push 2
-call test_para1
-push 97
-push 98
-call test_para2
-push 97
-push 1
-call test_para3
-return null
 void main()
-var int x
-judge = 0
-$$747 = judge + 1
-judge = $$747
-x = 0
-call test_global_variable
-call test_global_const
-call test_brackets
-call test_compare_operator
-call test_expression
-call test_while
-call test_if
-call test_switch
-call test_function
-call test_printf
-call test_scanf
-call test_varib
-call test_para
-printf("all test:")
-printf(judge)
-return null
+call void_0para
+call int_0para
+$$120 = RET
+printf($$120)
+call char_0para
+push 14
+push 15
+call int_2para
+$$132 = RET
+printf($$132)
+push 5
+call fact
+$$135 = RET
+printf($$135)

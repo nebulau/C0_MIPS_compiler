@@ -1272,6 +1272,10 @@ int main()
 	cin >> op;
 	if (op == 'y')
 		generate2();
+	cout << "Open peephole?(y/other)\n";
+	cin >> op;
+	if (op == 'y')
+		peephole();
 	print_midcode();
 	mips();
 	file.close();
