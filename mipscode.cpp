@@ -351,16 +351,15 @@ void FuncHandler(int i) {
 	else {
 		str_tp = midcode[i].argu1;
 		MipsOutput << str_tp << ":\n";
-		//MipsOutput << "\tadd $fp, $sp, " << FuncTab[FuncLoc].ParaNum * 4 << "\n#置$fp为被调用者基地址\n";
-		//MipsOutput << "\tsub $sp, $sp, " << (FuncTab[FuncLoc].VariNum - FuncTab[FuncLoc].ParaNum) * 4 << '\n';
+		MipsOutput << "#为函数局部变量和临时变量退栈空间\n";//为函数局部变量和临时变量退栈空间
 		MipsOutput << "\tsub $sp, $sp, " << FuncTab[FuncLoc].InfoSize - FuncTab[FuncLoc].ParaNum * 4 << '\n';
-		MipsOutput << "#退栈空间，接着保存s系寄存器和$ra,$fp\n";
-		MipsOutput << "\tsw $s0, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s1, 0($sp)\n\tsub $sp, $sp, 4\n";
-		MipsOutput << "\tsw $s2, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s3, 0($sp)\n\tsub $sp, $sp, 4\n";
-		MipsOutput << "\tsw $s4, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s5, 0($sp)\n\tsub $sp, $sp, 4\n";
-		MipsOutput << "\tsw $s6, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $s7, 0($sp)\n\tsub $sp, $sp, 4\n";
-		MipsOutput << "\tsw $ra, 0($sp)\n\tsub $sp, $sp, 4\n\tsw $fp, 0($sp)\n\tsub $sp, $sp, 4\n";
-		//MipsOutput << "#置$fp为被调用者基地址\n\tadd $fp, $sp, " << FuncTab[FuncLoc].VariNum * 4 + 40<< "\n";
+		MipsOutput << "#退栈空间，接着保存s系寄存器和$ra,$fp\n";//退栈空间，接着保存s系寄存器和$ra,$fp
+		MipsOutput << "\tsub $sp, $sp, 40\n";
+		MipsOutput << "\tsw $s0, 40($sp)\n\tsw $s1, 36($sp)\n";
+		MipsOutput << "\tsw $s2, 32($sp)\n\tsw $s3, 28($sp)\n";
+		MipsOutput << "\tsw $s4, 24($sp)\n\tsw $s5, 20($sp)\n";
+		MipsOutput << "\tsw $s6, 16($sp)\n\tsw $s7, 12($sp)\n";
+		MipsOutput << "\tsw $ra, 8($sp)\n\tsw $fp, 4($sp)\n";
 		MipsOutput << "#置$fp为被调用者基地址\n\tadd $fp, $sp, " << FuncTab[FuncLoc].InfoSize + 40 << "\n";
 	}
 
@@ -1060,13 +1059,15 @@ void RetExprHandler(int i) {
 		}
 	}
 	//return之前恢复栈指针到调用者的位置
-	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $fp, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $ra, 0($sp)\n";
+	/*MipsOutput << "\tadd $sp, $sp, 4\n\tlw $fp, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $ra, 0($sp)\n";
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s7, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s6, 0($sp)\n";
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
 	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
-	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
-	//MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].VariNum * 4 << '\n';
-	MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].InfoSize << '\n';
+	MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";*/
+	MipsOutput << "\tlw $fp, 4($sp)\n\tlw $ra, 8($sp)\n\tlw $s7, 12($sp)\n\tlw $s6, 16($sp)\n";
+	MipsOutput << "\tlw $s5, 20($sp)\n\tlw $s4, 24($sp)\n\tlw $s3, 28($sp)\n\tlw $s2, 32($sp)\n";
+	MipsOutput << "\tlw $s1, 36($sp)\n\tlw $s0, 40($sp)\n";
+	MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].InfoSize + 40 << '\n';
 	MipsOutput << "\tjr $ra\n";
 }
 void RetNullHandler(int i) {
@@ -1074,12 +1075,15 @@ void RetNullHandler(int i) {
 		//main函数返回
 		MipsOutput << "\tli $v0, 10\n\tsyscall\n";
 	else {
-		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $fp, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $ra, 0($sp)\n";
+		/*MipsOutput << "\tadd $sp, $sp, 4\n\tlw $fp, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $ra, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s7, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s6, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s5, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s4, 0($sp)\n";
 		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s3, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s2, 0($sp)\n";
-		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";
-		MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].InfoSize << '\n';
+		MipsOutput << "\tadd $sp, $sp, 4\n\tlw $s1, 0($sp)\n\tadd $sp, $sp, 4\n\tlw $s0, 0($sp)\n";*/
+		MipsOutput << "\tlw $fp, 4($sp)\n\tlw $ra, 8($sp)\n\tlw $s7, 12($sp)\n\tlw $s6, 16($sp)\n";
+		MipsOutput << "\tlw $s5, 20($sp)\n\tlw $s4, 24($sp)\n\tlw $s3, 28($sp)\n\tlw $s2, 32($sp)\n";
+		MipsOutput << "\tlw $s1, 36($sp)\n\tlw $s0, 40($sp)\n";
+		MipsOutput << "\tadd $sp, $sp, " << FuncTab[FuncLoc].InfoSize + 40<< '\n';
 		MipsOutput << "\tjr $ra\n";
 	}
 }

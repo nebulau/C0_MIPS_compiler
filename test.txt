@@ -3,10 +3,16 @@ int a(){
 	x=x+1;
 	return (x);
 }
+void f(){
+	x=5;
+	return;
+}
 
 void main(){
 	x = 0;
 	if(x==a())
 		printf("yes");
+	f();
+	printf(x);
 
 }
