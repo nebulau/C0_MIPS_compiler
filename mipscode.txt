@@ -682,5 +682,3 @@ Label18:
 	syscall
 Label16:
 
-
-
