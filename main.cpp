@@ -965,6 +965,8 @@ void realparaHandler(int j) {
 				else { errormsg(33); }
 			}
 		}
+		if(tab[j].type==int_para|| tab[j].type == char_para)
+			errormsg(33);
 		if (symbol != RPARSY) { skip(); errormsg(16); getsym(); return; }
 	}
 	getsym();
