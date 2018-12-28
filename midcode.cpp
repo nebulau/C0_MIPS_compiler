@@ -462,7 +462,10 @@ void delconst()                                                                 
 	}
 }
 /*
-	如果出现了一个临时变量$的赋值，且这个临时变量没出现在result位置，则可以全部替换
+	如果出现了一个临时变量$的赋值，且这个临时变量没出现在result位置，则可以暂时替换之后的两个中间代码出现的
+	$$3 = 1
+	$$4 = x
+	$$5 = $$3+$$4
 */
 void generate1() {
 	/*
@@ -471,19 +474,10 @@ void generate1() {
 		$$1替换成1或者ident
 	*/
 	int i, j, flag = 0;
-	for (i = 0; i < midcodec; i++) {
+	for (i = 0; i < midcodec - 2; i++) {
 		if (midcode[i].type == VARASSIGN && strlen(midcode[i].argu1) != 0
 			&& strlen(midcode[i].argu2) == 0 && strlen(midcode[i].result) != 0
 			&& midcode[i].result[0] == '$') {
-			/*j = i + 1;
-				if (strcmp(midcode[j].argu1, midcode[i].result) == 0) {
-					midcode[i].type = DEL;
-						strcpy_s(midcode[j].argu1, midcode[i].argu1);
-				}
-				else if (strcmp(midcode[j].argu2, midcode[i].result) == 0) {
-					midcode[i].type = DEL;
-						strcpy_s(midcode[j].argu2, midcode[i].argu1);
-				}*/
 			for (j = i + 1; j < midcodec; j++) {
 				if (strcmp(midcode[j].result, midcode[i].result) == 0) {
 					flag = 1; break;
@@ -505,10 +499,12 @@ void generate1() {
 	}
 }
 /*
-	常量合并
+	合并简单四则运算,只对临时起名的变量操作
+	$$1 = 1 + 2；
+	$$2 = $$1 + 3;
 */
 void generate2() {
-	//合并简单四则运算,只对临时起名的变量操作
+	
 	int i = 0, j;
 	char result_tp[idlen];
 	for (i = 0; i < midcodec; i++) {
@@ -567,6 +563,8 @@ void generate2() {
 	窥孔优化，出现一个临时变量$的运算，并且下一条中间代码是赋值语句，临时变量$在右式
 	将这两条相邻的中间代码合并为一条
 	这里相邻通过简单+1，因为这样的两条中间代码之间不会有DEL的中间代码
+	$$5=n+3
+	n=$$5
 */
 void peephole() {
 	for (int i = 0; i < midcodec - 1; i++) {
@@ -576,6 +574,171 @@ void peephole() {
 				strcpy_s(midcode[i].result, midcode[i + 1].result);
 				midcode[i + 1].type = DEL;
 			}
+		}
+	}
+}
+/*
+	对每个函数的局部变量引用计数排序
+*/
+void varsort() {
+	int i, j;
+	int TypeTp;
+	char IdenTp[idlen];
+	for (i = 0; i < midcodec; i++) {
+		if (midcode[i].type >= 10 && midcode[i].type <= 12) {
+			i++;
+			for (; !(midcode[i].type >= 10 && midcode[i].type <= 12) && i < midcodec; i++) {
+				if (midcode[i].type >= VAR_INT && midcode[i].type <= CHAR_ARR)	break;
+			}
+			//没有局部变量
+			if (midcode[i].type >= 10 && midcode[i].type <= 12) {
+				i--;
+				continue;
+			}
+			//i到j为局部变量在midcode的下标
+			else {
+				for (j = i; midcode[j].type >= VAR_INT && midcode[j].type <= CHAR_ARR; j++);
+				j--;
+				while (i < j) {
+					if (midcode[i].type == INT_ARR || midcode[i].type == CHAR_ARR) {
+						if (midcode[j].type == INT_ARR || midcode[j].type == CHAR_ARR) {
+							j--; continue;
+						}
+						else {
+							TypeTp = midcode[i].type;
+							midcode[i].type = midcode[j].type;
+							midcode[j].type = TypeTp;
+
+							strcpy_s(IdenTp, midcode[i].argu1);
+							strcpy_s(midcode[i].argu1, midcode[j].argu1);
+							strcpy_s(midcode[j].argu1, IdenTp);
+
+							midcode[j].value = midcode[i].value;
+							midcode[i].value = 0;
+
+							i++; j--;
+						}
+					}
+					else {
+						if (midcode[j].type == INT_ARR || midcode[j].type == CHAR_ARR) {
+							i++; j--; continue;
+						}
+						else {
+							i++;
+						}
+					}
+				}
+			}
+		}
+
+	}
+	//引用计数
+	int frequency[info_size];
+	for (i = 0; i < midcodec; i++) {
+		if (midcode[i].type >= 10 && midcode[i].type <= 12) {
+			for (int x = 0; x < info_size; x++)	frequency[x] = 0;
+			i++;
+			for (; !(midcode[i].type >= 10 && midcode[i].type <= 12) && i < midcodec; i++) {
+				if (midcode[i].type >= VAR_INT && midcode[i].type <= CHAR_ARR)	break;
+			}
+			//没有局部变量
+			if (midcode[i].type >= 10 && midcode[i].type <= 12) {
+				i--;
+				continue;
+			}
+			for (j = i; midcode[j].type == VAR_INT || midcode[j].type == VAR_CHAR; j++);
+			j--;
+			for (int t = i; t >= i && t <= j; t++) {
+				for (int k = j + 1; !(midcode[k].type >= 10 && midcode[k].type <= 12) && k < midcodec; k++) {
+					if (strcmp(midcode[k].argu1, midcode[t].argu1)==0 ||
+						strcmp(midcode[k].argu2, midcode[t].argu1)==0 ||
+						strcmp(midcode[k].result, midcode[t].argu1)==0)	frequency[t - i]++;
+				}
+			}
+			//排序
+			for (int m = 0; m < j - i+1; m++) {
+				for (int n = m + 1; n < j - i+1; n++) {
+					if (frequency[m] < frequency[n]) {
+						TypeTp = midcode[m + i].type;
+						midcode[m + i].type = midcode[n + i].type;
+						midcode[n + i].type = TypeTp;
+
+						strcpy_s(IdenTp, midcode[m + i].argu1);
+						strcpy_s(midcode[m + i].argu1, midcode[n + i].argu1);
+						strcpy_s(midcode[n + i].argu1, IdenTp);
+					}
+				}
+
+			}
+		}
+	}
+}
+/*
+	不带嵌套的循环外提，循环部分中间代码格式
+	Label
+	x>=y
+	BNZ ..
+	.
+	.
+	.
+	GOTO ..
+	Label
+*/
+void deloop() {
+	int i, j, fg1, fg2, fg3, ii;
+	int TypeTp;
+	char argu1Tp[idlen], argu2Tp[idlen], resultTp[idlen];
+	for (i = 0; i < midcodec - 5; i++) {
+		if (midcode[i].type == SETLABEL) {
+			for (ii = i; ii < midcodec; ii++)
+				if (midcode[ii].type == BZ || midcode[ii].type == BNZ)	break;
+			for (j = ii + 1; j < midcodec; j++) {
+				if (midcode[j].type == SETLABEL)	break;
+			}
+			if (midcode[j].type == SETLABEL) {
+				if (midcode[j - 1].type == GOTO && strcmp(midcode[j].argu1, midcode[ii].argu1) == 0 && strcmp(midcode[j - 1].argu1, midcode[i].argu1) == 0) {
+					for (int s = ii + 1; s < j - 1; s++) {
+						fg1 = 1; fg2 = 1; fg3 = 1;
+						for (int t = ii + 1; t < j - 1; t++) {
+							if (strcmp(midcode[s].argu1, midcode[t].result) == 0) {
+								fg1 = 0; break;
+							}
+						}
+						for (int t = ii + 1; t < j - 1; t++) {
+							if (strcmp(midcode[s].argu2, midcode[t].result) == 0) {
+								fg2 = 0; break;
+							}
+						}
+						for (int t = ii + 1; t < j - 1; t++) {
+							if (t == s) {
+								t++; continue;
+							}
+							if (strcmp(midcode[s].result, midcode[t].result) == 0) {
+								fg3 = 0; break;
+							}
+						}
+						//可以外提
+						if (fg1*fg2*fg3 == 1) {
+							TypeTp = midcode[s].type;
+							strcpy_s(argu1Tp, midcode[s].argu1);
+							strcpy_s(argu2Tp, midcode[s].argu2);
+							strcpy_s(resultTp, midcode[s].result);
+							
+							for (int k = s; k > i; k--) {
+								midcode[k].type = midcode[k - 1].type;
+								strcpy_s(midcode[k].argu1, midcode[k - 1].argu1);
+								strcpy_s(midcode[k].argu2, midcode[k - 1].argu2);
+								strcpy_s(midcode[k].result, midcode[k - 1].result);
+							}
+							midcode[i].type = TypeTp;
+							strcpy_s(midcode[i].argu1, argu1Tp);
+							strcpy_s(midcode[i].argu2, argu2Tp);
+							strcpy_s(midcode[i].result, resultTp);
+						}
+					}
+				}
+			}
+
 		}
 	}
 }

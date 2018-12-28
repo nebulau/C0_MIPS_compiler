@@ -485,7 +485,13 @@ void factorHandler() {
 		}
 		if (tab[j].type == const_char || tab[j].type == var_char || tab[j].type == char_para)
 			expr_is_char = 1;
-		insert_midcode(VARASSIGN, token_tp, NULL, id_name_gen(), 0);
+		if (tab[j].lev == 0 && (tab[j].type == var_int || tab[j].type == var_char)) {
+			char levtp[3] = { '$', 'G','\0' };
+			insert_midcode(VARASSIGN, token_tp, levtp, id_name_gen(), 0);
+		}
+			
+		else
+			insert_midcode(VARASSIGN, token_tp, NULL, id_name_gen(), 0);
 	}
 	else if (symbol == LPARSY){
 		getsym();
@@ -963,7 +969,7 @@ void realparaHandler(int j) {
 					insert_midcode(PUSH, midcode[midcodec - 1].result, NULL, NULL, 0);
 				}
 				else { errormsg(33); }
-			}
+			}  
 		}
 		if(tab[j].type==int_para|| tab[j].type == char_para)
 			errormsg(33);
@@ -1266,10 +1272,7 @@ int main()
 	printtab();
 	delconst();//delconst需要在generate之前
 	char op;
-	cout << "Open generate1?(y/other)\n";
-	cin >> op;
-	if (op == 'y')
-		generate1();
+	generate1();
 	cout << "Open generate2?(y/other)\n";
 	cin >> op;
 	if (op == 'y')
@@ -1278,6 +1281,7 @@ int main()
 	cin >> op;
 	if (op == 'y')
 		peephole();
+	varsort(); deloop();
 	print_midcode();
 	mips();
 	file.close();
