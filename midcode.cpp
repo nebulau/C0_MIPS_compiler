@@ -638,6 +638,7 @@ void varsort() {
 		if (midcode[i].type >= 10 && midcode[i].type <= 12) {
 			for (int x = 0; x < info_size; x++)	frequency[x] = 0;
 			i++;
+			//过滤参数
 			for (; !(midcode[i].type >= 10 && midcode[i].type <= 12) && i < midcodec; i++) {
 				if (midcode[i].type >= VAR_INT && midcode[i].type <= CHAR_ARR)	break;
 			}
@@ -650,9 +651,9 @@ void varsort() {
 			j--;
 			for (int t = i; t >= i && t <= j; t++) {
 				for (int k = j + 1; !(midcode[k].type >= 10 && midcode[k].type <= 12) && k < midcodec; k++) {
-					if (strcmp(midcode[k].argu1, midcode[t].argu1)==0 ||
-						strcmp(midcode[k].argu2, midcode[t].argu1)==0 ||
-						strcmp(midcode[k].result, midcode[t].argu1)==0)	frequency[t - i]++;
+					if (strcmp(midcode[k].argu1, midcode[t].argu1)==0)frequency[t - i]++;
+					if(strcmp(midcode[k].argu2, midcode[t].argu1)==0)frequency[t - i]++;
+					if(strcmp(midcode[k].result, midcode[t].argu1)==0)frequency[t - i]++;
 				}
 			}
 			//排序
@@ -670,75 +671,6 @@ void varsort() {
 				}
 
 			}
-		}
-	}
-}
-/*
-	不带嵌套的循环外提，循环部分中间代码格式
-	Label
-	x>=y
-	BNZ ..
-	.
-	.
-	.
-	GOTO ..
-	Label
-*/
-void deloop() {
-	int i, j, fg1, fg2, fg3, ii;
-	int TypeTp;
-	char argu1Tp[idlen], argu2Tp[idlen], resultTp[idlen];
-	for (i = 0; i < midcodec - 5; i++) {
-		if (midcode[i].type == SETLABEL) {
-			for (ii = i; ii < midcodec; ii++)
-				if (midcode[ii].type == BZ || midcode[ii].type == BNZ)	break;
-			for (j = ii + 1; j < midcodec; j++) {
-				if (midcode[j].type == SETLABEL)	break;
-			}
-			if (midcode[j].type == SETLABEL) {
-				if (midcode[j - 1].type == GOTO && strcmp(midcode[j].argu1, midcode[ii].argu1) == 0 && strcmp(midcode[j - 1].argu1, midcode[i].argu1) == 0) {
-					for (int s = ii + 1; s < j - 1; s++) {
-						fg1 = 1; fg2 = 1; fg3 = 1;
-						for (int t = ii + 1; t < j - 1; t++) {
-							if (strcmp(midcode[s].argu1, midcode[t].result) == 0) {
-								fg1 = 0; break;
-							}
-						}
-						for (int t = ii + 1; t < j - 1; t++) {
-							if (strcmp(midcode[s].argu2, midcode[t].result) == 0) {
-								fg2 = 0; break;
-							}
-						}
-						for (int t = ii + 1; t < j - 1; t++) {
-							if (t == s) {
-								t++; continue;
-							}
-							if (strcmp(midcode[s].result, midcode[t].result) == 0) {
-								fg3 = 0; break;
-							}
-						}
-						//可以外提
-						if (fg1*fg2*fg3 == 1) {
-							TypeTp = midcode[s].type;
-							strcpy_s(argu1Tp, midcode[s].argu1);
-							strcpy_s(argu2Tp, midcode[s].argu2);
-							strcpy_s(resultTp, midcode[s].result);
-							
-							for (int k = s; k > i; k--) {
-								midcode[k].type = midcode[k - 1].type;
-								strcpy_s(midcode[k].argu1, midcode[k - 1].argu1);
-								strcpy_s(midcode[k].argu2, midcode[k - 1].argu2);
-								strcpy_s(midcode[k].result, midcode[k - 1].result);
-							}
-							midcode[i].type = TypeTp;
-							strcpy_s(midcode[i].argu1, argu1Tp);
-							strcpy_s(midcode[i].argu2, argu2Tp);
-							strcpy_s(midcode[i].result, resultTp);
-						}
-					}
-				}
-			}
-
 		}
 	}
 }

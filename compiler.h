@@ -210,7 +210,6 @@ void generate1();
 void generate2();
 void peephole();
 void varsort();
-void deloop();
 char* str_name_gen();
 void mips();
 #endif // TEMP_H
