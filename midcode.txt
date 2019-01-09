@@ -1,0 +1,598 @@
+const int const_int_1 = 12345679
+const int const_int_2 = 0
+const int const_int_3 = 0
+const int const_int_4 = -12345679
+const char const_char_1 = '9'
+const char const_char_2 = '_'
+const char const_char_3 = '+'
+const char const_char_4 = '*'
+int global_int_array_1[5]
+var int global_int_1
+char global_char_array_1[5]
+var char global_char_1
+var int global_int_2
+int global_int_array_2[5]
+var char global_char_2
+char global_char_array_2[5]
+char global_char_array_3[10]
+void hanoi()
+para_int n
+para_char from
+para_char tmp
+para_char to
+n > 0
+BNZ Label0
+$$4 = n - 1
+push $$4
+push from
+push to
+push tmp
+call hanoi
+printf("take")
+printf(n)
+printf("from")
+printf(from)
+printf("to")
+printf(to)
+$$13 = n - 1
+push $$13
+push tmp
+push from
+push to
+call hanoi
+Label0:
+return null
+int Fibonacci()
+para_int n
+n == 0
+BNZ Label1
+ret 0
+Label1:
+n == 1
+BNZ Label2
+ret 1
+Label2:
+$$25 = n - 1
+push $$25
+call Fibonacci
+$$26 = RET
+$$30 = n - 2
+push $$30
+call Fibonacci
+$$31 = RET
+$$33 = $$26 + $$31
+ret $$33
+int fac()
+para_int n
+n == 1
+BNZ Label3
+ret 1
+Label3:
+$$40 = n - 1
+push $$40
+call fac
+$$41 = RET
+$$43 = n * $$41
+ret $$43
+void initGlobalArray()
+global_int_array_1[0] = 0
+global_int_array_1[1] = 1
+$$50 = global_int_array_1[0]
+$$52 = global_int_array_1[1]
+$$53 = $$50 + $$52
+global_int_array_1[2] = $$53
+$$56 = global_int_array_1[2]
+$$58 = global_int_array_1[1]
+$$59 = $$56 + $$58
+global_int_array_1[3] = $$59
+$$62 = global_int_array_1[3]
+$$64 = global_int_array_1[2]
+$$65 = $$62 + $$64
+global_int_array_1[4] = $$65
+$$68 = global_int_array_1[1]
+global_int_array_2[0] = $$68
+$$71 = global_int_array_2[0]
+$$73 = global_int_array_1[2]
+$$74 = $$71 * $$73
+global_int_array_2[1] = $$74
+$$77 = global_int_array_2[1]
+$$79 = global_int_array_1[3]
+$$80 = $$77 * $$79
+global_int_array_2[2] = $$80
+$$83 = global_int_array_2[2]
+$$85 = global_int_array_1[4]
+$$86 = $$83 * $$85
+global_int_array_2[3] = $$86
+$$89 = global_int_array_2[3]
+$$91 = global_int_array_1[4]
+$$92 = $$89 / $$91
+global_int_array_2[4] = $$92
+global_char_array_1[0] = 97
+global_char_array_1[1] = 65
+global_char_array_1[2] = 122
+global_char_array_1[3] = 90
+global_char_array_1[4] = 95
+global_char_array_2[0] = 43
+global_char_array_2[1] = 45
+global_char_array_2[2] = 42
+global_char_array_2[3] = 47
+global_char_array_2[4] = 54
+return null
+void assignGlobal()
+para_int a
+para_char b
+para_int c
+para_char d
+global_int_1 = a
+global_char_1 = b
+global_int_2 = c
+global_char_2 = d
+return null
+void printGlobalConst()
+printf(12345679)
+printf(0)
+printf(0)
+printf(-12345679)
+printf(57)
+printf(95)
+printf(43)
+printf(42)
+return null
+void printGlobalVar()
+printf(global_int_1)
+printf(global_int_2)
+printf(global_char_1)
+printf(global_char_2)
+return null
+void printGlobalArray()
+$$130 = global_int_array_1[0]
+printf($$130)
+$$132 = global_int_array_1[1]
+printf($$132)
+$$134 = global_int_array_1[2]
+printf($$134)
+$$136 = global_int_array_1[3]
+printf($$136)
+$$138 = global_int_array_1[4]
+printf($$138)
+$$140 = global_int_array_2[0]
+printf($$140)
+$$142 = global_int_array_2[1]
+printf($$142)
+$$144 = global_int_array_2[2]
+printf($$144)
+$$146 = global_int_array_2[3]
+printf($$146)
+$$148 = global_int_array_2[4]
+printf($$148)
+$$150 = global_char_array_1[0]
+printf($$150)
+$$152 = global_char_array_1[1]
+printf($$152)
+$$154 = global_char_array_1[2]
+printf($$154)
+$$156 = global_char_array_1[3]
+printf($$156)
+$$158 = global_char_array_1[4]
+printf($$158)
+$$160 = global_char_array_2[0]
+printf($$160)
+$$162 = global_char_array_2[1]
+printf($$162)
+$$164 = global_char_array_2[2]
+printf($$164)
+$$166 = global_char_array_2[3]
+printf($$166)
+$$168 = global_char_array_2[4]
+printf($$168)
+return null
+void testGlobal()
+call initGlobalArray
+push 12345679
+push 57
+push -12345679
+push 42
+call assignGlobal
+call printGlobalConst
+call printGlobalVar
+call printGlobalArray
+return null
+int testReturnInt()
+para_int a
+$$175 = a + 1
+ret $$175
+char testReturnChar()
+para_int a
+a == 1
+BNZ Label5
+ret 97
+GOTO Label4
+Label5:
+a == 2
+BNZ Label6
+ret 98
+GOTO Label4
+Label6:
+a == 3
+BNZ Label7
+ret 99
+GOTO Label4
+Label7:
+Label4:
+ret 95
+void testReturn()
+push 3
+call fac
+$$182 = RET
+push 2
+call fac
+$$185 = RET
+$$187 = $$182 + $$185
+push $$187
+call Fibonacci
+$$188 = RET
+push $$188
+call testReturnInt
+$$190 = RET
+printf($$190)
+push 1
+call testReturnChar
+$$193 = RET
+printf($$193)
+push 2
+call testReturnChar
+$$196 = RET
+printf($$196)
+push 3
+call testReturnChar
+$$199 = RET
+printf($$199)
+push 4
+call testReturnChar
+$$202 = RET
+printf($$202)
+return null
+void testAssignAndExp()
+const int const_int_1 = 1
+const int const_int_2 = -1
+const int const_int_3 = 0
+const char const_char_1 = 'a'
+const char const_char_2 = 'A'
+const char const_char_3 = 'b'
+var char char_temp_1
+var char char_temp_2
+var int int_temp_2
+var int int_temp_3
+var int int_temp_1
+char char_array[2]
+int int_array[2]
+push 5
+call Fibonacci
+$$206 = RET
+push $$206
+call Fibonacci
+$$208 = RET
+push $$208
+call Fibonacci
+$$210 = RET
+$$218 = $$210 + 0
+push 3
+call fac
+$$221 = RET
+$$223 = $$218 / $$221
+int_temp_1 = 1 + $$223
+push 3
+call fac
+$$226 = RET
+push 2
+call fac
+$$229 = RET
+$$231 = $$226 + $$229
+push $$231
+call fac
+$$232 = RET
+int_temp_2 = $$232
+push 0
+call testReturnInt
+$$236 = RET
+int_array[0] = $$236
+push 0
+call testReturnInt
+$$243 = RET
+$$246 = $$243 * -12345679
+$$247 = 12345679 + $$246
+$$249 = 1 - $$247
+push 1
+call testReturnInt
+$$252 = RET
+$$254 = 1 + $$252
+int_array[$$249] = $$254
+$$256 = int_array[0]
+push 0
+call testReturnInt
+$$262 = RET
+$$265 = $$262 * -12345679
+$$266 = 12345679 + $$265
+$$268 = 1 - $$266
+$$269 = int_array[$$268]
+$$274 = $$269 * 1
+int_temp_3 = $$256 - $$274
+$$279 = int_array[0]
+push $$279
+call testReturnChar
+$$280 = RET
+char_array[0] = $$280
+push 0
+call testReturnInt
+$$287 = RET
+$$290 = $$287 * -12345679
+$$291 = 12345679 + $$290
+$$293 = 1 - $$291
+$$295 = int_array[1]
+$$297 = $$295 + 1
+push $$297
+call testReturnChar
+$$298 = RET
+char_array[$$293] = $$298
+char_temp_1 = char_array[0]
+push 0
+call testReturnInt
+$$307 = RET
+$$310 = $$307 * -12345679
+$$311 = 12345679 + $$310
+$$313 = 1 - $$311
+char_temp_2 = char_array[$$313]
+printf(int_temp_1)
+printf(int_temp_2)
+printf(int_temp_3)
+$$319 = int_array[0]
+printf($$319)
+push 0
+call testReturnInt
+$$325 = RET
+$$328 = $$325 * -12345679
+$$329 = 12345679 + $$328
+$$331 = 1 - $$329
+$$332 = int_array[$$331]
+printf($$332)
+printf(char_temp_1)
+printf(char_temp_2)
+$$336 = char_array[0]
+printf($$336)
+$$338 = char_array[1]
+printf($$338)
+$$341 = char_array[0]
+$$343 = char_array[0]
+$$345 = $$343 * char_temp_2
+$$346 = $$341 + $$345
+$$348 = char_temp_1 * $$346
+printf($$348)
+return null
+void testIO()
+scanf(global_int_1)
+scanf(global_char_1)
+printf("!@\n#$^&*()Qqaa123[];',./")
+printf(global_int_1)
+printf(global_char_1)
+scanf(global_int_1)
+scanf(global_char_1)
+printf("!@\n#$^&*()Qqaa123[];',./")
+printf(global_int_1)
+printf(global_char_1)
+scanf(global_char_1)
+scanf(global_int_1)
+printf("!@\n#$^&*()Qqaa123[];',./")
+printf(global_char_1)
+printf(global_int_1)
+return null
+void testIfWhile()
+var int i
+var char d
+var int j
+var int k
+var char a
+var char b
+var char c
+k = 10
+a = 43
+b = 45
+c = 42
+d = 47
+k > 0
+BNZ Label8
+k <= 10
+BNZ Label9
+i = 0
+Label10:
+$$368 = k / 2
+i < $$368
+BNZ Label11
+$$372 = i / 2
+$$374 = $$372 * 2
+$$376 = i - $$374
+$$376 == 0
+BNZ Label13
+global_char_array_3[i] = a
+GOTO Label12
+Label13:
+$$376 == 1
+BNZ Label14
+global_char_array_3[i] = b
+GOTO Label12
+Label14:
+Label12:
+$$382 = global_char_array_3[i]
+printf($$382)
+i = i + 1
+GOTO Label10
+Label11:
+Label15:
+i < k
+BNZ Label16
+$$391 = i / 2
+$$393 = $$391 * 2
+$$395 = i - $$393
+$$395 == 0
+BNZ Label18
+global_char_array_3[i] = c
+GOTO Label17
+Label18:
+global_char_array_3[i] = d
+Label17:
+$$401 = global_char_array_3[i]
+printf($$401)
+i = i + 1
+GOTO Label15
+Label16:
+Label9:
+Label8:
+return null
+void testSwitch()
+const int sum = 3
+var char char_1
+var int int_1
+var int i
+i = 0
+int_1 = 0
+Label19:
+i < 3
+BNZ Label20
+int_1 == 0
+BNZ Label22
+char_1 = 97
+printf(char_1)
+GOTO Label21
+Label22:
+int_1 == 1
+BNZ Label23
+char_1 = 98
+printf(char_1)
+GOTO Label21
+Label23:
+char_1 = 95
+printf(char_1)
+Label21:
+char_1 == 97
+BNZ Label25
+int_1 = i + 1
+printf(int_1)
+GOTO Label24
+Label25:
+char_1 == 98
+BNZ Label26
+int_1 = 3
+printf(int_1)
+GOTO Label24
+Label26:
+Label24:
+i = i + 1
+GOTO Label19
+Label20:
+return null
+int func_ret_int_1()
+para_int i_1
+para_int i_2
+para_char c_1
+para_char c_2
+var int i_temp
+var char c_temp
+printf("INPUT of func_ret_int_1:")
+printf(i_1)
+printf(i_2)
+printf(c_1)
+printf(c_2)
+i_temp = i_1
+i_1 = i_2
+i_2 = i_temp
+c_temp = c_1
+c_1 = c_2
+c_2 = c_temp
+printf("OPERATE of func_ret_int_1:")
+printf(i_1)
+printf(i_2)
+printf(c_1)
+printf(c_2)
+ret i_1
+void testPara()
+var int i
+var int j
+var char c
+var char d
+i = 12345679
+j = -12345679
+c = 65
+d = 90
+push i
+push j
+push c
+push d
+call func_ret_int_1
+$$449 = RET
+printf($$449)
+return null
+void testRecursion()
+push 2
+call fac
+$$452 = RET
+push 3
+call fac
+$$455 = RET
+$$457 = $$452 * $$455
+push $$457
+call Fibonacci
+$$458 = RET
+push 3
+call Fibonacci
+$$461 = RET
+push 4
+call Fibonacci
+$$464 = RET
+$$466 = $$461 + $$464
+push $$466
+call fac
+$$467 = RET
+$$469 = $$458 - $$467
+push 2
+call Fibonacci
+$$472 = RET
+push 3
+call Fibonacci
+$$475 = RET
+$$477 = $$472 + $$475
+push $$477
+call fac
+$$478 = RET
+$$480 = $$469 / $$478
+push $$480
+push 97
+push 98
+push 99
+call hanoi
+return null
+void main()
+printf("************************************************")
+printf("Start testing recursion:")
+call testRecursion
+printf("************************************************")
+printf("Start testing global:")
+call testGlobal
+printf("************************************************")
+printf("Start testing return:")
+call testReturn
+printf("************************************************")
+printf("Start testing I/O:")
+call testIO
+printf("************************************************")
+printf("Start testing assign & exp:")
+call testAssignAndExp
+printf("************************************************")
+printf("Start testing if & while:")
+call testIfWhile
+printf("************************************************")
+printf("Start testing switch:")
+call testSwitch
+printf("************************************************")
+printf("Start testing parameter:")
+call testPara
+printf("************************************************")
+return null

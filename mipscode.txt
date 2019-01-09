@@ -1,0 +1,1967 @@
+.data
+	global_int_array_1:.word 0:20
+	global_int_1:.word 0
+	global_char_array_1:.word 0:20
+	global_char_1:.word 0
+	global_int_2:.word 0
+	global_int_array_2:.word 0:20
+	global_char_2:.word 0
+	global_char_array_2:.word 0:20
+	global_char_array_3:.word 0:40
+	$str0:.asciiz "take"
+	$str1:.asciiz "from"
+	$str2:.asciiz "to"
+	$str3:.asciiz "!@\n#$^&*()Qqaa123[];',./"
+	$str4:.asciiz "!@\n#$^&*()Qqaa123[];',./"
+	$str5:.asciiz "!@\n#$^&*()Qqaa123[];',./"
+	$str6:.asciiz "INPUT of func_ret_int_1:"
+	$str7:.asciiz "OPERATE of func_ret_int_1:"
+	$str8:.asciiz "************************************************"
+	$str9:.asciiz "Start testing recursion:"
+	$str10:.asciiz "************************************************"
+	$str11:.asciiz "Start testing global:"
+	$str12:.asciiz "************************************************"
+	$str13:.asciiz "Start testing return:"
+	$str14:.asciiz "************************************************"
+	$str15:.asciiz "Start testing I/O:"
+	$str16:.asciiz "************************************************"
+	$str17:.asciiz "Start testing assign & exp:"
+	$str18:.asciiz "************************************************"
+	$str19:.asciiz "Start testing if & while:"
+	$str20:.asciiz "************************************************"
+	$str21:.asciiz "Start testing switch:"
+	$str22:.asciiz "************************************************"
+	$str23:.asciiz "Start testing parameter:"
+	$str24:.asciiz "************************************************"
+.text
+	j main
+hanoi:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 48
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 64
+	lw $t0, 0($fp)
+	li $t1, 0
+	ble $t0, $t1, Label0
+	lw $t0, 0($fp)
+	li $t1, 1
+	sub $t0, $t0, $t1
+	move $s0, $t0
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	lw $t0, -4($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	lw $t0, -12($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	lw $t0, -8($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal hanoi
+#打印字符串
+	la $a0, $str0
+	li $v0, 4
+	syscall
+#打印int
+	lw $a0, 0($fp)
+	li $v0, 1
+	syscall
+#打印字符串
+	la $a0, $str1
+	li $v0, 4
+	syscall
+#打印char
+	lw $a0, -4($fp)
+	li $v0, 11
+	syscall
+#打印字符串
+	la $a0, $str2
+	li $v0, 4
+	syscall
+#打印char
+	lw $a0, -12($fp)
+	li $v0, 11
+	syscall
+	lw $t0, 0($fp)
+	li $t1, 1
+	sub $t0, $t0, $t1
+	move $s1, $t0
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	lw $t0, -8($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	lw $t0, -4($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	lw $t0, -12($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal hanoi
+Label0:
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	add $sp, $sp, 64
+	jr $ra
+Fibonacci:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 60
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 64
+	lw $t0, 0($fp)
+	li $t1, 0
+	bne $t0, $t1, Label1
+	li $v0, 0
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	add $sp, $sp, 64
+	jr $ra
+Label1:
+	lw $t0, 0($fp)
+	li $t1, 1
+	bne $t0, $t1, Label2
+	li $v0, 1
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	add $sp, $sp, 64
+	jr $ra
+Label2:
+	lw $t0, 0($fp)
+	li $t1, 1
+	sub $t0, $t0, $t1
+	move $s0, $t0
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	move $s1, $v0
+	lw $t0, 0($fp)
+	li $t1, 2
+	sub $t0, $t0, $t1
+	move $s2, $t0
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	move $s3, $v0
+	addu $t0, $s1, $s3
+	move $s4, $t0
+	move $v0, $s4
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	add $sp, $sp, 64
+	jr $ra
+fac:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 52
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 56
+	lw $t0, 0($fp)
+	li $t1, 1
+	bne $t0, $t1, Label3
+	li $v0, 1
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	add $sp, $sp, 56
+	jr $ra
+Label3:
+	lw $t0, 0($fp)
+	li $t1, 1
+	sub $t0, $t0, $t1
+	move $s0, $t0
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	move $s1, $v0
+	lw $t0, 0($fp)
+	mul $t0, $t0, $s1
+	move $s2, $t0
+	move $v0, $s2
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	add $sp, $sp, 56
+	jr $ra
+initGlobalArray:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 128
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $s5, 20($sp)
+	sw $s6, 16($sp)
+	sw $s7, 12($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 128
+	la $t0, global_int_array_1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 0
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 1
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s0, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s1, 0($t0)
+	addu $t0, $s0, $s1
+	move $s2, $t0
+	la $t0, global_int_array_1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	sw $s2, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s3, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s4, 0($t0)
+	addu $t0, $s3, $s4
+	move $s5, $t0
+	la $t0, global_int_array_1
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	sw $s5, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s6, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s7, 0($t0)
+	addu $t0, $s6, $s7
+	sw $t0, -32($fp)
+	la $t0, global_int_array_1
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -32($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_array_1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -36($fp)
+	la $t0, global_int_array_2
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -36($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_array_2
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -40($fp)
+	la $t0, global_int_array_1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -44($fp)
+	lw $t0, -40($fp)
+	lw $t1, -44($fp)
+	mul $t0, $t0, $t1
+	sw $t0, -48($fp)
+	la $t0, global_int_array_2
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -48($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_array_2
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -52($fp)
+	la $t0, global_int_array_1
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -56($fp)
+	lw $t0, -52($fp)
+	lw $t1, -56($fp)
+	mul $t0, $t0, $t1
+	sw $t0, -60($fp)
+	la $t0, global_int_array_2
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -60($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_array_2
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -64($fp)
+	la $t0, global_int_array_1
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -68($fp)
+	lw $t0, -64($fp)
+	lw $t1, -68($fp)
+	mul $t0, $t0, $t1
+	sw $t0, -72($fp)
+	la $t0, global_int_array_2
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -72($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_int_array_2
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -76($fp)
+	la $t0, global_int_array_1
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -80($fp)
+	lw $t0, -76($fp)
+	lw $t1, -80($fp)
+	div $t0, $t0, $t1
+	sw $t0, -84($fp)
+	la $t0, global_int_array_2
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -84($fp)
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 97
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 65
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 122
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_1
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 90
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_1
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 95
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_2
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 43
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_2
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 45
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_2
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 42
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_2
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 47
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, global_char_array_2
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	li $t2, 54
+	add $t0, $t0, $t1
+	sw $t2, 0($t0)
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	lw $s5, 20($sp)
+	lw $s6, 16($sp)
+	lw $s7, 12($sp)
+	add $sp, $sp, 128
+	jr $ra
+assignGlobal:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 40
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 56
+	lw $t0, 0($fp)
+	sw $t0, global_int_1
+	lw $t0, -4($fp)
+	sw $t0, global_char_1
+	lw $t0, -8($fp)
+	sw $t0, global_int_2
+	lw $t0, -12($fp)
+	sw $t0, global_char_2
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 56
+	jr $ra
+printGlobalConst:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 40
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 40
+#打印int
+	li $a0, 12345679
+	li $v0, 1
+	syscall
+#打印int
+	li $a0, 0
+	li $v0, 1
+	syscall
+#打印int
+	li $a0, 0
+	li $v0, 1
+	syscall
+#打印int
+	li $a0, -12345679
+	li $v0, 1
+	syscall
+#打印char
+	li $a0, 57
+	li $v0, 11
+	syscall
+#打印char
+	li $a0, 95
+	li $v0, 11
+	syscall
+#打印char
+	li $a0, 43
+	li $v0, 11
+	syscall
+#打印char
+	li $a0, 42
+	li $v0, 11
+	syscall
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 40
+	jr $ra
+printGlobalVar:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 40
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 40
+#打印int
+	lw $a0, global_int_1
+	li $v0, 1
+	syscall
+#打印int
+	lw $a0, global_int_2
+	li $v0, 1
+	syscall
+#打印char
+	lw $a0, global_char_1
+	li $v0, 11
+	syscall
+#打印char
+	lw $a0, global_char_2
+	li $v0, 11
+	syscall
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 40
+	jr $ra
+printGlobalArray:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 120
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $s5, 20($sp)
+	sw $s6, 16($sp)
+	sw $s7, 12($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 120
+	la $t0, global_int_array_1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s0, 0($t0)
+#打印int
+	move $a0, $s0
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s1, 0($t0)
+#打印int
+	move $a0, $s1
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s2, 0($t0)
+#打印int
+	move $a0, $s2
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_1
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s3, 0($t0)
+#打印int
+	move $a0, $s3
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_1
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s4, 0($t0)
+#打印int
+	move $a0, $s4
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_2
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s5, 0($t0)
+#打印int
+	move $a0, $s5
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_2
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s6, 0($t0)
+#打印int
+	move $a0, $s6
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_2
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $s7, 0($t0)
+#打印int
+	move $a0, $s7
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_2
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -32($fp)
+#打印int
+	lw $a0, -32($fp)
+	li $v0, 1
+	syscall
+	la $t0, global_int_array_2
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -36($fp)
+#打印int
+	lw $a0, -36($fp)
+	li $v0, 1
+	syscall
+	la $t0, global_char_array_1
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -40($fp)
+#打印char
+	lw $a0, -40($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_1
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -44($fp)
+#打印char
+	lw $a0, -44($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_1
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -48($fp)
+#打印char
+	lw $a0, -48($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_1
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -52($fp)
+#打印char
+	lw $a0, -52($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_1
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -56($fp)
+#打印char
+	lw $a0, -56($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_2
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -60($fp)
+#打印char
+	lw $a0, -60($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_2
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -64($fp)
+#打印char
+	lw $a0, -64($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_2
+	li $t1, 2
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -68($fp)
+#打印char
+	lw $a0, -68($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_2
+	li $t1, 3
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -72($fp)
+#打印char
+	lw $a0, -72($fp)
+	li $v0, 11
+	syscall
+	la $t0, global_char_array_2
+	li $t1, 4
+	li $t2, 4
+	mul $t1, $t1, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -76($fp)
+#打印char
+	lw $a0, -76($fp)
+	li $v0, 11
+	syscall
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	lw $s5, 20($sp)
+	lw $s6, 16($sp)
+	lw $s7, 12($sp)
+	add $sp, $sp, 120
+	jr $ra
+testGlobal:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 40
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 40
+	jal initGlobalArray
+	li $t0, 12345679
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, 57
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, -12345679
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, 42
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal assignGlobal
+	jal printGlobalConst
+	jal printGlobalVar
+	jal printGlobalArray
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 40
+	jr $ra
+testReturnInt:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 44
+	sw $s0, 40($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 48
+	lw $t0, 0($fp)
+	li $t1, 1
+	addu $t0, $t0, $t1
+	move $s0, $t0
+	move $v0, $s0
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	add $sp, $sp, 48
+	jr $ra
+testReturnChar:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 40
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 44
+	lw $t0, 0($fp)
+	li $t1, 1
+	bne $t0, $t1, Label5
+	li $v0, 97
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 44
+	jr $ra
+	j Label4
+Label5:
+	lw $t0, 0($fp)
+	li $t1, 2
+	bne $t0, $t1, Label6
+	li $v0, 98
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 44
+	jr $ra
+	j Label4
+Label6:
+	lw $t0, 0($fp)
+	li $t1, 3
+	bne $t0, $t1, Label7
+	li $v0, 99
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 44
+	jr $ra
+	j Label4
+Label7:
+Label4:
+	li $v0, 95
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 44
+	jr $ra
+testReturn:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 76
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $s5, 20($sp)
+	sw $s6, 16($sp)
+	sw $s7, 12($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 76
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	move $s0, $v0
+	li $t0, 2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	move $s1, $v0
+	addu $t0, $s0, $s1
+	move $s2, $t0
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	move $s3, $v0
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	move $s4, $v0
+#打印int
+	move $a0, $s4
+	li $v0, 1
+	syscall
+	li $t0, 1
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnChar
+	move $s5, $v0
+#打印char
+	move $a0, $s5
+	li $v0, 11
+	syscall
+	li $t0, 2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnChar
+	move $s6, $v0
+#打印char
+	move $a0, $s6
+	li $v0, 11
+	syscall
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnChar
+	move $s7, $v0
+#打印char
+	move $a0, $s7
+	li $v0, 11
+	syscall
+	li $t0, 4
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnChar
+	sw $v0, -32($fp)
+#打印char
+	lw $a0, -32($fp)
+	li $v0, 11
+	syscall
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	lw $s5, 20($sp)
+	lw $s6, 16($sp)
+	lw $s7, 12($sp)
+	add $sp, $sp, 76
+	jr $ra
+testAssignAndExp:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 276
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $s5, 20($sp)
+	sw $s6, 16($sp)
+	sw $s7, 12($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 276
+	li $t0, 5
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	move $s7, $v0
+	sw $s7, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	sw $v0, -40($fp)
+	lw $t0, -40($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	sw $v0, -44($fp)
+	lw $t0, -44($fp)
+	li $t1, 0
+	addu $t0, $t0, $t1
+	sw $t0, -48($fp)
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	sw $v0, -52($fp)
+	lw $t0, -48($fp)
+	lw $t1, -52($fp)
+	div $t0, $t0, $t1
+	sw $t0, -56($fp)
+	li $t0, 1
+	lw $t1, -56($fp)
+	addu $t0, $t0, $t1
+	move $s4, $t0
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	sw $v0, -60($fp)
+	li $t0, 2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	sw $v0, -64($fp)
+	lw $t0, -60($fp)
+	lw $t1, -64($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -68($fp)
+	lw $t0, -68($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	sw $v0, -72($fp)
+	lw $t0, -72($fp)
+	move $s2, $t0
+	li $t0, 0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	sw $v0, -76($fp)
+	la $t0, -28($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -76($fp)
+	sub $t0, $t0, $t1
+	sw $t2, 0($t0)
+	li $t0, 0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	sw $v0, -80($fp)
+	lw $t0, -80($fp)
+	li $t1, -12345679
+	mul $t0, $t0, $t1
+	sw $t0, -84($fp)
+	li $t0, 12345679
+	lw $t1, -84($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -88($fp)
+	li $t0, 1
+	lw $t1, -88($fp)
+	sub $t0, $t0, $t1
+	sw $t0, -92($fp)
+	li $t0, 1
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	sw $v0, -96($fp)
+	li $t0, 1
+	lw $t1, -96($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -100($fp)
+	la $t0, -28($fp)
+	lw $t1, -92($fp)
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -100($fp)
+	sub $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, -28($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -104($fp)
+	li $t0, 0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	sw $v0, -108($fp)
+	lw $t0, -108($fp)
+	li $t1, -12345679
+	mul $t0, $t0, $t1
+	sw $t0, -112($fp)
+	li $t0, 12345679
+	lw $t1, -112($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -116($fp)
+	li $t0, 1
+	lw $t1, -116($fp)
+	sub $t0, $t0, $t1
+	sw $t0, -120($fp)
+	la $t0, -28($fp)
+	lw $t1, -120($fp)
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -124($fp)
+	lw $t0, -124($fp)
+	li $t1, 1
+	mul $t0, $t0, $t1
+	sw $t0, -128($fp)
+	lw $t0, -104($fp)
+	lw $t1, -128($fp)
+	sub $t0, $t0, $t1
+	move $s3, $t0
+	la $t0, -28($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -132($fp)
+	lw $t0, -132($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnChar
+	sw $v0, -136($fp)
+	la $t0, -20($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -136($fp)
+	sub $t0, $t0, $t1
+	sw $t2, 0($t0)
+	li $t0, 0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	sw $v0, -140($fp)
+	lw $t0, -140($fp)
+	li $t1, -12345679
+	mul $t0, $t0, $t1
+	sw $t0, -144($fp)
+	li $t0, 12345679
+	lw $t1, -144($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -148($fp)
+	li $t0, 1
+	lw $t1, -148($fp)
+	sub $t0, $t0, $t1
+	sw $t0, -152($fp)
+	la $t0, -28($fp)
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -156($fp)
+	lw $t0, -156($fp)
+	li $t1, 1
+	addu $t0, $t0, $t1
+	sw $t0, -160($fp)
+	lw $t0, -160($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnChar
+	sw $v0, -164($fp)
+	la $t0, -20($fp)
+	lw $t1, -152($fp)
+	li $t2, 4
+	mul $t1, $t1, $t2
+	lw $t2, -164($fp)
+	sub $t0, $t0, $t1
+	sw $t2, 0($t0)
+	la $t0, -20($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $s0, 0($t0)
+	li $t0, 0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	sw $v0, -168($fp)
+	lw $t0, -168($fp)
+	li $t1, -12345679
+	mul $t0, $t0, $t1
+	sw $t0, -172($fp)
+	li $t0, 12345679
+	lw $t1, -172($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -176($fp)
+	li $t0, 1
+	lw $t1, -176($fp)
+	sub $t0, $t0, $t1
+	sw $t0, -180($fp)
+	la $t0, -20($fp)
+	lw $t1, -180($fp)
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $s1, 0($t0)
+#打印int
+	move $a0, $s4
+	li $v0, 1
+	syscall
+#打印int
+	move $a0, $s2
+	li $v0, 1
+	syscall
+#打印int
+	move $a0, $s3
+	li $v0, 1
+	syscall
+	la $t0, -28($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -184($fp)
+#打印int
+	lw $a0, -184($fp)
+	li $v0, 1
+	syscall
+	li $t0, 0
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal testReturnInt
+	sw $v0, -188($fp)
+	lw $t0, -188($fp)
+	li $t1, -12345679
+	mul $t0, $t0, $t1
+	sw $t0, -192($fp)
+	li $t0, 12345679
+	lw $t1, -192($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -196($fp)
+	li $t0, 1
+	lw $t1, -196($fp)
+	sub $t0, $t0, $t1
+	sw $t0, -200($fp)
+	la $t0, -28($fp)
+	lw $t1, -200($fp)
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -204($fp)
+#打印int
+	lw $a0, -204($fp)
+	li $v0, 1
+	syscall
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+#打印char
+	move $a0, $s1
+	li $v0, 11
+	syscall
+	la $t0, -20($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -208($fp)
+#打印char
+	lw $a0, -208($fp)
+	li $v0, 11
+	syscall
+	la $t0, -20($fp)
+	li $t1, 1
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -212($fp)
+#打印char
+	lw $a0, -212($fp)
+	li $v0, 11
+	syscall
+	la $t0, -20($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -216($fp)
+	la $t0, -20($fp)
+	li $t1, 0
+	li $t2, 4
+	mul $t1, $t1, $t2
+	sub $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -220($fp)
+	lw $t0, -220($fp)
+	mul $t0, $t0, $s1
+	sw $t0, -224($fp)
+	lw $t0, -216($fp)
+	lw $t1, -224($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -228($fp)
+	lw $t1, -228($fp)
+	mul $t0, $s0, $t1
+	sw $t0, -232($fp)
+#打印int
+	lw $a0, -232($fp)
+	li $v0, 1
+	syscall
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	lw $s5, 20($sp)
+	lw $s6, 16($sp)
+	lw $s7, 12($sp)
+	add $sp, $sp, 276
+	jr $ra
+testIO:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 40
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 40
+#读取int
+	li $v0, 5
+	syscall 
+	sw $v0, global_int_1
+#读取char
+	li $v0, 12
+	syscall 
+	sw $v0, global_char_1
+#打印字符串
+	la $a0, $str3
+	li $v0, 4
+	syscall
+#打印int
+	lw $a0, global_int_1
+	li $v0, 1
+	syscall
+#打印char
+	lw $a0, global_char_1
+	li $v0, 11
+	syscall
+#读取int
+	li $v0, 5
+	syscall 
+	sw $v0, global_int_1
+#读取char
+	li $v0, 12
+	syscall 
+	sw $v0, global_char_1
+#打印字符串
+	la $a0, $str4
+	li $v0, 4
+	syscall
+#打印int
+	lw $a0, global_int_1
+	li $v0, 1
+	syscall
+#打印char
+	lw $a0, global_char_1
+	li $v0, 11
+	syscall
+#读取char
+	li $v0, 12
+	syscall 
+	sw $v0, global_char_1
+#读取int
+	li $v0, 5
+	syscall 
+	sw $v0, global_int_1
+#打印字符串
+	la $a0, $str5
+	li $v0, 4
+	syscall
+#打印char
+	lw $a0, global_char_1
+	li $v0, 11
+	syscall
+#打印int
+	lw $a0, global_int_1
+	li $v0, 1
+	syscall
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	add $sp, $sp, 40
+	jr $ra
+testIfWhile:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 104
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $s5, 20($sp)
+	sw $s6, 16($sp)
+	sw $s7, 12($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 104
+	li $t0, 10
+	move $s3, $t0
+	li $t0, 43
+	move $s4, $t0
+	li $t0, 45
+	move $s5, $t0
+	li $t0, 42
+	move $s6, $t0
+	li $t0, 47
+	move $s1, $t0
+	li $t1, 0
+	ble $s3, $t1, Label8
+	li $t1, 10
+	bgt $s3, $t1, Label9
+	li $t0, 0
+	move $s0, $t0
+Label10:
+	li $t1, 2
+	div $t0, $s3, $t1
+	move $s7, $t0
+	bge $s0, $s7, Label11
+	li $t1, 2
+	div $t0, $s0, $t1
+	sw $t0, -32($fp)
+	lw $t0, -32($fp)
+	li $t1, 2
+	mul $t0, $t0, $t1
+	sw $t0, -36($fp)
+	lw $t1, -36($fp)
+	sub $t0, $s0, $t1
+	sw $t0, -40($fp)
+	lw $t0, -40($fp)
+	li $t1, 0
+	bne $t0, $t1, Label13
+	la $t0, global_char_array_3
+	li $t2, 4
+	mul $t1, $s0, $t2
+	add $t0, $t0, $t1
+	sw $s4, 0($t0)
+	j Label12
+Label13:
+	lw $t0, -40($fp)
+	li $t1, 1
+	bne $t0, $t1, Label14
+	la $t0, global_char_array_3
+	li $t2, 4
+	mul $t1, $s0, $t2
+	add $t0, $t0, $t1
+	sw $s5, 0($t0)
+	j Label12
+Label14:
+Label12:
+	la $t0, global_char_array_3
+	li $t2, 4
+	mul $t1, $s0, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -44($fp)
+#打印char
+	lw $a0, -44($fp)
+	li $v0, 11
+	syscall
+	li $t1, 1
+	addu $t0, $s0, $t1
+	move $s0, $t0
+	j Label10
+Label11:
+Label15:
+	bge $s0, $s3, Label16
+	li $t1, 2
+	div $t0, $s0, $t1
+	sw $t0, -48($fp)
+	lw $t0, -48($fp)
+	li $t1, 2
+	mul $t0, $t0, $t1
+	sw $t0, -52($fp)
+	lw $t1, -52($fp)
+	sub $t0, $s0, $t1
+	sw $t0, -56($fp)
+	lw $t0, -56($fp)
+	li $t1, 0
+	bne $t0, $t1, Label18
+	la $t0, global_char_array_3
+	li $t2, 4
+	mul $t1, $s0, $t2
+	add $t0, $t0, $t1
+	sw $s6, 0($t0)
+	j Label17
+Label18:
+	la $t0, global_char_array_3
+	li $t2, 4
+	mul $t1, $s0, $t2
+	add $t0, $t0, $t1
+	sw $s1, 0($t0)
+Label17:
+	la $t0, global_char_array_3
+	li $t2, 4
+	mul $t1, $s0, $t2
+	add $t0, $t0, $t1
+	lw $t2, 0($t0)
+	sw $t2, -60($fp)
+#打印char
+	lw $a0, -60($fp)
+	li $v0, 11
+	syscall
+	li $t1, 1
+	addu $t0, $s0, $t1
+	move $s0, $t0
+	j Label15
+Label16:
+Label9:
+Label8:
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	lw $s5, 20($sp)
+	lw $s6, 16($sp)
+	lw $s7, 12($sp)
+	add $sp, $sp, 104
+	jr $ra
+testSwitch:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 52
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 52
+	li $t0, 0
+	move $s2, $t0
+	li $t0, 0
+	move $s1, $t0
+Label19:
+	li $t1, 3
+	bge $s2, $t1, Label20
+	li $t1, 0
+	bne $s1, $t1, Label22
+	li $t0, 97
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	j Label21
+Label22:
+	li $t1, 1
+	bne $s1, $t1, Label23
+	li $t0, 98
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+	j Label21
+Label23:
+	li $t0, 95
+	move $s0, $t0
+#打印char
+	move $a0, $s0
+	li $v0, 11
+	syscall
+Label21:
+	li $t1, 97
+	bne $s0, $t1, Label25
+	li $t1, 1
+	addu $t0, $s2, $t1
+	move $s1, $t0
+#打印int
+	move $a0, $s1
+	li $v0, 1
+	syscall
+	j Label24
+Label25:
+	li $t1, 98
+	bne $s0, $t1, Label26
+	li $t0, 3
+	move $s1, $t0
+#打印int
+	move $a0, $s1
+	li $v0, 1
+	syscall
+	j Label24
+Label26:
+Label24:
+	li $t1, 1
+	addu $t0, $s2, $t1
+	move $s2, $t0
+	j Label19
+Label20:
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	add $sp, $sp, 52
+	jr $ra
+func_ret_int_1:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 48
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 64
+#打印字符串
+	la $a0, $str6
+	li $v0, 4
+	syscall
+#打印int
+	lw $a0, 0($fp)
+	li $v0, 1
+	syscall
+#打印int
+	lw $a0, -4($fp)
+	li $v0, 1
+	syscall
+#打印char
+	lw $a0, -8($fp)
+	li $v0, 11
+	syscall
+#打印char
+	lw $a0, -12($fp)
+	li $v0, 11
+	syscall
+	lw $t0, 0($fp)
+	move $s0, $t0
+	lw $t0, -4($fp)
+	sw $t0, 0($fp)
+	sw $s0, -4($fp)
+	lw $t0, -8($fp)
+	move $s1, $t0
+	lw $t0, -12($fp)
+	sw $t0, -8($fp)
+	sw $s1, -12($fp)
+#打印字符串
+	la $a0, $str7
+	li $v0, 4
+	syscall
+#打印int
+	lw $a0, 0($fp)
+	li $v0, 1
+	syscall
+#打印int
+	lw $a0, -4($fp)
+	li $v0, 1
+	syscall
+#打印char
+	lw $a0, -8($fp)
+	li $v0, 11
+	syscall
+#打印char
+	lw $a0, -12($fp)
+	li $v0, 11
+	syscall
+	lw $v0, 0($fp)
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	add $sp, $sp, 64
+	jr $ra
+testPara:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 60
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 60
+	li $t0, 12345679
+	move $s0, $t0
+	li $t0, -12345679
+	move $s1, $t0
+	li $t0, 65
+	move $s2, $t0
+	li $t0, 90
+	move $s3, $t0
+	sw $s0, 0($sp)
+	sub $sp, $sp, 4
+	sw $s1, 0($sp)
+	sub $sp, $sp, 4
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	sw $s3, 0($sp)
+	sub $sp, $sp, 4
+	jal func_ret_int_1
+	move $s4, $v0
+#打印char
+	move $a0, $s4
+	li $v0, 11
+	syscall
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	add $sp, $sp, 60
+	jr $ra
+testRecursion:
+#为函数局部变量和临时变量退栈空间
+#退栈空间，接着保存s系寄存器和$ra,$fp
+	sub $sp, $sp, 96
+	sw $s0, 40($sp)
+	sw $s1, 36($sp)
+	sw $s2, 32($sp)
+	sw $s3, 28($sp)
+	sw $s4, 24($sp)
+	sw $s5, 20($sp)
+	sw $s6, 16($sp)
+	sw $s7, 12($sp)
+	sw $ra, 8($sp)
+	sw $fp, 4($sp)
+#置$fp为被调用者基地址
+	add $fp, $sp, 96
+	li $t0, 2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	move $s0, $v0
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	move $s1, $v0
+	mul $t0, $s0, $s1
+	move $s2, $t0
+	sw $s2, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	move $s3, $v0
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	move $s4, $v0
+	li $t0, 4
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	move $s5, $v0
+	addu $t0, $s4, $s5
+	move $s6, $t0
+	sw $s6, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	move $s7, $v0
+	sub $t0, $s3, $s7
+	sw $t0, -32($fp)
+	li $t0, 2
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	sw $v0, -36($fp)
+	li $t0, 3
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal Fibonacci
+	sw $v0, -40($fp)
+	lw $t0, -36($fp)
+	lw $t1, -40($fp)
+	addu $t0, $t0, $t1
+	sw $t0, -44($fp)
+	lw $t0, -44($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal fac
+	sw $v0, -48($fp)
+	lw $t0, -32($fp)
+	lw $t1, -48($fp)
+	div $t0, $t0, $t1
+	sw $t0, -52($fp)
+	lw $t0, -52($fp)
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, 97
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, 98
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	li $t0, 99
+	sw $t0, 0($sp)
+	sub $sp, $sp, 4
+	jal hanoi
+	lw $fp, 4($sp)
+	lw $ra, 8($sp)
+	lw $s0, 40($sp)
+	lw $s1, 36($sp)
+	lw $s2, 32($sp)
+	lw $s3, 28($sp)
+	lw $s4, 24($sp)
+	lw $s5, 20($sp)
+	lw $s6, 16($sp)
+	lw $s7, 12($sp)
+	add $sp, $sp, 96
+	jr $ra
+main:
+#保存帧指针
+	move $fp, $sp
+#退栈空间
+	sub $sp, $sp, 0
+#打印字符串
+	la $a0, $str8
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str9
+	li $v0, 4
+	syscall
+	jal testRecursion
+#打印字符串
+	la $a0, $str10
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str11
+	li $v0, 4
+	syscall
+	jal testGlobal
+#打印字符串
+	la $a0, $str12
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str13
+	li $v0, 4
+	syscall
+	jal testReturn
+#打印字符串
+	la $a0, $str14
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str15
+	li $v0, 4
+	syscall
+	jal testIO
+#打印字符串
+	la $a0, $str16
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str17
+	li $v0, 4
+	syscall
+	jal testAssignAndExp
+#打印字符串
+	la $a0, $str18
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str19
+	li $v0, 4
+	syscall
+	jal testIfWhile
+#打印字符串
+	la $a0, $str20
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str21
+	li $v0, 4
+	syscall
+	jal testSwitch
+#打印字符串
+	la $a0, $str22
+	li $v0, 4
+	syscall
+#打印字符串
+	la $a0, $str23
+	li $v0, 4
+	syscall
+	jal testPara
+#打印字符串
+	la $a0, $str24
+	li $v0, 4
+	syscall
+	li $v0, 10
+	syscall
